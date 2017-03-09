@@ -35,8 +35,12 @@ def convert_iters_to_string_recursive(iterable, delim=whitespace):
     print(iterable)
     if contains_iterable(iterable):
         return delim.join(map(convert_iters_to_string_recursive, iterable))
-    else:
-        return delim.join(map(str, iterable))
+
+    try:
+        return delim.join(iterable)
+
+    except TypeError:
+        return str(iterable)
 
 
 def contains_iterable(iterable):
