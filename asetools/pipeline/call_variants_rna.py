@@ -29,18 +29,19 @@ def run(config):
     pipeline_order = config.PipelineFlow.CallVariantsRNASeq.ORDER
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
-        config = align_reads_STAR(config)
+        align_reads_STAR(config)
         write_config_align_reads_STAR(config)
+
 
 def align_reads_STAR(config):
     global STR_CONST
 
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION, config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
-    star_command_args = format_command_args(config.RunSTAR.STAR_COMMAND_DICT)
-    star_command = STR_CONST.SPACE.join([config.RunSTAR.PATH, star_command_args])
-    subprocess.check_output(star_command.split()).decode(STR_CONST.UTF8).strip()
+    star_command_args = config.RunSTAR.format_command_args()
+    subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
     return config
+
 
 def write_config_align_reads_STAR(config):
     global tab, newline
@@ -51,28 +52,12 @@ def write_config_align_reads_STAR(config):
         outfile.write(json.dumps(out_config_dict, indent=4))
 
 
-
 # Version Checks
 def check_version(star_path, version, parse_version, version_error, version_flag="--version"):
     output = subprocess.check_output([star_path, version_flag])
     local_version = parse_version(output)
-    print(version, type(version))
     print(local_version, type(local_version))
-    print(version == local_version)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
-
-
-# Misc functions
-def format_command_args(command_args, delim=STR_CONST.SPACE):
-    out_command = []
-    for key, value in command_args.items():
-        if not value:
-            continue
-        if isinstance(value, list) or isinstance(value, set):
-            out_command.append(delim.join(map(str, [key, delim.join(map(str, value))])))
-        else:
-            out_command.append(delim.join(map(str, [key, value])))
-    return delim.join(out_command)
 
 
 def run_pipeline_step(start, step, order):

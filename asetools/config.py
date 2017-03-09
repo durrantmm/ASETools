@@ -135,9 +135,9 @@ class RunSTAR:
         self.twopass1readsN_ARG = -1
 
         self.outFileNamePrefix_FLAG = "--outFileNamePrefix"
-        self.outFileNamePrefix_ARG = None
+        self.outFileNamePrefix_ARG = "STAR_algnmnt"
 
-        self.STAR_COMMAND_DICT = OrderedDict([(self.genomeDir_FLAG, self.genomeDir_ARG),
+        self.STAR_OPTIONAL_COMMAND_DICT = OrderedDict([(self.genomeDir_FLAG, self.genomeDir_ARG),
                                               (self.readFilesIn_FLAG, self.readFilesIn_ARG),
                                               (self.readFilesCommand_FLAG, self.readFilesCommand_ARG),
                                               (self.runThreadN_FLAG, self.runThreadN_ARG),
@@ -155,17 +155,27 @@ class RunSTAR:
                                               (self.outSAMattributes_FLAG, self.outSAMattributes_ARG),
                                               (self.sjdbScore_FLAG, self.sjdbScore_ARG),
                                               (self.twopassMode_FLAG, self.twopassMode_ARG),
-                                              (self.twopass1readsN_FLAG, self.twopass1readsN_ARG),
-                                              (self.outFileNamePrefix_FLAG, self.outFileNamePrefix_ARG)])
+                                              (self.twopass1readsN_FLAG, self.twopass1readsN_ARG)])
 
-    def set_out_prefix(self, override=False):
-        if config.RunSTAR.outFileNamePrefix_ARG:
-            config.RunSTAR.outFileNamePrefix_ARG = os.path.join(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR,
-                                                                config.RunSTAR.outFileNamePrefix_ARG)
-        else:
-            config.RunSTAR.outFileNamePrefix_ARG = os.path.join(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR,
-                                                                basename(config.PipelineFlow.OUTPUT_DIR))
+    def get_STAR_out_prefix_command(self, output_dir):
+        return os.path.join(output_dir, self.outFileNamePrefix_ARG)
 
+    # Misc functions
+    def format_command_args(self, output_dir, delim=STR_CONST.SPACE):
+
+        out_command = [self.PATH]
+        for key, value in self.STAR_OPTIONAL_COMMAND_DICT.items():
+            if not value:
+                continue
+            if isinstance(value, list) or isinstance(value, set):
+                out_command.append(delim.join(map(str, [key, delim.join(map(str, value))])))
+            else:
+                out_command.append(delim.join(map(str, [key, value])))
+
+        out_command.append(self.outFileNamePrefix_FLAG)
+        out_command.append(self.get_STAR_out_prefix_command(output_dir))
+
+        return delim.join(out_command)
 
 class Java:
     PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
