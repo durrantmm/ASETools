@@ -34,8 +34,8 @@ def check_star_version(star_path, version, version_flag="--version"):
 def convert_iters_to_string_recursive(iterable, delim=whitespace):
     print(iterable)
     try:
-        return delim.join(iterable)
-    except TypeError:
+        return delim.join(map(str, iterable))
+    except:
         return delim.join(map(convert_iters_to_string_recursive, iterable))
 
 if __name__ == "__main__":
