@@ -61,7 +61,7 @@ def contains_iterable(iterable):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument('config', type=os.path.isfile,
+    parser.add_argument('config', type=lambda x: str(x) if os.path.isfile else sys.exit("Invalid Config File"),
                         help='The config.py file to use in the pipeline.')
     parser.add_argument('-oSTAR', '--override_star_argument', action="append",
                         help="Onlye one new argument per use of option. "
