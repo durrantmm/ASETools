@@ -33,10 +33,23 @@ def check_star_version(star_path, version, version_flag="--version"):
 # Misc functions
 def convert_iters_to_string_recursive(iterable, delim=whitespace):
     print(iterable)
-    try:
-        return delim.join(map(str, iterable))
-    except:
+    if contains_iterable(iterable):
         return delim.join(map(convert_iters_to_string_recursive, iterable))
+    else:
+        return delim.join(map(str, iterable))
+
+
+def contains_iterable(iterable):
+
+    if not hasattr(iterable, '__iter__'):
+        return False
+
+    for item in iterable:
+        if hasattr(iterable, '__iter__'):
+            return True
+
+    return False
+
 
 if __name__ == "__main__":
     config_path = sys.argv[1]
