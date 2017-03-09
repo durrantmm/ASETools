@@ -13,7 +13,7 @@ def main(config):
     align_reads_with_STAR(config)
 
 def align_reads_with_STAR(config):
-    bash_command = config
+    check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
 
 def check_star_version(star_path, version, version_flag="--version"):
     global STAR_VERSION_ERROR
