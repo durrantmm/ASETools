@@ -17,7 +17,7 @@ def align_reads_with_STAR(config):
 
 def check_star_version(star_path, version, version_flag="--version"):
     global STAR_VERSION_ERROR
-    stdout = str(subprocess.check_output([star_path, version_flag])).strip()
+    stdout = subprocess.check_output([star_path, version_flag]).decode("utf-8").strip()
     print(stdout)
     local_version = stdout.strip()
     assert version == local_version, STAR_VERSION_ERROR.format(ACTUAL=local_version, EXPECTED=version)
