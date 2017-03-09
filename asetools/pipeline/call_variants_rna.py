@@ -40,6 +40,9 @@ def convert_iters_to_string_recursive(iterable, delim=whitespace):
 
 
 def contains_iterable(iterable):
+    if not iterable:
+        return False
+
     if isinstance(iterable, str):
         return False
 
