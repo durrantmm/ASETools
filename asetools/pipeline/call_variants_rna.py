@@ -37,7 +37,7 @@ def align_reads_STAR(config):
 
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION, config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = format_command_args(config.RunSTAR.STAR_COMMAND_DICT)
-    star_command = STR_CONST.SPACE.join([config.STAR.PATH, star_command_args])
+    star_command = STR_CONST.SPACE.join([config.RunSTAR.PATH, star_command_args])
     subprocess.check_output(star_command.split()).decode(STR_CONST.UTF8).strip()
 
     return config
