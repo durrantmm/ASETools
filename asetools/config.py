@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from collections import OrderedDict
 
 class Config:
     # General reference genome in fasta format. For example, ucsc.hg19.fasta
@@ -72,22 +73,22 @@ class Config:
         outFileNamePrefix_FLAG = "--out1FileNamePrefix"
         outFileNamePrefix_ARG = None
     
-        STAR_COMMAND_DICT = {genomeDir_FLAG: genomeDir_ARG,
-                             readFilesIn_FLAG: readFilesIn_ARG,
-                             readFilesCommand_FLAG: readFilesCommand_ARG,
-                             runThreadN_FLAG: runThreadN_ARG,
-                             genomeLoad_FLAG: genomeLoad_ARG,
-                             outFilterMultimapNmax_FLAG: outFilterMultimapNmax_ARG,
-                             alignSJDBoverhangMin_FLAG: alignSJDBoverhangMin_ARG,
-                             outFilterMismatchNmax_FLAG: outFilterMismatchNmax_ARG,
-                             outFilterMismatchNoverReadLmax_FLAG: outFilterMismatchNoverReadLmax_ARG,
-                             alignIntronMin_FLAG: alignIntronMin_ARG,
-                             alignIntronMax_FLAG: alignIntronMax_ARG,
-                             alignMatesGapMax_FLAG: alignMatesGapMax_ARG,
-                             outSAMunmapped_FLAG: outSAMunmapped_ARG,
-                             outFilterType_FLAG: outFilterType_ARG,
-                             outSAMattributes_FLAG: outSAMattributes_ARG,
-                             sjdbScore_FLAG: sjdbScore_ARG,
-                             twopassMode_FLAG: twopassMode_ARG,
-                             twopass1readsN_FLAG: twopass1readsN_ARG,
-                             outFileNamePrefix_FLAG: outFileNamePrefix_ARG}
+        STAR_COMMAND_DICT = OrderedDict([(genomeDir_FLAG, genomeDir_ARG),
+                                         (readFilesIn_FLAG, readFilesIn_ARG),
+                                         (readFilesCommand_FLAG, readFilesCommand_ARG),
+                                         (runThreadN_FLAG, runThreadN_ARG),
+                                         (genomeLoad_FLAG, genomeLoad_ARG),
+                                         (outFilterMultimapNmax_FLAG, outFilterMultimapNmax_ARG),
+                                         (alignSJDBoverhangMin_FLAG, alignSJDBoverhangMin_ARG),
+                                         (outFilterMismatchNmax_FLAG, outFilterMismatchNmax_ARG),
+                                         (outFilterMismatchNoverReadLmax_FLAG, outFilterMismatchNoverReadLmax_ARG),
+                                         (alignIntronMin_FLAG, alignIntronMin_ARG),
+                                         (alignIntronMax_FLAG, alignIntronMax_ARG),
+                                         (alignMatesGapMax_FLAG, alignMatesGapMax_ARG),
+                                         (outSAMunmapped_FLAG, outSAMunmapped_ARG),
+                                         (outFilterType_FLAG, outFilterType_ARG),
+                                         (outSAMattributes_FLAG, outSAMattributes_ARG),
+                                         (sjdbScore_FLAG, sjdbScore_ARG),
+                                         (twopassMode_FLAG, twopassMode_ARG),
+                                         (twopass1readsN_FLAG, twopass1readsN_ARG),
+                                         (outFileNamePrefix_FLAG, outFileNamePrefix_ARG)])
