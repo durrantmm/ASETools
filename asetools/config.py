@@ -59,7 +59,7 @@ class Config:
         outFilterType_ARG = "BySJout"
     
         outSAMattributes_FLAG = "--outSAMattributes"
-        outSAMattributes_ARG = ['NA', 'HI', 'AS', 'NM', 'MD']
+        outSAMattributes_ARG = ['NH', 'HI', 'AS', 'NM', 'MD']
     
         sjdbScore_FLAG = "--sjdbScore"
         sjdbScore_ARG = 1
