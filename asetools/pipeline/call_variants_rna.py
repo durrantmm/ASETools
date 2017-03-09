@@ -56,6 +56,9 @@ def write_config_align_reads_STAR(config):
 def check_version(star_path, version, parse_version, version_error, version_flag="--version"):
     output = subprocess.check_output([star_path, version_flag])
     local_version = parse_version(output)
+    print(version, type(version))
+    print(local_version, type(local_version))
+    print(version == local_version)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
 
