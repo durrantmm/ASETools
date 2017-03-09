@@ -7,7 +7,7 @@ class Config:
     class StarAligner:
     
         # Path to the star aligner, absolute path is preferred over aliases
-        PATH = "~/miniconda3/bin/STAR"
+        PATH = "/home/mdurrant/miniconda3/bin/STAR"
         # The version of STAR aligner. Change at your own risk.
         VERSION = "STAR_2.5.2b"
     
