@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-
 import sys, os
-from os.path import basename, splitext
-import importlib.machinery
 import subprocess
 import argparse
-from collections import namedtuple
-from glob import glob
 import json
+from config.fixed_config import Config
+
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
@@ -67,19 +64,14 @@ def run_pipeline_step(start, step, order):
     else:
         return False
 
-
 if __name__ == "__main__":
 
     def argument_parser():
 
         parser = argparse.ArgumentParser(description='Process some integers.')
-        parser.add_argument('config', type=str,
-                            help='The config.py file to use in the pipeline.')
         parser.add_argument('output', type=str,
                             help='The output folder to be used by the pipeline.')
         args_first_parse = parser.parse_args()
-
-        config = get_config(args_first_parse.config)
 
         parser.add_argument('-oSTAR', '--override_star_argument', action="append",
                             help="Only one new argument for each time you invoke the option."
@@ -91,18 +83,11 @@ if __name__ == "__main__":
                             help="Choose the point in the call variants pipeline at which you'd like to start.")
 
         args = parser.parse_args()
-        config = adjust_config(config, args)
 
-        return config
-
-
-    def get_config(config_path):
-        config_module_name = splitext(basename(config_path))[0]
-        config = importlib.machinery.SourceFileLoader(config_module_name, config_path).load_module().Config()
-        return config
+        return args
 
 
-    def adjust_config(config, args):
+    def set_config(config, args):
         global STR_CONST
         # Adding the override arguments
         if args.override_star_argument:
@@ -120,7 +105,10 @@ if __name__ == "__main__":
         return config
 
 
-    config = argument_parser()
+    args = argument_parser()
+    config = Config()
+    set_config(config, args)
+
 
     run(config)
 
