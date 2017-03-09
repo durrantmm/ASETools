@@ -25,7 +25,7 @@ class Config:
         readFilesCommand_FLAG = "--readFilesCommand"
         readFilesCommand_ARG = "zcat"
     
-        runThreadN_FLAG = "--unThreadN"
+        runThreadN_FLAG = "--runThreadN"
         runThreadN_ARG = 2
     
         genomeLoad_FLAG = "--genomeLoad"
