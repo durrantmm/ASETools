@@ -66,7 +66,7 @@ def run_pipeline_step(start, step, order):
 
 if __name__ == "__main__":
 
-    def argument_parser():
+    def argument_parser(config):
 
         parser = argparse.ArgumentParser(description='Process some integers.')
         parser.add_argument('output', type=str,
@@ -105,8 +105,9 @@ if __name__ == "__main__":
         return config
 
 
-    args = argument_parser()
     config = Config()
+    args = argument_parser(config)
+
     set_config(config, args)
 
 
