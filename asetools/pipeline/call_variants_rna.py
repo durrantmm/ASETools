@@ -38,9 +38,9 @@ def format_command_args(command_args, delim=whitespace):
         if not value:
             continue
         if isinstance(value, list) or isinstance(value, set):
-            out_command += delim.join(str(key), whitespace.join(value))
+            out_command += delim.join(map(str, [key, whitespace.join(map(str, value))]))
         else:
-            out_command += delim.join([key, value])
+            out_command += delim.join(map(str, [key, value]))
     return out_command
 
 
