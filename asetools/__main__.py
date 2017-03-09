@@ -1,8 +1,7 @@
-import sys
-
+#!/usr/bin/env python3
 
 def main():
-    pass
+    print("NICE")
 
 
 if __name__ == '__main__':

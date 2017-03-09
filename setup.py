@@ -6,5 +6,5 @@ setup(name='ASETools',
       author='Matt Durrant',
       author_email='mdurrant@stanford.edu',
       url='www.stanford.edu',
-      packages=['pysam', 'vcf'],
+      packages=['sys', 'pysam', 'vcf', 'argparse'],
      )
