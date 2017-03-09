@@ -77,7 +77,7 @@ class RunSTAR:
         # If the argument is optional, set its value to None to exclude.
         self.VERSION = "STAR_2.5.2b"
         self.VERSION_FLAG = '--version'
-        self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8)
+        self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
         self.genomeDir_FLAG = "--genomeDir"
