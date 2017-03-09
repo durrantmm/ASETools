@@ -40,6 +40,8 @@ def convert_iters_to_string_recursive(iterable, delim=whitespace):
 
 
 def contains_iterable(iterable):
+    if isinstance(iterable, str):
+        return False
 
     if not hasattr(iterable, '__iter__'):
         return False
