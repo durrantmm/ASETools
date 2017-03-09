@@ -70,7 +70,7 @@ class Config:
         twopass1readsN_FLAG = "--twopass1readsN"
         twopass1readsN_ARG = -1
     
-        outFileNamePrefix_FLAG = "--out1FileNamePrefix"
+        outFileNamePrefix_FLAG = "--outFileNamePrefix"
         outFileNamePrefix_ARG = None
     
         STAR_COMMAND_DICT = OrderedDict([(genomeDir_FLAG, genomeDir_ARG),

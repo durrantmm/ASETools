@@ -82,7 +82,6 @@ if __name__ == "__main__":
             config.StarAligner.STAR_COMMAND_DICT[flag] = argument
 
     print(config.StarAligner.STAR_COMMAND_DICT)
-    sys.exit()
     main(config)
 
 
