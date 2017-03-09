@@ -6,7 +6,8 @@ import os
 STR_CONST = type("StringConstants", (),
                  {'UTF8':'utf-8',
                   'EMPTY_STRING': '',
-                  'CONFIG_SUFFIX': '.config'})
+                  'CONFIG_SUFFIX': '.config',
+                  'SPACE': ' '})
 
 REFERENCE_GENOME_PATH = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
 
