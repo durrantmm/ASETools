@@ -19,7 +19,7 @@ def main(config):
 def align_reads_with_STAR(config):
     global whitespace
     check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
-    star_command_args = format_command_args(config.STAR_COMMAND_DICT)
+    star_command_args = format_command_args(config.StarAligner.STAR_COMMAND_DICT)
     star_command = whitespace.join([config.StarAligner.PATH, star_command_args])
     print(star_command)
 
