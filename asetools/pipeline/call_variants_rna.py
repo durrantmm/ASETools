@@ -119,7 +119,7 @@ def argument_parser():
                         help='The config.py file to use in the pipeline.')
     parser.add_argument('output', type=str,
                         help='The output folder to be used by the pipeline.')
-    args_first_parse = vars(parser.parse_args())
+    args_first_parse = dict_to_namedtuple(vars(parser.parse_args()))
     config = get_config(args_first_parse.config)
 
     parser.add_argument('-oSTAR', '--override_star_argument', action="append",
@@ -131,8 +131,7 @@ def argument_parser():
                         default=config.PipelineFlow.CallVariantsRNASeq.STAR_ALIGN_READS, type=str,
                         help="Choose the point in the call variants pipeline at which you'd like to start.")
 
-    args = vars(parser.parse_args())
-    args = dict_to_namedtuple(args)
+    args = dict_to_namedtuple(vars(parser.parse_args()))
 
     config = adjust_config_by_args(config, args)
     config = arrange_output_dir(args.output, config)
