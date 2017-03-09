@@ -74,8 +74,9 @@ class RunSTAR(UserRunSTAR):
 
         self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
+        self.INVALID_FASTQ = "At least one of the fastq files you provided is invalid."
 
-        self.readFilesIn = ("--readFilesIn", None, None)
+        self.readFilesIn = ["--readFilesIn", None, None]
 
         self.outFileNamePrefix = ("--outFileNamePrefix", "STAR_algnmnt")
 
@@ -85,7 +86,7 @@ class RunSTAR(UserRunSTAR):
 
     def format_command_args(self, output_dir, delim=STR_CONST.SPACE):
 
-        out_command = [self.PATH]
+        out_command = [self.PATH, delim.join(self.readFilesIn)]
         for key, value in self.ARGS.items():
             if not value:
                 continue
@@ -94,10 +95,17 @@ class RunSTAR(UserRunSTAR):
             else:
                 out_command.append(delim.join(map(str, [key, value])))
 
-        out_command.append(self.outFileNamePrefix_FLAG)
+        out_command.append(delim.join(self.outFileNamePrefix))
         out_command.append(self.get_STAR_out_prefix_command(output_dir))
 
         return delim.join(out_command)
+
+
+    def set_readFilesIn(self, read_files_in):
+        for index, file in read_files_in:
+            assert os.path.isfile(file), self.INVALID_FASTQ
+            self.readFilesIn[index] = file
+
 
 
 class Java(UserJava):

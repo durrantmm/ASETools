@@ -88,10 +88,9 @@ if __name__ == "__main__":
     def set_config(config, args):
         global STR_CONST
         # Adding the override arguments
-        if args.override_star_argument:
-            for entry in args.override_star_argument:
-                flag, argument = entry.split()[0], STR_CONST.SPACE.join(entry.split()[1:])
-                config.RunSTAR.STAR_COMMAND_DICT[flag] = argument
+        if args.readFilesIn:
+            config.RunSTAR.set_readFilesIn(args.readFilesIn)
+
 
         # Setting the start position
         config.PipelineFlow.CallVariantsRNASeq.START = args.start
