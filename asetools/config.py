@@ -22,7 +22,7 @@ class Config:
         readFilesIn_FLAG = "--readFilesIn"
         readFilesIn_ARG = None
     
-        readFilesCommand_FLAG = "--readFilesCommandARG"
+        readFilesCommand_FLAG = "--readFilesCommand"
         readFilesCommand_ARG = "zcat"
     
         runThreadN_FLAG = "--unThreadN"
@@ -31,7 +31,7 @@ class Config:
         genomeLoad_FLAG = "--genomeLoad"
         genomeLoad_ARG = "NoSharedMemory"
     
-        outFilterMultimapNmax_FLAG = "--outFilterMultimapNmax_FLAG"
+        outFilterMultimapNmax_FLAG = "--outFilterMultimapNmax"
         outFilterMultimapNmax_ARG = 20
     
         alignSJDBoverhangMin_FLAG = "--alignSJDBoverhangMin"

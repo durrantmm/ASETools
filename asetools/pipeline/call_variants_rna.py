@@ -20,6 +20,7 @@ def align_reads_with_STAR(config):
     check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
     star_command_args = format_command_args(config.StarAligner.STAR_COMMAND_DICT)
     star_command = whitespace.join([config.StarAligner.PATH, star_command_args])
+    print(star_command)
     output = subprocess.check_output(star_command.split()).decode(utf8).strip()
     print(output)
 
