@@ -24,18 +24,18 @@ def align_reads_with_STAR(config):
     print(star_command)
 
 
-
-
-
-
-
-
 # Version Checks
 def check_star_version(star_path, version, version_flag="--version"):
     global STAR_VERSION_ERROR, utf8
     local_version = subprocess.check_output([star_path, version_flag]).decode(utf8).strip()
     assert version == local_version, STAR_VERSION_ERROR.format(ACTUAL=local_version, EXPECTED=version)
 
+# Misc functions
+def convert_iters_to_string_recursive(iterable, delim=whitespace):
+    try:
+        return delim.join(iterable)
+    except TypeError:
+        return delim.join(map(convert_iters_to_string_recursive, iterable))
 
 if __name__ == "__main__":
     config_path = sys.argv[1]
@@ -45,9 +45,4 @@ if __name__ == "__main__":
 
     main(config)
 
-# Misc functions
-def convert_iters_to_string_recursive(iterable, delim=whitespace):
-    try:
-        return delim.join(iterable)
-    except TypeError:
-        return delim.join(map(convert_iters_to_string_recursive, iterable))
+
