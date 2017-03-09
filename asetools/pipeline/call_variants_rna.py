@@ -64,7 +64,9 @@ if __name__ == "__main__":
     parser.add_argument('config', type=os.path.isfile,
                         help='The config.py file to use in the pipeline.')
     parser.add_argument('-oSTAR', '--override_star_argument', action="append",
-                        description="Example: -oSTAR \"--readFilesIn paired_ends.1.fq paired_ends.2.fq\"")
+                        help="Onlye one new argument per use of option. "
+                             "Example: -oSTAR \"--readFilesIn paired_ends.1.fq.gz paired_ends.2.fq.gz\""
+                             "-oSTAR \"--out1FileNamePrefix paired_end_alignment\"")
 
     args = vars(parser.parse_args())
     print(args)
