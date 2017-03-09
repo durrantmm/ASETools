@@ -70,6 +70,7 @@ if __name__ == "__main__":
 
     args = vars(parser.parse_args())
 
+    print(args)
     config_path = args['config']
     config_module_name = splitext(basename(config_path))[0]
 
