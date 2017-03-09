@@ -58,16 +58,13 @@ class PipelineCallVariantsRNASeq:
         os.makedirs(self.OUTPUT_DIR, exist_ok=True)
 
         self.STAR_ALIGN_READS_CONFIG_PATH = os.path.join(
-            main_output_dir, self.STAR_ALIGN_READS+STR_CONST.CONFIG_SUFFIX)
-        os.makedirs(self.STAR_ALIGN_READS_CONFIG_PATH, exist_ok=True)
+            self.OUTPUT_DIR, self.STAR_ALIGN_READS+STR_CONST.CONFIG_SUFFIX)
 
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS_CONFIG_PATH = os.path.join(
-            main_output_dir, self.PICARD_ADD_OR_REPLACE_READ_GROUPS + STR_CONST.CONFIG_SUFFIX)
-        os.makedirs(self.PICARD_ADD_OR_REPLACE_READ_GROUPS_CONFIG_PATH, exist_ok=True)
+            self.OUTPUT_DIR, self.PICARD_ADD_OR_REPLACE_READ_GROUPS + STR_CONST.CONFIG_SUFFIX)
 
         self.PICARD_MARK_DUPLICATES_CONFIG_PATH = os.path.join(
-            main_output_dir, self.PICARD_MARK_DUPLICATES+STR_CONST.CONFIG_SUFFIX)
-        os.makedirs(self.PICARD_MARK_DUPLICATES_CONFIG_PATH, exist_ok=True)
+            self.OUTPUT_DIR, self.PICARD_MARK_DUPLICATES+STR_CONST.CONFIG_SUFFIX)
 
 
 class RunSTAR:
