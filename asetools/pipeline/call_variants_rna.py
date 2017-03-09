@@ -17,7 +17,6 @@ def main(config):
     align_reads_with_STAR(config)
 
 def align_reads_with_STAR(config):
-    global whitespace
     check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
     star_command_args = format_command_args(config.StarAligner.STAR_COMMAND_DICT)
     star_command = whitespace.join([config.StarAligner.PATH, star_command_args])
@@ -26,23 +25,21 @@ def align_reads_with_STAR(config):
 
 # Version Checks
 def check_star_version(star_path, version, version_flag="--version"):
-    global STAR_VERSION_ERROR, utf8
     local_version = subprocess.check_output([star_path, version_flag]).decode(utf8).strip()
     assert version == local_version, STAR_VERSION_ERROR.format(ACTUAL=local_version, EXPECTED=version)
 
 
 # Misc functions
 def format_command_args(command_args, delim=whitespace):
-    out_command = ""
+    out_command = []
     for key, value in command_args.items():
         if not value:
             continue
         if isinstance(value, list) or isinstance(value, set):
-            out_command += delim.join(map(str, [key, whitespace.join(map(str, value))]))
+            out_command.append(delim.join(map(str, [key, delim.join(map(str, value))])))
         else:
-            out_command += delim.join(map(str, [key, value]))
-    return out_command
-
+            out_command.append(delim.join(map(str, [key, value])))
+    return delim.join(out_command)
 
 
 def contains_iterable(iterable):
