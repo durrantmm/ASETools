@@ -38,6 +38,7 @@ def align_reads_STAR(config):
 
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION, config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR)
+    print(star_command_args)
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
     return config
@@ -56,7 +57,6 @@ def write_config_align_reads_STAR(config):
 def check_version(star_path, version, parse_version, version_error, version_flag="--version"):
     output = subprocess.check_output([star_path, version_flag])
     local_version = parse_version(output)
-    print(local_version, type(local_version))
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
 
