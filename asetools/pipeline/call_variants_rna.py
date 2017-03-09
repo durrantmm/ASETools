@@ -32,6 +32,7 @@ def check_star_version(star_path, version, version_flag="--version"):
 
 # Misc functions
 def convert_iters_to_string_recursive(iterable, delim=whitespace):
+    print(str(iterable)[:int(len(iterable)*0,2)])
     try:
         return delim.join(iterable)
     except TypeError:
