@@ -3,7 +3,7 @@ import sys, os
 import subprocess
 import argparse
 import json
-from config.fixed_config import Config
+from config.config_call_variants_rna import CallVariantsRNAConfig
 
 
 ### Global attributes and methods accessible to all classes
@@ -32,8 +32,8 @@ def run(config):
 
 def align_reads_STAR(config):
     global STR_CONST
-
-    check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION, config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
+    check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
+                  config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR)
     print(star_command_args)
     sys.exit()
@@ -51,18 +51,18 @@ def write_config_align_reads_STAR(config):
         outfile.write(json.dumps(out_config_dict, indent=4))
 
 
-# Version Checks
-def check_version(star_path, version, parse_version, version_error, version_flag="--version"):
-    output = subprocess.check_output([star_path, version_flag])
-    local_version = parse_version(output)
-    assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
-
-
 def run_pipeline_step(start, step, order):
     if order.index(start) <= order.index(step):
         return True
     else:
         return False
+
+
+def check_version(app_path, version_flag, version, parse_version, version_error):
+    output = subprocess.check_output([app_path, version_flag])
+    local_version = parse_version(output)
+    assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
+
 
 if __name__ == "__main__":
 
@@ -73,10 +73,8 @@ if __name__ == "__main__":
                             help='The output folder to be used by the pipeline.')
         args_first_parse = parser.parse_args()
 
-        parser.add_argument('-oSTAR', '--override_star_argument', action="append",
-                            help="Only one new argument for each time you invoke the option."
-                                 "Example: -oSTAR \"--readFilesIn paired_ends.1.fq.gz paired_ends.2.fq.gz\""
-                                 "-oSTAR \"--out1FileNamePrefix paired_end_alignment\"")
+        parser.add_argument('--readFilesIn', type=str, nargs=2,
+                            help = "Specify the paired-end fastq files if you starting at the alignment step.")
 
         parser.add_argument('-s', '--start', choices=config.PipelineFlow.CallVariantsRNASeq.ORDER,
                             default=config.PipelineFlow.CallVariantsRNASeq.STAR_ALIGN_READS, type=str,
@@ -105,7 +103,7 @@ if __name__ == "__main__":
         return config
 
 
-    config = Config()
+    config = CallVariantsRNAConfig()
     args = argument_parser(config)
 
     set_config(config, args)
