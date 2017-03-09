@@ -69,13 +69,19 @@ if __name__ == "__main__":
                              "-oSTAR \"--out1FileNamePrefix paired_end_alignment\"")
 
     args = vars(parser.parse_args())
-    print(args)
-    sys.exit()
-    config_path = sys.argv[1]
+
+    config_path = args['config']
     config_module_name = splitext(basename(config_path))[0]
 
     config = importlib.machinery.SourceFileLoader(config_module_name, config_path).load_module().Config
 
+    if args["override_star_argument"]:
+        for entry in args["override_star_argument"]:
+            flag, argument = entry.split()[0], whitespace.join(entry.split()[1:])
+            config.StarAligner.STAR_COMMAND_DICT[flag] = argument
+
+    print(config.StarAligner.STAR_COMMAND_DICT)
+    sys.exit()
     main(config)
 
 
