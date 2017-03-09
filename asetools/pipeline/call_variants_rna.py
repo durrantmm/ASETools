@@ -19,7 +19,7 @@ def main(config):
 def align_reads_with_STAR(config):
     global whitespace
     check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
-    star_command_args = whitespace.join(map(lambda x: whitespace.join(x), config.StarAligner.STAR_COMMAND_DICT.items()))
+    star_command_args = convert_iters_to_string_recursive(config.StarAligner.STAR_COMMAND_DICT.items())
     star_command = whitespace.join([config.StarAligner.PATH, star_command_args])
     print(star_command)
 
@@ -44,3 +44,10 @@ if __name__ == "__main__":
     config = importlib.machinery.SourceFileLoader(config_module_name, config_path).load_module().Config
 
     main(config)
+
+# Misc functions
+def convert_iters_to_string_recursive(iterable, delim=whitespace):
+    try:
+        return delim.join(iterable)
+    except TypeError:
+        return delim.join(map(convert_iters_to_string_recursive, iterable))
