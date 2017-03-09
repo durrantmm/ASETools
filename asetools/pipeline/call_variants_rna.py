@@ -63,7 +63,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Process some integers.')
     parser.add_argument('config', type=os.path.isfile,
                         help='The config.py file to use in the pipeline.')
-    parser.add_argument('-oSTAR', '--override_star_argument', action="append")
+    parser.add_argument('-oSTAR', '--override_star_argument', action="append",
+                        description="Example: -oSTAR \"--readFilesIn paired_ends.1.fq paired_ends.2.fq\"")
 
     args = vars(parser.parse_args())
     print(args)
