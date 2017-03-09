@@ -19,7 +19,7 @@ def main(config):
 def align_reads_with_STAR(config):
     global whitespace
     check_star_version(config.StarAligner.PATH, config.StarAligner.VERSION)
-    star_command_args = convert_iters_to_string_recursive(config.StarAligner.STAR_COMMAND_DICT.items())
+    star_command_args = format_command_args(config.STAR_COMMAND_DICT)
     star_command = whitespace.join([config.StarAligner.PATH, star_command_args])
     print(star_command)
 
@@ -30,20 +30,19 @@ def check_star_version(star_path, version, version_flag="--version"):
     local_version = subprocess.check_output([star_path, version_flag]).decode(utf8).strip()
     assert version == local_version, STAR_VERSION_ERROR.format(ACTUAL=local_version, EXPECTED=version)
 
+
 # Misc functions
-def convert_iters_to_string_recursive(iterable, delim=whitespace):
-    print(iterable)
-    if contains_iterable(iterable):
-        return delim.join(map(convert_iters_to_string_recursive, iterable))
+def format_command_args(command_args, delim=whitespace):
+    out_command = ""
+    for key, value in command_args.items():
+        if not value:
+            continue
+        if isinstance(value, list) or isinstance(value, set):
+            out_command += delim.join(str(key), whitespace.join(value))
+        else:
+            out_command += delim.join([key, value])
+    return out_command
 
-    if isinstance(iterable, str):
-        return iterable
-
-    try:
-        return delim.join(iterable)
-
-    except TypeError:
-        return str(iterable)
 
 
 def contains_iterable(iterable):
