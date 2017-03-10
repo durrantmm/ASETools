@@ -81,9 +81,9 @@ def run_pipeline_step(start, step, order):
 
 def check_version(app_path, version_flag, version, parse_version, version_error, capture_stderr=False):
     if capture_stderr:
-        output = subprocess.check_output([app_path, version_flag], stderr=subprocess.STDOUT)
+        output = subprocess.check_output(app_path.split() + version_flag.split(), stderr=subprocess.STDOUT)
     else:
-        output = subprocess.check_output([app_path, version_flag])
+        output = subprocess.check_output(app_path.split() + version_flag.split())
     local_version = parse_version(output)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
