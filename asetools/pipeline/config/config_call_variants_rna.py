@@ -20,7 +20,7 @@ class CallVariantsRNAConfig:
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
-        self.Java = RunJava()
+        self.RunJava = RunJava()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
