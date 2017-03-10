@@ -144,7 +144,7 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
         self.input_file = inputFileClass(flag="I", path=None, suffix='.sam')
 
         outputFileClass = recordclass('outputFile', 'flag, path, suffix')
-        self.output_file = outputFileClass(flag="0", path=None, suffix='.bam')
+        self.output_file = outputFileClass(flag="O", path=None, suffix='.bam')
 
         self.FLAG_ARG_DELIM = "="
 
