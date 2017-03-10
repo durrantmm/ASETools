@@ -32,6 +32,11 @@ class CallVariantsRNAConfig:
 
         self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
+    def save_config_state(self):
+        out_config_dict = self.__dict__
+        with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
+            outfile.write(json.dumps(out_config_dict, indent=4))
+
 
 class RunSTAR(UserRunSTAR):
 
@@ -96,15 +101,6 @@ class RunSTAR(UserRunSTAR):
                 l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
                 self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
-
-
-    def write_step_config(self):
-        global tab, newline
-        out_config = lambda: None
-        out_config.output_prefix = self.get_full_out_prefix()
-        out_config_dict = out_config.__dict__
-        with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
-            outfile.write(json.dumps(out_config_dict, indent=4))
 
 
     def update_paths_relative(self, output_dir):
