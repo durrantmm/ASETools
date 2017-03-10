@@ -53,7 +53,7 @@ def align_reads_STAR(config, log=None):
 
 def add_read_groups_picard(config, log):
     global STR_CONST
-    config.RunPicardAddOrReplaceReadGroups.adjust_input_output(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
+    config.RunPicardAddOrReplaceReadGroups.retrieve_input_output_from_RunSTAR(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
 
     check_version(config.RunPicardAddOrReplaceReadGroups.JAVA_PATH,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_FLAG,
