@@ -81,10 +81,10 @@ def run_pipeline_step(start, step, order):
 
 def check_version(app_path, version_flag, version, parse_version, version_error, stdout=subprocess.PIPE, ignore_error=False):
     try:
-        result = subprocess.check_output(app_path.split() + version_flag.split(), stderr=stdout)
+        output = subprocess.check_output(app_path.split() + version_flag.split(), stderr=stdout)
     except subprocess.CalledProcessError as e:
         if ignore_error:
-            result = result.output
+            output = e.output
         else:
             raise e
 
