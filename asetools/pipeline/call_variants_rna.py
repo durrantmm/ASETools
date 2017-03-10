@@ -33,7 +33,6 @@ def run(config, log):
         add_read_groups_picard(config, log)
 
 
-
 def align_reads_STAR(config, log=None):
     global STR_CONST
     #check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
