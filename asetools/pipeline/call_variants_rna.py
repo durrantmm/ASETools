@@ -69,7 +69,7 @@ def add_read_groups_picard(config, log):
     if log:
         log.info("Running Picard AddOrReplaceReadGroups...")
         log.info("Command used to run Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
-    #subprocess.check_output(add_read_groups_command.split()).decode(STR_CONST.UTF8).strip()
+    subprocess.check_output(add_read_groups_command.split()).decode(STR_CONST.UTF8).strip()
 
     save_config.RunAddReadGroups.save(config.RunAddReadGroups)
     if log: log.info("Finished running Picard AddOrReplaceReadGroups, everything went well...")
