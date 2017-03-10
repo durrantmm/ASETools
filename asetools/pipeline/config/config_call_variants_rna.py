@@ -33,7 +33,7 @@ class PipelineFlow:
     def update_main_output_path(self, path):
         self.MAIN_OUTPUT_DIR = os.path.abspath(path)
 
-        self.CallVariantsRNASeq.update_paths_relative(path)
+        self.CallVariantsRNASeq.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
 
 class PipelineCallVariantsRNASeq:

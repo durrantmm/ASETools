@@ -27,7 +27,7 @@ def run(config):
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config)
-        write_config_align_reads_STAR(config)
+        config.RunSTAR.write_config_align_reads_STAR(config)
 
 
 def align_reads_STAR(config):
@@ -36,7 +36,6 @@ def align_reads_STAR(config):
                   config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR)
     print(star_command_args)
-    sys.exit()
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
     return config
@@ -94,8 +93,7 @@ if __name__ == "__main__":
         config.PipelineFlow.CallVariantsRNASeq.START = args.start
 
         # Setting the main output dir
-        config.PipelineFlow.update_main_output_path(os.path.abspath(args.output))
-        config.PipelineFlow.OUTPUT_DIR = args.output
+        config.PipelineFlow.update_main_output_path(args.output)
 
         return config
 
