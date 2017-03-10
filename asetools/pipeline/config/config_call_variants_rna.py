@@ -101,10 +101,10 @@ class RunSTAR(UserRunSTAR):
             if len(prefix) >= 1:
                 self.outFileNamePrefix_ARG = prefix.strip('.').strip('_')
 
-    def save_config_state(self):
+    def save_config_state(self, suffix=".json"):
         out_config_dict = self.encodeJSON()
 
-        with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
+        with open(os.path.join(self.OUTPUT_DIR, RunSTAR.__name__+suffix, 'w')) as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
 
