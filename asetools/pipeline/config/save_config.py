@@ -5,17 +5,17 @@ import json
 class RunSTAR:
 
     @staticmethod
-    def save(RunSTAR_o, suffix=".json"):
+    def save(RunSTAR_o):
         out_config_dict = RunSTAR.encodeJSON(RunSTAR_o)
 
-        with open(RunSTAR_o.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
+        with open(RunSTAR_o.run_star_config_path, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
     @staticmethod
     def encodeJSON(RunSTAR_o):
-        keep = ["OUTPUT_DIR", "ARGS", "PATH", "readFilesIn", "outFileNamePrefix", "VERSION"]
+        keep = ["output_dir", "ARGS", "PATH", "readFilesIn", "outFileNamePrefix", "VERSION", "output_sam"]
         outdict = RunSTAR_o.__dict__.copy()
-        del outdict['PARSE_VERSION']
+        del outdict['parse_version']
         outdict['readFilesIn'] = RunSTAR_o.readFilesIn._asdict()
         outdict['outFileNamePrefix'] = RunSTAR_o.outFileNamePrefix._asdict()
 

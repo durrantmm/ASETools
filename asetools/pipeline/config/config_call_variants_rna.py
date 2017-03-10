@@ -2,10 +2,9 @@
 from collections import OrderedDict
 import os, sys
 from os.path import basename
-import json
 from recordclass import recordclass
-from collections import namedtuple
 from config.user_config import *
+from glob import glob
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
@@ -42,11 +41,11 @@ class RunSTAR(UserRunSTAR):
     def __init__(self):
         super().__init__()
         self.name = 'RunSTAR'
-        self.OUTPUT_DIR = "STEP1_STAR_alignment"
+        self.output_dir = "STEP1_STAR_alignment"
 
-        self.STAR_ALIGN_READS_CONFIG_PATH = "RunSTAR.config"
+        self.run_star_config_path = "RunSTAR.json"
 
-        self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
+        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
         self.INVALID_FASTQ = "At least one of the fastq files you provided is invalid."
         self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
@@ -58,9 +57,17 @@ class RunSTAR(UserRunSTAR):
         outFileNamePrefixClass = recordclass('outFileNamePrefix', 'flag, prefix')
         self.outFileNamePrefix = outFileNamePrefixClass(flag='--outFileNamePrefix', prefix='STAR_alnmn')
 
+        self.output_sam = None
+        self.INVALID_OUTPUT_SAM_ERROR = "The sam file output by the STAR aligner cannot be found."
+
+    def save_output_sam(self):
+        output_sam = glob(self.get_full_out_prefix() + '*.sam')
+        assert len(output_sam) == 1, self.INVALID_OUTPUT_SAM_ERROR
+
+
 
     def get_full_out_prefix(self):
-        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix.prefix)
+        return os.path.join(self.output_dir, self.outFileNamePrefix.prefix)
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
@@ -104,11 +111,11 @@ class RunSTAR(UserRunSTAR):
 
 
     def update_paths_relative(self, output_dir):
-        self.OUTPUT_DIR = os.path.join(output_dir, self.OUTPUT_DIR)
-        os.makedirs(self.OUTPUT_DIR, exist_ok=True)
+        self.output_dir = os.path.join(output_dir, self.output_dir)
+        os.makedirs(self.output_dir, exist_ok=True)
 
-        self.STAR_ALIGN_READS_CONFIG_PATH = os.path.join(
-            self.OUTPUT_DIR, self.STAR_ALIGN_READS_CONFIG_PATH)
+        self.run_star_config_path = os.path.join(
+            self.output_dir, self.run_star_config_path)
 
 
 class Java(UserJava):
