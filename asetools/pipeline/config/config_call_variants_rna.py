@@ -36,6 +36,7 @@ class CallVariantsRNAConfig:
 
         self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
         self.RunAddReadGroups.update_paths_relative(self.MAIN_OUTPUT_DIR)
+        self.RunMarkDuplicates.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
 
 class RunSTAR(UserRunSTAR):
@@ -186,7 +187,7 @@ class RunAddReadGroups(UserRunAddReadGroups):
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.run_add_groups_json_path = os.path.join(
-            self.output_dir, self.run_add_groups_json_path)
+            self.output_dir, self.json_path)
 
 
     def set_input(self, input_path):
@@ -258,7 +259,7 @@ class RunMarkDuplicates(UserRunMarkDuplicates):
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.run_add_groups_json_path = os.path.join(
-            self.output_dir, self.run_add_groups_json_path)
+            self.output_dir, self.json_path)
 
     def set_input(self, input_path):
         self.input.path = os.path.abspath(input_path)
