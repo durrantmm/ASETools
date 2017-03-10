@@ -1,48 +1,21 @@
 #!/usr/bin/env python3
 from collections import OrderedDict
 import os
+import json
 from config.user_config import *
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
                  {'UTF8':'utf-8',
                   'EMPTY_STRING': '',
-                  'CONFIG_SUFFIX': '.config',
                   'SPACE': ' '})
-
-REFERENCE_GENOME_PATH = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
 
 
 class CallVariantsRNAConfig:
     def __init__(self):
-        self.PipelineFlow = PipelineFlow(self)
-        self.RunSTAR = RunSTAR()
-
-        # General reference genome in fasta format. For example, ucsc.hg19.fasta
-
-
-class PipelineFlow:
-
-    def __init__(self, config_in):
-        self.Config = config_in
-        self.CallVariantsRNASeq = PipelineCallVariantsRNASeq(self)
-
-        # Output dir, usually specified as a command line argument.
         self.MAIN_OUTPUT_DIR = None
 
-    def update_main_output_path(self, path):
-        self.MAIN_OUTPUT_DIR = os.path.abspath(path)
-
-        self.CallVariantsRNASeq.update_paths_relative(self.MAIN_OUTPUT_DIR)
-
-
-class PipelineCallVariantsRNASeq:
-    global STR_CONST
-
-    def __init__(self, pipeline_flow_in):
-        self.PipelineFlow = pipeline_flow_in
-
-        self.OUTPUT_DIR = "call_variants_rna"
+        self.RunSTAR = RunSTAR()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
@@ -52,25 +25,20 @@ class PipelineCallVariantsRNASeq:
         self.START = self.STAR_ALIGN_READS
 
 
-    def update_paths_relative(self, main_output_dir):
+    def update_main_output_path(self, path):
+        self.MAIN_OUTPUT_DIR = os.path.abspath(path)
+        os.makedirs(self.MAIN_OUTPUT_DIR, exist_ok=True)
 
-        self.OUTPUT_DIR = os.path.join(
-            main_output_dir, self.OUTPUT_DIR)
-
-        self.STAR_ALIGN_READS_CONFIG_PATH = os.path.join(
-            self.OUTPUT_DIR, self.STAR_ALIGN_READS+STR_CONST.CONFIG_SUFFIX)
-
-        self.PICARD_ADD_OR_REPLACE_READ_GROUPS_CONFIG_PATH = os.path.join(
-            self.OUTPUT_DIR, self.PICARD_ADD_OR_REPLACE_READ_GROUPS + STR_CONST.CONFIG_SUFFIX)
-
-        self.PICARD_MARK_DUPLICATES_CONFIG_PATH = os.path.join(
-            self.OUTPUT_DIR, self.PICARD_MARK_DUPLICATES+STR_CONST.CONFIG_SUFFIX)
+        self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
 
 class RunSTAR(UserRunSTAR):
 
     def __init__(self):
         super().__init__()
+        self.OUTPUT_DIR = "STEP1_STAR_alignment"
+
+        self.STAR_ALIGN_READS_CONFIG_PATH = "star_alignment.config"
 
         self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
@@ -89,7 +57,7 @@ class RunSTAR(UserRunSTAR):
         return os.path.join(output_dir, self.outFileNamePrefix.prefix)
 
 
-    def format_command_args(self, output_dir, delim=STR_CONST.SPACE):
+    def format_command_args(self, delim=STR_CONST.SPACE):
 
         assert self.readFilesIn.fastq1 and self.readFilesIn.fastq2, self.ABSENT_FASTQ
 
@@ -103,7 +71,7 @@ class RunSTAR(UserRunSTAR):
                 out_command.append(delim.join(map(str, [key, value])))
 
         out_command.append(self.outFileNamePrefix.flag)
-        out_command.append(self.get_STAR_out_prefix_command(output_dir))
+        out_command.append(self.get_STAR_out_prefix_command(self.OUTPUT_DIR))
 
         return delim.join(out_command)
 
@@ -128,13 +96,28 @@ class RunSTAR(UserRunSTAR):
                 self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
 
+    def write_step_config(self):
+        global tab, newline
+        out_config = lambda: None
+        out_config.output_prefix = self.get_STAR_out_prefix_command()
+        out_config_dict = out_config.__dict__()
+        with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
+            outfile.write(json.dumps(out_config_dict, indent=4))
+
+
+    def update_paths_relative(self, output_dir):
+        self.OUTPUT_DIR = os.path.join(output_dir, self.OUTPUT_DIR)
+        os.makedirs(self.OUTPUT_DIR, exist_ok=True)
+
+        self.STAR_ALIGN_READS_CONFIG_PATH = os.path.join(
+            self.OUTPUT_DIR, self.STAR_ALIGN_READS_CONFIG_PATH)
+
 
 class Java(UserJava):
     def __init__(self):
         super().__init__()
         self.PARSE_VERSION = lambda x: x
         self.VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
-
 
 
 class RunPicard(UserRunPicard):

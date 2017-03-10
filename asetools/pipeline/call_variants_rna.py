@@ -20,34 +20,25 @@ PICARD_MARK_DUPLICATES = "mark_duplicates"
 
 def run(config):
 
-    os.makedirs(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR, exist_ok=True)
+    os.makedirs(config.MAIN_OUTPUT_DIR, exist_ok=True)
 
-    pipeline_start = config.PipelineFlow.CallVariantsRNASeq.START
-    pipeline_order = config.PipelineFlow.CallVariantsRNASeq.ORDER
+    pipeline_start = config.START
+    pipeline_order = config.ORDER
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config)
-        config.RunSTAR.write_config_align_reads_STAR(config)
+        config.RunSTAR.write_step_config(config)
 
 
 def align_reads_STAR(config):
     global STR_CONST
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
                   config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
-    star_command_args = config.RunSTAR.format_command_args(config.PipelineFlow.CallVariantsRNASeq.OUTPUT_DIR)
+    star_command_args = config.RunSTAR.format_command_args()
     print(star_command_args)
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
     return config
-
-
-def write_config_align_reads_STAR(config):
-    global tab, newline
-    out_config = lambda: None
-    out_config.output_prefix = config.STAR.outFileNamePrefix
-    out_config_dict = out_config.__dict__()
-    with open(config.PipelineFlow.CallVariantsRNASeq.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
-        outfile.write(json.dumps(out_config_dict, indent=4))
 
 
 def run_pipeline_step(start, step, order):
@@ -74,8 +65,7 @@ if __name__ == "__main__":
         parser.add_argument('--readFilesIn', type=str, nargs=2,
                             help = "Specify the paired-end fastq files if you starting at the alignment step.")
 
-        parser.add_argument('-s', '--start', choices=config.PipelineFlow.CallVariantsRNASeq.ORDER,
-                            default=config.PipelineFlow.CallVariantsRNASeq.STAR_ALIGN_READS, type=str,
+        parser.add_argument('-s', '--start', choices=config.ORDER, type=str,
                             help="Choose the point in the call variants pipeline at which you'd like to start.")
 
         args = parser.parse_args()
@@ -90,10 +80,11 @@ if __name__ == "__main__":
             config.RunSTAR.set_readFilesIn(args.readFilesIn, make_prefix=True)
 
         # Setting the start position
-        config.PipelineFlow.CallVariantsRNASeq.START = args.start
+        if args.start:
+            config.START = args.start
 
         # Setting the main output dir
-        config.PipelineFlow.update_main_output_path(args.output)
+        config.update_main_output_path(args.output)
 
         return config
 
