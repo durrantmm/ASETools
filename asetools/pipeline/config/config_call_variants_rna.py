@@ -102,7 +102,7 @@ class RunSTAR(UserRunSTAR):
                 self.outFileNamePrefix_ARG = prefix.strip('.').strip('_')
 
     def save_config_state(self):
-        out_config_dict = self.econdeJSON()
+        out_config_dict = self.encodeJSON()
 
         with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
