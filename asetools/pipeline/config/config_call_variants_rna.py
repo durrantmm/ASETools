@@ -83,7 +83,7 @@ class RunSTAR(UserRunSTAR):
                                                     'fastq2': None})
 
         self.outFileNamePrefix = type('outFileNamePrefix', (), {'flag': "--outFileNamePrefix",
-                                                                'prefix': None})
+                                                                'prefix': 'STAR_alnmn'})
 
     def get_STAR_out_prefix_command(self, output_dir):
         return os.path.join(output_dir, self.outFileNamePrefix.prefix)
@@ -112,6 +112,8 @@ class RunSTAR(UserRunSTAR):
         assert len(read_files_in) == 2, self.INVALID_FASTQ
         assert os.path.isfile(read_files_in[0]), self.INVALID_FASTQ
         assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
+        assert read_files_in[0] != read_files_in[1], self.INVALID_FASTQ
+
         self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
 
         if make_prefix:
@@ -122,7 +124,8 @@ class RunSTAR(UserRunSTAR):
                 i += 1
                 prefix += l1
                 l1, l2 = self.readFilesIn.fastq1[i], self.readFilesIn.fastq2[i]
-            self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
+            if len(prefix) >= 1:
+                self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
 
 
