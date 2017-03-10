@@ -127,6 +127,9 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
         self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
         self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
+        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()
+        self.VERSION_ERROR = "Your Picard is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
+
         self.inputSam = type("PicardInputSam", (),
                              {
                                  "flag": "I",
