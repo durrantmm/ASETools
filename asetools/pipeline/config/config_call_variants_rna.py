@@ -75,6 +75,8 @@ class RunSTAR(UserRunSTAR):
         self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
         self.INVALID_FASTQ = "At least one of the fastq files you provided is invalid."
+        self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
+                            "provide valid fastq files with the --readFilesIn command"
 
         self.readFilesIn = ["--readFilesIn", None, None]
 
@@ -85,6 +87,8 @@ class RunSTAR(UserRunSTAR):
 
 
     def format_command_args(self, output_dir, delim=STR_CONST.SPACE):
+
+        assert self.readFilesIn[1] and self.readFilesIn[2], self.ABSENT_FASTQ
 
         out_command = [self.PATH, delim.join(self.readFilesIn)]
         for key, value in self.ARGS.items():
