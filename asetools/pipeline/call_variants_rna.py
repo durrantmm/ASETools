@@ -39,7 +39,7 @@ def run(config, log):
 def align_reads_STAR(config, log=None):
     global STR_CONST
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
-                  config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
+                  config.RunSTAR.parse_version, config.RunSTAR.VERSION_ERROR)
     if log: log.info("STAR is the correct version...")
     star_command_args = config.RunSTAR.format_command_args()
 
