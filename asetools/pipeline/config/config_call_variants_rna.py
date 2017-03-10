@@ -20,6 +20,7 @@ class CallVariantsRNAConfig:
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
+        self.Java = RunJava()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
@@ -119,10 +120,10 @@ class RunSTAR(UserRunSTAR):
             self.output_dir, self.run_star_config_path)
 
 
-class Java(UserJava):
+class RunJava(UserRunJava):
     def __init__(self):
         super().__init__()
-        self.PARSE_VERSION = lambda x: x
+        self.parse_version = lambda x: x
         self.VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
 

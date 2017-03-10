@@ -29,6 +29,8 @@ def run(config, log):
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config, log)
 
+    if run_pipeline_step(pipeline_start, PICARD_ADD_OR_REPLACE_READ_GROUPS, pipeline_order):
+        add_read_groups_picard(config, log)
 
 
 
@@ -46,6 +48,14 @@ def align_reads_STAR(config, log=None):
 
     config.RunSTAR.save_output_sam()
     save_config.RunSTAR.save(config.RunSTAR)
+    if log:
+        log.info("Finished running STAR, everything went well...")
+
+
+def add_read_groups_picard(config, log):
+    global STR_CONST
+    check_version(config.RunJava.PATH, config.RunJava.VERSION_FLAG, config.RunJava.VERSION,
+                  config.RunJava.parse_version, config.RunJava.VERSION_ERROR)
 
 
 def run_pipeline_step(start, step, order):
