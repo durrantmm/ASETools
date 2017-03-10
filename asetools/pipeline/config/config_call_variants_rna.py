@@ -282,8 +282,8 @@ def antijoin_paths(short_path, long_path):
     long_path = os.pathsep.split(long_path)
 
     trimmed_path = []
-    for elem in reversed(short_path):
-        if elem != long_path[-1]:
+    for elem in reversed(long_path):
+        if elem != short_path[-1]:
             trimmed_path = trimmed_path + [elem]
         else:
             break
