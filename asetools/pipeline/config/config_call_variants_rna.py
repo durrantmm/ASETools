@@ -110,17 +110,18 @@ class RunSTAR(UserRunSTAR):
 
     def set_readFilesIn(self, read_files_in, make_prefix=False):
         assert len(read_files_in) == 2, self.INVALID_FASTQ
-        assert os.path.isfile(read_files_in.fastq1), self.INVALID_FASTQ
-        assert os.path.isfile(read_files_in.fastq2), self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in[0]), self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
         self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
 
         if make_prefix:
             prefix = ""
-            file1 = self.readFilesIn[1]
-            file2 = self.readFilesIn[2]
-            l1, l2 = file1[0], file2[0]
+            i = 0
+            l1, l2 = self.readFilesIn.fastq1[i], self.readFilesIn.fastq2[i]
             while l1 == l2:
+                i += 1
                 prefix += l1
+                l1, l2 = self.readFilesIn.fastq1[i], self.readFilesIn.fastq2[i]
             self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
 
