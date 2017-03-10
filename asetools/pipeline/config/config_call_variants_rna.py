@@ -40,7 +40,10 @@ class CallVariantsRNAConfig:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
     def json_serialize(self, other):
-        serialized = other.__dict__
+        try:
+            serialized = other.__dict__
+        except AttributeError:
+            return other
 
         for o in serialized:
             try:
