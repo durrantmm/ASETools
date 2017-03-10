@@ -109,7 +109,9 @@ class RunSTAR(UserRunSTAR):
 
 
     def encodeJSON(self):
-        return self.__dict__
+        outdict = self.__dict__.copy()
+        del outdict['PARSE_VERSION']
+        return outdict
 
     def decodeJSON(self):
         pass
