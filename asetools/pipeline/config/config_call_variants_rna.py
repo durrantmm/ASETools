@@ -3,6 +3,7 @@ from collections import OrderedDict
 import os, sys
 from os.path import basename
 import json
+from json import JSONEncoder
 from config.user_config import *
 
 ### Global attributes and methods accessible to all classes
@@ -31,28 +32,6 @@ class CallVariantsRNAConfig:
         os.makedirs(self.MAIN_OUTPUT_DIR, exist_ok=True)
 
         self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
-
-    def save_config_state(self):
-        out_config_dict = self.json_serialize(self)
-
-        with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
-            outfile.write(json.dumps(out_config_dict, indent=4))
-
-    def json_serialize(self, other):
-        try:
-            serialized = dict(other.__dict__)
-        except AttributeError:
-            return other
-
-        for o in serialized:
-            try:
-                serialized[o] = self.json_serialize(dict(serialized[o].__dict__))
-            except AttributeError:
-                continue
-
-        return serialized
-
-
 
 
 class RunSTAR(UserRunSTAR):
@@ -118,6 +97,19 @@ class RunSTAR(UserRunSTAR):
                 l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
                 self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
+
+    def save_state(self):
+        out_config_dict = self.econdeJSON()
+
+        with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
+            outfile.write(json.dumps(out_config_dict, indent=4))
+
+
+    def encodeJSON(self):
+        return self.__dict__
+
+    def decodeJSON(self):
+        pass
 
 
     def update_paths_relative(self, output_dir):
