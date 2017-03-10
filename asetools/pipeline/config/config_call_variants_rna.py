@@ -40,13 +40,13 @@ class CallVariantsRNAConfig:
 
     def json_serialize(self, other):
         try:
-            serialized = other.__dict__
+            serialized = dict(other.__dict__)
         except AttributeError:
             return other
 
         for o in serialized:
             try:
-                serialized[o] = self.json_serialize(serialized[o].__dict__)
+                serialized[o] = self.json_serialize(dict(serialized[o].__dict__))
             except AttributeError:
                 continue
 
