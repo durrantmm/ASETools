@@ -16,6 +16,8 @@ STR_CONST = type("StringConstants", (),
 
 class CallVariantsRNAConfig:
     def __init__(self):
+        self.name = 'CallVariantsRNAConfig'
+
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
@@ -39,6 +41,7 @@ class RunSTAR(UserRunSTAR):
 
     def __init__(self):
         super().__init__()
+        self.name = 'RunSTAR'
         self.OUTPUT_DIR = "STEP1_STAR_alignment"
 
         self.STAR_ALIGN_READS_CONFIG_PATH = "star_alignment.config"
