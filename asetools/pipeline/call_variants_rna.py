@@ -38,7 +38,7 @@ def align_reads_STAR(config, log=None):
 
     if log:
         log.info("Running STAR aligner on the provided fastq files...")
-        log.info("Command used to run STAR Aligner:"+STR_CONST.NEWLINE+pretty_format_command(star_command_args.split()))
+        log.info("Command used to run STAR Aligner:"+STR_CONST.NEW_LINE+pretty_format_command(star_command_args.split()))
     sys.exit()
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
