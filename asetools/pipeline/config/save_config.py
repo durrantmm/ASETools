@@ -34,7 +34,7 @@ class RunAddReadGroups:
     def save(RunAddReadGroups_o):
         out_config_dict = RunAddReadGroups.encodeJSON(RunAddReadGroups_o)
 
-        with open(RunAddReadGroups_o.run_star_json_path, 'w') as outfile:
+        with open(RunAddReadGroups_o.run_add_groups_json_path, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
     @staticmethod
