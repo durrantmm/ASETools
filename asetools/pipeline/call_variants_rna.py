@@ -67,6 +67,7 @@ def run_pipeline_step(start, step, order):
 
 def check_version(app_path, version_flag, version, parse_version, version_error):
     output = subprocess.check_output([app_path, version_flag])
+    print(output)
     local_version = parse_version(output)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
