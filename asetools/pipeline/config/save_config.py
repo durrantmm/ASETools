@@ -15,8 +15,8 @@ class RunSTAR:
     def encodeJSON(RunSTAR_o):
         outdict = RunSTAR_o.__dict__.copy()
         del outdict['PARSE_VERSION']
-        outdict['readFilesIn'] = RunSTAR_o.readFilesIn._asdict()
-        outdict['outFileNamePrefix'] = RunSTAR_o.outFileNamePrefix._asdict()
+        #outdict['readFilesIn'] = RunSTAR_o.readFilesIn._asdict()
+        #outdict['outFileNamePrefix'] = RunSTAR_o.outFileNamePrefix._asdict()
         return outdict
 
     @staticmethod
