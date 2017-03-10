@@ -277,17 +277,15 @@ def adjust_path_relative(relative_path, path):
 
 
 def antijoin_paths(short_path, long_path):
-    print(short_path, long_path)
-    long_head, long_tail = os.path.split(long_path)
-    short_head, short_tail = os.path.split(short_path)
-    trimmed_path = ""
+    short_path = os.pathsep.split(short_path)
+    long_path = os.pathstep.split(long_path)
 
+    trimmed_path = []
+    for elem in reversed(short_path):
+        if elem != long_path[-1]:
+            trimmed_path = trimmed_path + [elem]
+        else:
+            break
 
-    while short_tail != long_tail:
-        print(short_tail, short_head)
-        print(trimmed_path)
-        trimmed_path = os.path.join(short_tail, trimmed_path)
-        short_head, short_tail = os.path.split(short_head)
-
-    return trimmed_path
+    return os.pathsep.join(trimmed_path)
 
