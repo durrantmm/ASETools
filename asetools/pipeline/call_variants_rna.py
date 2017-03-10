@@ -4,7 +4,7 @@ import subprocess
 import argparse
 import json
 from config.config_call_variants_rna import CallVariantsRNAConfig
-
+from config.log import Log
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
@@ -18,8 +18,8 @@ PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
 PICARD_MARK_DUPLICATES = "mark_duplicates"
 
 
-def run(config):
-
+def run(config, log):
+    log.info(config.__dict__())
     os.makedirs(config.MAIN_OUTPUT_DIR, exist_ok=True)
 
     pipeline_start = config.START
@@ -94,7 +94,8 @@ if __name__ == "__main__":
 
     set_config(config, args)
 
+    log = Log(config.MAIN_OUTPUT_DIR)
 
-    run(config)
+    run(config, log)
 
 
