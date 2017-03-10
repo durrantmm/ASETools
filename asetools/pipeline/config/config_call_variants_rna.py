@@ -64,7 +64,7 @@ class RunSTAR(UserRunSTAR):
 
     def format_command_args(self, delim=STR_CONST.SPACE):
 
-        assert self.readFilesIn.fastq1 and self.readFilesIn.fastq2, self.ABSENT_FASTQ
+        assert self.readFilesIn_ARG1 and self.readFilesIn_ARG2, self.ABSENT_FASTQ
 
         out_command = [self.PATH, self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
         for key, value in self.ARGS.items():
