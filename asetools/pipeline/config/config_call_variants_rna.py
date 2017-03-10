@@ -102,7 +102,7 @@ class RunSTAR(UserRunSTAR):
             else:
                 out_command.append(delim.join(map(str, [key, value])))
 
-        out_command.append(delim.join(self.outFileNamePrefix))
+        out_command.append(self.outFileNamePrefix.flag)
         out_command.append(self.get_STAR_out_prefix_command(output_dir))
 
         return delim.join(out_command)
