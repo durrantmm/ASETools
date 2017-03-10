@@ -242,16 +242,20 @@ class RunMarkDuplicates(UserRunMarkDuplicates):
 
     def adjust_input_output_RunAddReadGroups(self, RunAddReadGroups_json):
         global STR_CONST
+
         if self.input_file.path and self.output_file.path:
             return
+
         if not self.input_file.path:
-            input_path = adjust_path_relative(dirname(self.output_dir), RunAddReadGroups_json['output_sam'])
+            input_path = adjust_path_relative(dirname(self.output_dir), RunAddReadGroups_json['output_file'])
             assert input_path.endswith(self.input_file.suffix), \
-                'The input file for AddOrReplaceReadGroups must end in %s' % self.input_file.suffix
+                'The input file for MarkDuplicates must end in %s' % self.input_file.suffix
             self.input_file.path = input_path
+
         if not self.output_file.path:
-            output_prefix = basename(RunAddReadGroups_json['outFileNamePrefix']['prefix'])
-            out_prefix = os.path.join(self.output_dir, output_prefix)
+            output_path_prefix = remove_suffix(basename(RunAddReadGroups_json['output_file']['path'],
+                                                        RunAddReadGroups_json['output_file']['suffix']))
+            out_prefix = os.path.join(self.output_dir, output_path_prefix)
             self.output_file.path = STR_CONST.EMPTY_STRING.join([out_prefix, self.output_file.suffix])
 
 
@@ -289,3 +293,9 @@ def antijoin_paths(short_path, long_path):
 
     return os.sep.join(trimmed_path)
 
+
+def remove_suffix(string, suffix):
+    if string.endswith(suffix):
+        return ''.join(list.string[:-len(suffix)])
+    else:
+        return string
