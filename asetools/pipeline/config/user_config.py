@@ -50,7 +50,7 @@ class UserRunPicardAddOrReplaceReadGroups:
         self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java -jar " \
                     "/srv/gs1/software/picard-tools/2.8.0/picard.jar AddOrReplaceReadGroups"
         self.VERSION = "2.8.0-SNAPSHOT"
-        self.VERSION_FLAG = ""
+        self.VERSION_FLAG = "--help"
 
 
         self.ARGS = OrderedDict([
