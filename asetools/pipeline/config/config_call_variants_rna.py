@@ -137,6 +137,9 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
         self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()[x.decode(STR_CONST.UTF8).split().index(self.VERSION)]
         self.VERSION_ERROR = "Your Picard is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
+        self.ABSENT_INPUT_OUTPUT = "You are missing an input and an output file for AddOrReplaceReadGroups"
+        self.ARGUMENT_TYPE_ERROR = "All flags and arguments must be strings or ints"
+
         inputFileClass = recordclass('inputFile', 'flag, path, suffix')
         self.input_file = inputFileClass(flag="I", path=None, suffix='.sam')
 
@@ -147,19 +150,17 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
-        assert self.readFilesIn.fastq1 and self.readFilesIn.fastq2, self.ABSENT_FASTQ
+        assert self.input_file.path and self.output_file.path, self.ABSENT_INPUT_OUTPUT
 
-        out_command = [self.PATH, self.readFilesIn.flag, self.readFilesIn.fastq1, self.readFilesIn.fastq2]
+        out_command = [self.PATH, self.FLAG_ARG_DELIM.join([self.input_file.flag, self.input_file.path]),
+                       self.FLAG_ARG_DELIM.join([self.output_file.flag, self.output_file.path])]
+
         for key, value in self.ARGS.items():
             if not value:
                 continue
-            if isinstance(value, list) or isinstance(value, set):
-                out_command.append(delim.join(map(str, [key, delim.join(map(str, value))])))
-            else:
-                out_command.append(delim.join(map(str, [key, value])))
+            assert isinstance(value, str) and not isinstance(value, int), self.ARGUMENT_TYPE_ERROR
 
-        out_command.append(self.outFileNamePrefix.flag)
-        out_command.append(self.get_full_out_prefix())
+            out_command.append(self.FLAG_ARG_DELIM.join(map(str, [key, value])))
 
         return delim.join(out_command)
 
