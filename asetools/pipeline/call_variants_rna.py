@@ -71,7 +71,6 @@ if __name__ == "__main__":
         parser = argparse.ArgumentParser(description='Process some integers.')
         parser.add_argument('output', type=str,
                             help='The output folder to be used by the pipeline.')
-        args_first_parse = parser.parse_args()
 
         parser.add_argument('--readFilesIn', type=str, nargs=2,
                             help = "Specify the paired-end fastq files if you starting at the alignment step.")
