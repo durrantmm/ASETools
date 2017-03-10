@@ -94,7 +94,7 @@ if __name__ == "__main__":
         config.PipelineFlow.CallVariantsRNASeq.START = args.start
 
         # Setting the main output dir
-        config.PipelineFlow.update_main_output_path(args.output)
+        config.PipelineFlow.update_main_output_path(os.path.abspath(args.output))
         config.PipelineFlow.OUTPUT_DIR = args.output
 
         return config
