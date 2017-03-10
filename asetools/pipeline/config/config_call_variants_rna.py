@@ -281,8 +281,11 @@ def antijoin_paths(short_path, long_path):
     long_head, long_tail = os.path.split(long_path)
     short_head, short_tail = os.path.split(short_path)
     trimmed_path = ""
+
     while short_tail != long_tail:
+        print(trimmed_path)
         trimmed_path = os.path.join(short_tail, trimmed_path)
         short_head, short_tail = os.path.split(short_head)
+
     return trimmed_path
 
