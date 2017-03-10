@@ -60,10 +60,11 @@ class RunSTAR(UserRunSTAR):
         self.output_sam = None
         self.INVALID_OUTPUT_SAM_ERROR = "The sam file output by the STAR aligner cannot be found."
 
+
     def save_output_sam(self):
         output_sam = glob(self.get_full_out_prefix() + '*.sam')
         assert len(output_sam) == 1, self.INVALID_OUTPUT_SAM_ERROR
-
+        self.output_sam = output_sam.pop()
 
 
     def get_full_out_prefix(self):
