@@ -102,7 +102,7 @@ class RunSTAR(UserRunSTAR):
         global tab, newline
         out_config = lambda: None
         out_config.output_prefix = self.get_full_out_prefix()
-        out_config_dict = out_config.__dict__()
+        out_config_dict = dict(out_config)
         with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
