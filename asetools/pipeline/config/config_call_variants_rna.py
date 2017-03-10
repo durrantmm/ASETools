@@ -166,12 +166,12 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
 
     def adjust_input_output_RunSTAR(self, RunSTAR_json):
         global STR_CONST
-        if self.input_file.path and self.output.path:
+        if self.input_file.path and self.output_file.path:
             return
         if not self.input_file.path:
             input_path = RunSTAR_json['output_sam']
-            assert input_path.endswith(self.input.suffix), \
-                'The input file for AddOrReplaceReadGroups must end in %s' % self.input.suffix
+            assert input_path.endswith(self.input_file.suffix), \
+                'The input file for AddOrReplaceReadGroups must end in %s' % self.input_file.suffix
             self.input_file.path = input_path
         if not self.output_file.path:
             output_prefix = basename(RunSTAR_json['outFileNamePrefix']['prefix'])
