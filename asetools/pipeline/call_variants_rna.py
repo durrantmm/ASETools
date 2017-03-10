@@ -28,7 +28,8 @@ def run(config, log):
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config, log)
-        save_config.RunSTAR.save(config.RunSTAR)
+
+
 
 
 def align_reads_STAR(config, log=None):
@@ -43,8 +44,9 @@ def align_reads_STAR(config, log=None):
 
     #subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
+    config.RunSTAR.save_output_sam()
+    save_config.RunSTAR.save(config.RunSTAR)
 
-    return config
 
 def run_pipeline_step(start, step, order):
     if order.index(start) <= order.index(step):
