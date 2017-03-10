@@ -66,7 +66,7 @@ class RunSTAR(UserRunSTAR):
 
         assert self.readFilesIn_ARG1 and self.readFilesIn_ARG2, self.ABSENT_FASTQ
 
-        out_command = [self.PATH, self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
+        out_command = [self.PATH, self.readFilesIn.flag, self.readFilesIn.fastq1, self.readFilesIn.fastq2]
         for key, value in self.ARGS.items():
             if not value:
                 continue
@@ -87,10 +87,10 @@ class RunSTAR(UserRunSTAR):
         assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
         assert read_files_in[0] != read_files_in[1], self.INVALID_FASTQ
 
-        self.readFilesIn_ARG1, self.readFilesIn_ARG2 = read_files_in
+        self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
 
         if make_prefix:
-            fastq1, fastq2 = basename(self.readFilesIn_ARG1), basename(self.readFilesIn_ARG2)
+            fastq1, fastq2 = basename(self.readFilesIn.fastq1), basename(self.readFilesIn.fastq2)
             prefix = ""
             i = 0
             l1, l2 = fastq1[i], fastq2[i]
