@@ -67,7 +67,7 @@ def add_read_groups_picard(config, log):
                   config.RunPicardAddOrReplaceReadGroups.VERSION,
                   config.RunPicardAddOrReplaceReadGroups.parse_version,
                   config.RunPicardAddOrReplaceReadGroups.VERSION_ERROR,
-                  capture_stderr=True)
+                  stdout=subprocess.STDOUT, ignore_error=True)
 
 
 
