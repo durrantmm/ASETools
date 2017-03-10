@@ -78,19 +78,22 @@ class RunSTAR(UserRunSTAR):
         self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
                             "provide valid fastq files with the --readFilesIn command"
 
-        self.readFilesIn = ["--readFilesIn", None, None]
+        self.readFilesIn = type("readFilesIn", (), {"flag": "--readFilesIn",
+                                                    'fastq1': None,
+                                                    'fastq2': None})
 
-        self.outFileNamePrefix = ("--outFileNamePrefix", "STAR_algnmnt")
+        self.outFileNamePrefix = type('outFileNamePrefix', (), {'flag': "--outFileNamePrefix",
+                                                                'prefix': None})
 
     def get_STAR_out_prefix_command(self, output_dir):
-        return os.path.join(output_dir, self.outFileNamePrefix_ARG)
+        return os.path.join(output_dir, self.outFileNamePrefix.prefix)
 
 
     def format_command_args(self, output_dir, delim=STR_CONST.SPACE):
 
         assert self.readFilesIn[1] and self.readFilesIn[2], self.ABSENT_FASTQ
 
-        out_command = [self.PATH, delim.join(self.readFilesIn)]
+        out_command = [self.PATH, self.readFilesIn.flag, self.readFilesIn.fastq1, self.readFilesIn.fastq2]
         for key, value in self.ARGS.items():
             if not value:
                 continue
@@ -105,10 +108,20 @@ class RunSTAR(UserRunSTAR):
         return delim.join(out_command)
 
 
-    def set_readFilesIn(self, read_files_in):
-        for index, file in read_files_in:
-            assert os.path.isfile(file), self.INVALID_FASTQ
-            self.readFilesIn[index] = file
+    def set_readFilesIn(self, read_files_in, make_prefix=False):
+        assert len(read_files_in) == 2, self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in[0]), self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
+        self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
+
+        if make_prefix:
+            prefix = ""
+            file1 = self.readFilesIn[1]
+            file2 = self.readFilesIn[2]
+            l1, l2 = file1[0], file2[0]
+            while l1 == l2:
+                prefix += l1
+            self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
 
 

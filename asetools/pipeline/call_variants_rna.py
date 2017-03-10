@@ -45,7 +45,7 @@ def align_reads_STAR(config):
 def write_config_align_reads_STAR(config):
     global tab, newline
     out_config = lambda: None
-    out_config.output_prefix = config.STAR.outFileNamePrefix_ARG
+    out_config.output_prefix = config.STAR.outFileNamePrefix
     out_config_dict = out_config.__dict__()
     with open(config.PipelineFlow.CallVariantsRNASeq.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
         outfile.write(json.dumps(out_config_dict, indent=4))
@@ -89,8 +89,7 @@ if __name__ == "__main__":
         global STR_CONST
         # Adding the override arguments
         if args.readFilesIn:
-            config.RunSTAR.set_readFilesIn(args.readFilesIn)
-
+            config.RunSTAR.set_readFilesIn(args.readFilesIn, make_prefix=True)
 
         # Setting the start position
         config.PipelineFlow.CallVariantsRNASeq.START = args.start
