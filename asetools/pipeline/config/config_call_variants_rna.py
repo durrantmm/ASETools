@@ -34,8 +34,7 @@ class CallVariantsRNAConfig:
 
     def save_config_state(self):
         out_config_dict = self.json_serialize(self)
-        print(out_config_dict)
-        sys.exit()
+
         with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
