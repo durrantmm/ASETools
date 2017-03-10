@@ -101,7 +101,7 @@ class RunSTAR(UserRunSTAR):
             if len(prefix) >= 1:
                 self.outFileNamePrefix_ARG = prefix.strip('.').strip('_')
 
-    def save_state(self):
+    def save_config_state(self):
         out_config_dict = self.econdeJSON()
 
         with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
