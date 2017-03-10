@@ -19,7 +19,7 @@ PICARD_MARK_DUPLICATES = "mark_duplicates"
 
 
 def run(config, log):
-    log.info(config.__dict__())
+    log.info("Beginning ASETools RNASeq Variant Calling Pipeline...")
     os.makedirs(config.MAIN_OUTPUT_DIR, exist_ok=True)
 
     pipeline_start = config.START
@@ -35,7 +35,9 @@ def align_reads_STAR(config, log=None):
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
                   config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args()
+
     if log:
+        log.info("Running STAR aligner on the provided fastq files...")
         log.info("Command used to run STAR Aligner:"+STR_CONST.NEWLINE+pretty_format_command(star_command_args.split()))
     sys.exit()
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
