@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
-import sys, os
-import subprocess
 import argparse
-import json
-from config.config_call_variants_rna import CallVariantsRNAConfig
-from config.log import Log
+import os
+import subprocess
+
 from config import save_config
+from config.fixed.discrete.config_call_variants_rna import CallVariantsRNAConfig
+from config.log import Log
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
@@ -36,22 +36,7 @@ def run(config, log):
         mark_duplicates_picard(config, log)
 
 
-def align_reads_STAR(config, log=None):
-    global STR_CONST
-    check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
-                  config.RunSTAR.parse_version, config.RunSTAR.VERSION_ERROR)
-    if log: log.info("STAR is the correct version...")
-    star_command_args = config.RunSTAR.format_command_args()
 
-    if log:
-        log.info("Running STAR aligner on the provided fastq files...")
-        log.info("Command used to run STAR Aligner:"+STR_CONST.NEW_LINE+star_command_args)
-
-    subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
-
-    config.RunSTAR.save_output_sam()
-    save_config.RunSTAR.save(config.RunSTAR)
-    if log: log.info("Finished running STAR, everything went well...")
 
 
 def add_read_groups_picard(config, log):
@@ -80,7 +65,8 @@ def add_read_groups_picard(config, log):
 
 def mark_duplicates_picard(config, log):
     global STR_CONST
-    config.RunMarkDuplicates.adjust_input_output_RunAddReadGroups(save_config.read_json_to_dict(config.RunAddReadGroups.get_json_path()))
+    config.RunMarkDuplicates.adjust_input_output_RunAddReadGroups(
+        save_config.read_json_to_dict(config.RunAddReadGroups.get_json_path()))
 
     check_version(config.RunMarkDuplicates.JAVA_PATH, config.RunMarkDuplicates.JAVA_VERSION_FLAG,
                   config.RunMarkDuplicates.JAVA_VERSION, config.RunMarkDuplicates.parse_java_version,
@@ -107,19 +93,6 @@ def run_pipeline_step(start, step, order):
         return True
     else:
         return False
-
-
-def check_version(app_path, version_flag, version, parse_version, version_error, stdout=subprocess.PIPE, ignore_error=False):
-    try:
-        output = subprocess.check_output(app_path.split() + version_flag.split(), stderr=stdout)
-    except subprocess.CalledProcessError as e:
-        if ignore_error:
-            output = e.output
-        else:
-            raise e
-
-    local_version = parse_version(output)
-    assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
 
 if __name__ == "__main__":
