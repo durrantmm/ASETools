@@ -164,7 +164,7 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
         return delim.join(out_command)
 
 
-    def retrieve_input_output_from_RunSTAR(self, RunSTAR_json):
+    def adjust_input_output_RunSTAR(self, RunSTAR_json):
         global STR_CONST
         if self.input_file.path and self.output.path:
             return
