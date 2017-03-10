@@ -28,13 +28,13 @@ def run(config, log):
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config, log)
-        save_config.RunSTAR(config.RunSTAR)
+        save_config.RunSTAR.save(config.RunSTAR)
 
 
 def align_reads_STAR(config, log=None):
     global STR_CONST
-    check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
-                  config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
+    #check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
+    #              config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args()
 
     if log:

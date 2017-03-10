@@ -4,7 +4,7 @@ import os, sys
 from os.path import basename
 import json
 from recordclass import recordclass
-from json import JSONEncoder
+from collections import namedtuple
 from config.user_config import *
 
 ### Global attributes and methods accessible to all classes
@@ -49,13 +49,11 @@ class RunSTAR(UserRunSTAR):
         self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
                             "provide valid fastq files with the --readFilesIn command"
 
-        self.readFilesIn = recordclass('readFilesIn', 'flag', 'fastq1', 'fastq2')
-        self.readFilesIn.flag  = "--readFilesIn"
-        self.readFilesIn.fastq1, self.readFilesIn.fastq2 = None, None
+        readFilesInClass = recordclass('readFilesIn', 'flag fastq1 fastq2')
+        self.readFilesIn = readFilesInClass(flag='--readFilesIn', fastq1=None, fastq2=None)
 
-        self.outFileNamePrefix = recordclass('outFileNamePrefix', 'flag, prefix')
-        self.outFileNamePrefix.flag = '--outFileNamePrefix'
-        self.outFileNamePrefix.prefix = 'STAR_alnmn'
+        outFileNamePrefixClass = recordclass('outFileNamePrefix', 'flag, prefix')
+        self.outFileNamePrefix = outFileNamePrefixClass(flag='--outFileNamePrefix', prefix='STAR_alnmn')
 
 
     def get_full_out_prefix(self):
