@@ -66,6 +66,7 @@ def add_read_groups_picard(config, log):
     if log: log.info("Picard version is correct...")
 
     add_read_groups_command = config.RunAddReadGroups.format_command_args()
+    print(add_read_groups_command)
     # subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
 
