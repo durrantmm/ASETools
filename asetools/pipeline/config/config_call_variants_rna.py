@@ -21,6 +21,7 @@ class CallVariantsRNAConfig:
 
         self.RunSTAR = RunSTAR()
         self.RunAddReadGroups = RunAddReadGroups()
+        self.RunMarkDuplicates = RunMarkDuplicates()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
