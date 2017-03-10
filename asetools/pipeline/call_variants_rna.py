@@ -5,7 +5,7 @@ import argparse
 import json
 from config.config_call_variants_rna import CallVariantsRNAConfig
 from config.log import Log
-from config import save_config
+from config.save_config import save_config
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),
