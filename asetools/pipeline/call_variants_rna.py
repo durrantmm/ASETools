@@ -26,8 +26,8 @@ def run(config, log):
     pipeline_start = config.START
     pipeline_order = config.ORDER
 
-    #if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
-    #    align_reads_STAR(config, log)
+    if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
+        align_reads_STAR(config, log)
 
     if run_pipeline_step(pipeline_start, PICARD_ADD_OR_REPLACE_READ_GROUPS, pipeline_order):
         add_read_groups_picard(config, log)
@@ -38,8 +38,8 @@ def run(config, log):
 
 def align_reads_STAR(config, log=None):
     global STR_CONST
-    #check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
-    #              config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
+    check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
+                  config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     if log: log.info("STAR is the correct version...")
     star_command_args = config.RunSTAR.format_command_args()
 
@@ -47,7 +47,7 @@ def align_reads_STAR(config, log=None):
         log.info("Running STAR aligner on the provided fastq files...")
         log.info("Command used to run STAR Aligner:"+STR_CONST.NEW_LINE+star_command_args)
 
-    #subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
+    subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
     config.RunSTAR.save_output_sam()
     save_config.RunSTAR.save(config.RunSTAR)
@@ -58,14 +58,14 @@ def add_read_groups_picard(config, log):
     global STR_CONST
     config.RunAddReadGroups.adjust_input_output_RunSTAR(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
 
-    #check_version(config.RunAddReadGroups.JAVA_PATH, config.RunAddReadGroups.JAVA_VERSION_FLAG,
-    #              config.RunAddReadGroups.JAVA_VERSION, config.RunAddReadGroups.parse_java_version,
-    #              config.RunAddReadGroups.JAVA_VERSION_ERROR, stdout=subprocess.STDOUT)
+    check_version(config.RunAddReadGroups.JAVA_PATH, config.RunAddReadGroups.JAVA_VERSION_FLAG,
+                  config.RunAddReadGroups.JAVA_VERSION, config.RunAddReadGroups.parse_java_version,
+                  config.RunAddReadGroups.JAVA_VERSION_ERROR, stdout=subprocess.STDOUT)
     if log: log.info("Java version is correct...")
 
-    #check_version(config.RunAddReadGroups.PATH, config.RunAddReadGroups.VERSION_FLAG, config.RunAddReadGroups.VERSION,
-    #              config.RunAddReadGroups.parse_version, config.RunAddReadGroups.VERSION_ERROR,
-    #              stdout=subprocess.STDOUT, ignore_error=True)
+    check_version(config.RunAddReadGroups.PATH, config.RunAddReadGroups.VERSION_FLAG, config.RunAddReadGroups.VERSION,
+                  config.RunAddReadGroups.parse_version, config.RunAddReadGroups.VERSION_ERROR,
+                  stdout=subprocess.STDOUT, ignore_error=True)
     if log: log.info("Picard version is correct...")
 
     add_read_groups_command = config.RunAddReadGroups.format_command_args()
