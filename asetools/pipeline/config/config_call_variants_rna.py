@@ -289,10 +289,10 @@ def antijoin_paths(short_path, long_path):
             continue
         elif trimmed_path == []:
             trimmed_path = [elem] + trimmed_path
-        elif not os.path.isfile(os.path.join(short_path, os.path.join(trimmed_path))):
+        elif not os.path.isfile(os.path.join(short_path, os.sep.join(trimmed_path))):
             trimmed_path = [elem] + trimmed_path
         else:
             break
 
-    return os.path.join(trimmed_path)
+    return os.sep.join(trimmed_path)
 
