@@ -27,7 +27,7 @@ def run(config, log):
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config, log)
-        config.save_config_state()
+        config.RunSTAR.save_config_state()
 
 
 def align_reads_STAR(config, log=None):
