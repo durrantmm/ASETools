@@ -8,7 +8,7 @@ class RunSTAR:
     def save(RunSTAR_o, suffix=".json"):
         out_config_dict = RunSTAR.encodeJSON(RunSTAR_o)
 
-        with open(os.path.join(RunSTAR_o.OUTPUT_DIR, 'RunStar'+suffix), 'w') as outfile:
+        with open(os.path.join(RunSTAR_o.OUTPUT_DIR, 'RunSTAR'+suffix), 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
 
     @staticmethod
