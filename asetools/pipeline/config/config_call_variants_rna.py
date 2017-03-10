@@ -3,7 +3,7 @@ from collections import OrderedDict
 import os, sys
 from os.path import basename
 import json
-from collections import namedtuple
+from recordclass import recordclass
 from json import JSONEncoder
 from config.user_config import *
 
@@ -55,7 +55,7 @@ class RunSTAR(UserRunSTAR):
         self.readFilesIn = [self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
 
 
-        self.outFileNamePrefix = namedtuple('outFileNamePrefix', 'flag, prefix')
+        self.outFileNamePrefix = recordclass('outFileNamePrefix', 'flag, prefix')
         self.outFileNamePrefix.flag = '--outFileNamePrefix'
         self.outFileNamePrefix.prefix = 'STAR_alnmn'
 
