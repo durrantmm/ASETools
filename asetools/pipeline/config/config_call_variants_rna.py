@@ -44,7 +44,7 @@ class RunSTAR(UserRunSTAR):
         self.name = 'RunSTAR'
         self.OUTPUT_DIR = "STEP1_STAR_alignment"
 
-        self.STAR_ALIGN_READS_CONFIG_PATH = "star_alignment.config"
+        self.STAR_ALIGN_READS_CONFIG_PATH = "RunSTAR.config"
 
         self.PARSE_VERSION = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
