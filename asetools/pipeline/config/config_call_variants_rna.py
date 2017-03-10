@@ -48,22 +48,25 @@ class RunSTAR(UserRunSTAR):
         self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
                             "provide valid fastq files with the --readFilesIn command"
 
-        self.readFilesIn = type("readFilesIn", (), {"flag": "--readFilesIn",
-                                                    'fastq1': None,
-                                                    'fastq2': None})
+        self.readFilesIn_FLAG = "--readFilesIn"
+        self.readFilesIn_ARG1 = None
+        self.readFilesIn_ARG2 = None
+        self.readFilesIn = [self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
 
-        self.outFileNamePrefix = type('outFileNamePrefix', (), {'flag': "--outFileNamePrefix",
-                                                                'prefix': 'STAR_alnmn'})
+
+        self.outFileNamePrefix_FLAG = "--outFileNamePrefix"
+        self.outFileNamePrefix_ARG = 'STAR_alnmn'
+        self.outFileNamePrefix = [self.outFileNamePrefix_FLAG, self.outFileNamePrefix_ARG]
 
     def get_full_out_prefix(self):
-        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix.prefix)
+        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix_ARG)
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
 
         assert self.readFilesIn.fastq1 and self.readFilesIn.fastq2, self.ABSENT_FASTQ
 
-        out_command = [self.PATH, self.readFilesIn.flag, self.readFilesIn.fastq1, self.readFilesIn.fastq2]
+        out_command = [self.PATH, self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
         for key, value in self.ARGS.items():
             if not value:
                 continue
@@ -72,7 +75,7 @@ class RunSTAR(UserRunSTAR):
             else:
                 out_command.append(delim.join(map(str, [key, value])))
 
-        out_command.append(self.outFileNamePrefix.flag)
+        out_command.append(self.outFileNamePrefix_FLAG)
         out_command.append(self.get_full_out_prefix())
 
         return delim.join(out_command)
@@ -84,10 +87,10 @@ class RunSTAR(UserRunSTAR):
         assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
         assert read_files_in[0] != read_files_in[1], self.INVALID_FASTQ
 
-        self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
+        self.readFilesIn_ARG1, self.readFilesIn_ARG2 = read_files_in
 
         if make_prefix:
-            fastq1, fastq2 = basename(self.readFilesIn.fastq1), basename(self.readFilesIn.fastq2)
+            fastq1, fastq2 = basename(self.readFilesIn_ARG1), basename(self.readFilesIn_ARG2)
             prefix = ""
             i = 0
             l1, l2 = fastq1[i], fastq2[i]
