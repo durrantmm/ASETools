@@ -99,7 +99,7 @@ class RunSTAR(UserRunSTAR):
                 prefix += l1
                 l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
-                self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
+                self.outFileNamePrefix_ARG = prefix.strip('.').strip('_')
 
     def save_state(self):
         out_config_dict = self.econdeJSON()
