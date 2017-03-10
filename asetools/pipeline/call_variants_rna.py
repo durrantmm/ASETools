@@ -54,13 +54,15 @@ def align_reads_STAR(config, log=None):
 
 def add_read_groups_picard(config, log):
     global STR_CONST
+    config.RunPicardAddOrReplaceReadGroups.adjust_input_output(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
+
     check_version(config.RunPicardAddOrReplaceReadGroups.JAVA_PATH,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_FLAG,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION,
                   config.RunPicardAddOrReplaceReadGroups.parse_java_version,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_ERROR,
                   stdout=subprocess.STDOUT)
-    if log: log.info("Java is the correct version...")
+    if log: log.info("Java version is correct...")
 
     check_version(config.RunPicardAddOrReplaceReadGroups.PATH,
                   config.RunPicardAddOrReplaceReadGroups.VERSION_FLAG,
@@ -68,6 +70,11 @@ def add_read_groups_picard(config, log):
                   config.RunPicardAddOrReplaceReadGroups.parse_version,
                   config.RunPicardAddOrReplaceReadGroups.VERSION_ERROR,
                   stdout=subprocess.STDOUT, ignore_error=True)
+    if log: log.info("Picard version is correct...")
+
+    add_read_groups_command = config.RunPicardAddOrReplaceReadGroups.format_command_args()
+    # subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
+
 
 
 
@@ -89,7 +96,6 @@ def check_version(app_path, version_flag, version, parse_version, version_error,
             raise e
 
     local_version = parse_version(output)
-    print(local_version)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
 
