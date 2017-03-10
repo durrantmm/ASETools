@@ -110,8 +110,8 @@ class RunSTAR(UserRunSTAR):
 
     def set_readFilesIn(self, read_files_in, make_prefix=False):
         assert len(read_files_in) == 2, self.INVALID_FASTQ
-        assert os.path.isfile(read_files_in[0]), self.INVALID_FASTQ
-        assert os.path.isfile(read_files_in[1]), self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in.fastq1), self.INVALID_FASTQ
+        assert os.path.isfile(read_files_in.fastq2), self.INVALID_FASTQ
         self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
 
         if make_prefix:
