@@ -54,8 +54,8 @@ class RunSTAR(UserRunSTAR):
         self.outFileNamePrefix = type('outFileNamePrefix', (), {'flag': "--outFileNamePrefix",
                                                                 'prefix': 'STAR_alnmn'})
 
-    def get_STAR_out_prefix_command(self, output_dir):
-        return os.path.join(output_dir, self.outFileNamePrefix.prefix)
+    def get_full_out_prefix(self):
+        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix.prefix)
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
@@ -72,7 +72,7 @@ class RunSTAR(UserRunSTAR):
                 out_command.append(delim.join(map(str, [key, value])))
 
         out_command.append(self.outFileNamePrefix.flag)
-        out_command.append(self.get_STAR_out_prefix_command(self.OUTPUT_DIR))
+        out_command.append(self.get_full_out_prefix())
 
         return delim.join(out_command)
 
@@ -101,7 +101,7 @@ class RunSTAR(UserRunSTAR):
     def write_step_config(self):
         global tab, newline
         out_config = lambda: None
-        out_config.output_prefix = self.get_STAR_out_prefix_command()
+        out_config.output_prefix = self.get_full_out_prefix()
         out_config_dict = out_config.__dict__()
         with open(self.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
