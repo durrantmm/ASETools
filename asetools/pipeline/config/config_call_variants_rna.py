@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from collections import OrderedDict
-import os
+import os, sys
 from os.path import basename
 import json
 from config.user_config import *
@@ -33,11 +33,24 @@ class CallVariantsRNAConfig:
         self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
     def save_config_state(self):
-        out_config_dict = self.__dict__
+        out_config_dict = self.json_serialize(self)
         print(out_config_dict)
         sys.exit()
         with open(self.RunSTAR.STAR_ALIGN_READS_CONFIG_PATH, 'w') as outfile:
             outfile.write(json.dumps(out_config_dict, indent=4))
+
+    def json_serialize(self, other):
+        serialized = other.__dict__
+
+        for o in serialized:
+            try:
+                serialized[o] = self.json_serialize(serialized[o].__dict__)
+            except AttributeError:
+                continue
+
+        return serialized
+
+
 
 
 class RunSTAR(UserRunSTAR):
