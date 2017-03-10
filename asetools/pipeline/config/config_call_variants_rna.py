@@ -50,7 +50,7 @@ class RunSTAR(UserRunSTAR):
                             "provide valid fastq files with the --readFilesIn command"
 
         self.readFilesIn = recordclass('readFilesIn', 'flag', 'fastq1', 'fastq2')
-        self.readFilesIn.flag,   = "--readFilesIn"
+        self.readFilesIn.flag  = "--readFilesIn"
         self.readFilesIn.fastq1, self.readFilesIn.fastq2 = None, None
 
         self.outFileNamePrefix = recordclass('outFileNamePrefix', 'flag, prefix')
