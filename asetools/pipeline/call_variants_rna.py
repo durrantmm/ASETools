@@ -59,7 +59,7 @@ def add_read_groups_picard(config, log):
     check_version(config.RunPicardAddOrReplaceReadGroups.JAVA_PATH,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_FLAG,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION,
-                  config.RunPicardAddOrReplaceReadGroups.parse_version,
+                  config.RunPicardAddOrReplaceReadGroups.parse_java_version,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_ERROR,
                   capture_stderr=True)
     if log:
