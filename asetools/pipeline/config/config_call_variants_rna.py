@@ -123,7 +123,7 @@ class RunSTAR(UserRunSTAR):
 class RunJava(UserRunJava):
     def __init__(self):
         super().__init__()
-        self.parse_version = lambda x: x.split()[2].strip('\"')
+        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
         self.VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
 
