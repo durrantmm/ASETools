@@ -124,10 +124,10 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
     def __init__(self):
         super().__init__()
 
-        self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
+        self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[x.decode(STR_CONST.UTF8).split().index(self.JAVA_VERSION)]
         self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
-        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()
+        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()[x.decode(STR_CONST.UTF8).split().index(self.VERSION)]
         self.VERSION_ERROR = "Your Picard is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
         self.inputSam = type("PicardInputSam", (),
