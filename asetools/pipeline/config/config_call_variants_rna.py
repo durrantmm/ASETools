@@ -290,5 +290,5 @@ def antijoin_paths(short_path, long_path):
         else:
             break
 
-    return os.sep.join(trimmed_path)
+    return os.sepg.join(trimmed_path)
 
