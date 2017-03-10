@@ -49,11 +49,9 @@ class RunSTAR(UserRunSTAR):
         self.ABSENT_FASTQ = "If you are running the call variants pipeline from the read alignment step, you must " \
                             "provide valid fastq files with the --readFilesIn command"
 
-        self.readFilesIn_FLAG = "--readFilesIn"
-        self.readFilesIn_ARG1 = None
-        self.readFilesIn_ARG2 = None
-        self.readFilesIn = [self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
-
+        self.readFilesIn = recordclass('readFilesIn', 'flag', 'fastq1', 'fastq2')
+        self.readFilesIn.flag,   = "--readFilesIn"
+        self.readFilesIn.fastq1, self.readFilesIn.fastq2 = None, None
 
         self.outFileNamePrefix = recordclass('outFileNamePrefix', 'flag, prefix')
         self.outFileNamePrefix.flag = '--outFileNamePrefix'
@@ -102,21 +100,6 @@ class RunSTAR(UserRunSTAR):
                 l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
                 self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
-
-    def save_config_state(self, suffix=".json"):
-        out_config_dict = self.encodeJSON()
-
-        with open(os.path.join(self.OUTPUT_DIR, RunSTAR.__name__+suffix), 'w') as outfile:
-            outfile.write(json.dumps(out_config_dict, indent=4))
-
-
-    def encodeJSON(self):
-        outdict = self.__dict__.copy()
-        del outdict['PARSE_VERSION']
-        return outdict
-
-    def decodeJSON(self):
-        pass
 
 
     def update_paths_relative(self, output_dir):
