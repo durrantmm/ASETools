@@ -247,7 +247,7 @@ class RunMarkDuplicates(UserRunMarkDuplicates):
             return
 
         if not self.input_file.path:
-            input_path = adjust_path_relative(dirname(self.output_dir), RunAddReadGroups_json['output_file'])
+            input_path = adjust_path_relative(dirname(self.output_dir), RunAddReadGroups_json['output_file']['path'])
             assert input_path.endswith(self.input_file.suffix), \
                 'The input file for MarkDuplicates must end in %s' % self.input_file.suffix
             self.input_file.path = input_path
