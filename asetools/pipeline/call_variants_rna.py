@@ -37,8 +37,7 @@ def align_reads_STAR(config, log=None):
     star_command_args = config.RunSTAR.format_command_args()
     if log:
         log.info("Command used to run STAR Aligner:"+STR_CONST.NEWLINE+pretty_format_command(star_command_args.split()))
-
-    print(star_command_args)
+    sys.exit()
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
 
