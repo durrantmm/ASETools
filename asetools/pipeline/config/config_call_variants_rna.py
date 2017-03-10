@@ -20,7 +20,7 @@ class CallVariantsRNAConfig:
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
-        self.RunAddReadGroups = RunPicardAddOrReplaceReadGroups()
+        self.RunAddReadGroups = RunAddReadGroups()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
@@ -125,11 +125,11 @@ class RunSTAR(UserRunSTAR):
             self.output_dir, self.run_star_json_path)
 
 
-class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
+class RunAddReadGroups(UserRunAddReadGroups):
     def __init__(self):
         super().__init__()
         self.output_dir = "STEP2_add_read_groups"
-        self.run_add_groups_json_path = 'RunPicardAddOrReplaceReadGroups.json'
+        self.run_add_groups_json_path = 'RunAddReadGroups.json'
 
         self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
         self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."

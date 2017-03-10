@@ -40,7 +40,7 @@ class UserRunSTAR:
         ])
 
 
-class UserRunPicardAddOrReplaceReadGroups:
+class UserRunAddReadGroups:
 
     def __init__(self):
         self.JAVA_PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
