@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from collections import OrderedDict
 import os
+from os.path import basename
 import json
 from config.user_config import *
 
@@ -85,13 +86,14 @@ class RunSTAR(UserRunSTAR):
         self.readFilesIn.fastq1, self.readFilesIn.fastq2 = read_files_in
 
         if make_prefix:
+            fastq1, fastq2 = basename(self.readFilesIn.fastq1), basename(self.readFilesIn.fastq2)
             prefix = ""
             i = 0
-            l1, l2 = self.readFilesIn.fastq1[i], self.readFilesIn.fastq2[i]
+            l1, l2 = fastq1[i], fastq2[i]
             while l1 == l2:
                 i += 1
                 prefix += l1
-                l1, l2 = self.readFilesIn.fastq1[i], self.readFilesIn.fastq2[i]
+                l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
                 self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
