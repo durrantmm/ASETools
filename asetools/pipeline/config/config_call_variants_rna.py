@@ -270,11 +270,14 @@ class RunMarkDuplicates(UserRunMarkDuplicates):
 
 
 def adjust_path_relative(relative_path, path):
+    print(relative_path)
     path = antijoin_paths(relative_path, path)
+    sys.exit()
     return os.path.join(relative_path, path)
 
 
 def antijoin_paths(short_path, long_path):
+    print(short_path, long_path)
     long_head, long_tail = os.path.split(long_path)
     short_head, short_tail = os.path.split(short_path)
     trimmed_path = ""
