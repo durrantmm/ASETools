@@ -20,7 +20,7 @@ class CallVariantsRNAConfig:
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
-        self.RunJava = RunJava()
+        self.RunPicardAddOrReplaceReadGroups = RunPicardAddOrReplaceReadGroups()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
@@ -120,21 +120,12 @@ class RunSTAR(UserRunSTAR):
             self.output_dir, self.run_star_config_path)
 
 
-class RunJava(UserRunJava):
-    def __init__(self):
-        super().__init__()
-        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
-        self.VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
-
-
-class RunPicard(UserRunPicard):
-    def __init__(self):
-        super().__init__()
-
-
 class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
     def __init__(self):
         super().__init__()
+
+        self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
+        self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
 
         self.inputSam = type("PicardInputSam", (),
                              {

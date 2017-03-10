@@ -40,25 +40,15 @@ class UserRunSTAR:
         ])
 
 
-
-class UserRunJava:
-
-    def __init__(self):
-        self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
-        self.VERSION = "1.8.0_66"
-        self.VERSION_FLAG = "-version"
-
-
-class UserRunPicard:
-
-    def __init__(self):
-        self.PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
-
-
 class UserRunPicardAddOrReplaceReadGroups:
 
     def __init__(self):
-        self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
+        self.JAVA_PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
+        self.JAVA_VERSION = "1.8.0_66"
+        self.JAVA_VERSION_FLAG = "-version"
+
+        self.PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
+
 
         self.ARGS = OrderedDict([
 
