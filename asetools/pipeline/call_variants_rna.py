@@ -55,7 +55,7 @@ def align_reads_STAR(config, log=None):
 def add_read_groups_picard(config, log):
     global STR_CONST
     check_version(config.RunJava.PATH, config.RunJava.VERSION_FLAG, config.RunJava.VERSION,
-                  config.RunJava.parse_version, config.RunJava.VERSION_ERROR)
+                  config.RunJava.parse_version, config.RunJava.VERSION_ERROR, capture_stderr=True)
 
 
 def run_pipeline_step(start, step, order):
@@ -65,8 +65,11 @@ def run_pipeline_step(start, step, order):
         return False
 
 
-def check_version(app_path, version_flag, version, parse_version, version_error):
-    output = subprocess.check_output([app_path, version_flag])
+def check_version(app_path, version_flag, version, parse_version, version_error, capture_stderr=False):
+    if capture_stderr:
+        output = subprocess.check_output([app_path, version_flag], stderr=subprocess.STDOUT)
+    else:
+        output = subprocess.check_output([app_path, version_flag])
     print(output.strip().split())
     sys.exit()
     local_version = parse_version(output)
