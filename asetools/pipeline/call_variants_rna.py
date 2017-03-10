@@ -65,6 +65,13 @@ def add_read_groups_picard(config, log):
     if log:
         log.info("Java is the correct version...")
 
+    check_version(config.RunPicardAddOrReplaceReadGroups.PATH,
+                  config.RunPicardAddOrReplaceReadGroups.VERSION_FLAG,
+                  config.RunPicardAddOrReplaceReadGroups.VERSION,
+                  config.RunPicardAddOrReplaceReadGroups.parse_version,
+                  config.RunPicardAddOrReplaceReadGroups.VERSION_ERROR,
+                  capture_stderr=True)
+
 
 
 
