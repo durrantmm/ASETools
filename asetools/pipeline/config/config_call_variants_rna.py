@@ -147,8 +147,6 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
-        if self.input == None:
-            self.retrieve_input_from_RunSTAR()
         assert self.readFilesIn.fastq1 and self.readFilesIn.fastq2, self.ABSENT_FASTQ
 
         out_command = [self.PATH, self.readFilesIn.flag, self.readFilesIn.fastq1, self.readFilesIn.fastq2]
@@ -186,7 +184,7 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
         os.makedirs(self.output_dir, exist_ok=True)
 
         self.run_add_groups_json_path = os.path.join(
-            self.output_dir, self.run_star_json_path)
+            self.output_dir, self.run_add_groups_json_path)
 
 
 
