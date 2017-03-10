@@ -62,6 +62,7 @@ def pretty_format_command(commands, flag_prefix='--'):
                 out_str += commands[tmp_index] + STR_CONST.SPACE
                 tmp_index += 1
             out_str += STR_CONST.SPACE
+    return out_str
 
 def run_pipeline_step(start, step, order):
     if order.index(start) <= order.index(step):
