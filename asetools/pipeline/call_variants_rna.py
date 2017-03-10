@@ -58,7 +58,7 @@ def pretty_format_command(commands, flag_prefix='--'):
         if command.startswith(flag_prefix):
             out_str += command + STR_CONST.SPACE
             tmp_index = index+1
-            while not commands[tmp_index].startswith(flag_prefix) and tmp_index < len(commands):
+            while tmp_index < len(commands) and not commands[tmp_index].startswith(flag_prefix):
                 out_str += commands[tmp_index] + STR_CONST.SPACE
                 tmp_index += 1
             out_str += STR_CONST.SPACE
