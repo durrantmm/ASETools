@@ -26,20 +26,39 @@ def run(config, log):
     pipeline_order = config.ORDER
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
-        align_reads_STAR(config)
+        align_reads_STAR(config, log)
         config.RunSTAR.write_step_config(config)
 
 
-def align_reads_STAR(config):
+def align_reads_STAR(config, log=None):
     global STR_CONST
     check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
                   config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
     star_command_args = config.RunSTAR.format_command_args()
+    if log:
+        log.info("Command used to run STAR Aligner:"+STR_CONST.NEWLINE+pretty_format_command(star_command_args.split()))
+
     print(star_command_args)
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
+
     return config
 
+def pretty_format_command(commands, flag_prefix='--'):
+    global STR_CONST
+    out_str = commands[0] + STR_CONST.NEW_LINE
+    commands = commands[1:]
+    for index, command in enumerate(commands):
+        if command.startswith(flag_prefix) and commands[index+1].startswith(flag_prefix):
+            out_str += command + STR_CONST.NEW_LINE
+            continue
+
+        if command.startswith(flag_prefix):
+            out_str += command + STR_CONST.SPACE
+            tmp_index = index+1
+            while not commands[tmp_index].startswith(flag_prefix):
+                out_str += commands[tmp_index] + STR_CONST.SPACE
+            out_str += STR_CONST.SPACE
 
 def run_pipeline_step(start, step, order):
     if order.index(start) <= order.index(step):
