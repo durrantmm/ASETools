@@ -26,8 +26,8 @@ def run(config, log):
     pipeline_start = config.START
     pipeline_order = config.ORDER
 
-    if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
-        align_reads_STAR(config, log)
+    #if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
+    #    align_reads_STAR(config, log)
 
     if run_pipeline_step(pipeline_start, PICARD_ADD_OR_REPLACE_READ_GROUPS, pipeline_order):
         add_read_groups_picard(config, log)
