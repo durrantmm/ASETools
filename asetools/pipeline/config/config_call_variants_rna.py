@@ -3,6 +3,7 @@ from collections import OrderedDict
 import os, sys
 from os.path import basename
 import json
+from collections import namedtuple
 from json import JSONEncoder
 from config.user_config import *
 
@@ -54,12 +55,13 @@ class RunSTAR(UserRunSTAR):
         self.readFilesIn = [self.readFilesIn_FLAG, self.readFilesIn_ARG1, self.readFilesIn_ARG2]
 
 
-        self.outFileNamePrefix_FLAG = "--outFileNamePrefix"
-        self.outFileNamePrefix_ARG = 'STAR_alnmn'
-        self.outFileNamePrefix = [self.outFileNamePrefix_FLAG, self.outFileNamePrefix_ARG]
+        self.outFileNamePrefix = namedtuple('outFileNamePrefix', 'flag, prefix')
+        self.outFileNamePrefix.flag = '--outFileNamePrefix'
+        self.outFileNamePrefix.prefix = 'STAR_alnmn'
+
 
     def get_full_out_prefix(self):
-        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix_ARG)
+        return os.path.join(self.OUTPUT_DIR, self.outFileNamePrefix.prefix)
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
@@ -75,7 +77,7 @@ class RunSTAR(UserRunSTAR):
             else:
                 out_command.append(delim.join(map(str, [key, value])))
 
-        out_command.append(self.outFileNamePrefix_FLAG)
+        out_command.append(self.outFileNamePrefix.flag)
         out_command.append(self.get_full_out_prefix())
 
         return delim.join(out_command)
@@ -99,7 +101,7 @@ class RunSTAR(UserRunSTAR):
                 prefix += l1
                 l1, l2 = fastq1[i], fastq2[i]
             if len(prefix) >= 1:
-                self.outFileNamePrefix_ARG = prefix.strip('.').strip('_')
+                self.outFileNamePrefix.prefix = prefix.strip('.').strip('_')
 
     def save_config_state(self, suffix=".json"):
         out_config_dict = self.encodeJSON()
