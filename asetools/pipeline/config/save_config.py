@@ -3,7 +3,7 @@ import json
 
 
 def read_json_to_dict(path):
-    return json.load(path)
+    return json.load(open(path))
 
 
 class RunSTAR:
