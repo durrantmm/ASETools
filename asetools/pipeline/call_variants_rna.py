@@ -38,8 +38,7 @@ def align_reads_STAR(config, log=None):
     global STR_CONST
     #check_version(config.RunSTAR.PATH, config.RunSTAR.VERSION_FLAG, config.RunSTAR.VERSION,
     #              config.RunSTAR.PARSE_VERSION, config.RunSTAR.VERSION_ERROR)
-    if log:
-        log.info("STAR is the correct version...")
+    if log: log.info("STAR is the correct version...")
     star_command_args = config.RunSTAR.format_command_args()
 
     if log:
@@ -50,8 +49,7 @@ def align_reads_STAR(config, log=None):
 
     config.RunSTAR.save_output_sam()
     save_config.RunSTAR.save(config.RunSTAR)
-    if log:
-        log.info("Finished running STAR, everything went well...")
+    if log: log.info("Finished running STAR, everything went well...")
 
 
 def add_read_groups_picard(config, log):
@@ -62,8 +60,7 @@ def add_read_groups_picard(config, log):
                   config.RunPicardAddOrReplaceReadGroups.parse_java_version,
                   config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_ERROR,
                   capture_stderr=True)
-    if log:
-        log.info("Java is the correct version...")
+    if log: log.info("Java is the correct version...")
 
     check_version(config.RunPicardAddOrReplaceReadGroups.PATH,
                   config.RunPicardAddOrReplaceReadGroups.VERSION_FLAG,
