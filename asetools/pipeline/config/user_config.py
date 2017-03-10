@@ -58,23 +58,18 @@ class UserRunPicard:
 class UserRunPicardAddOrReplaceReadGroups:
 
     def __init__(self):
-        self.SORT_ORDER_FLAG = "SO="
-        self.SORT_ORDER_ARG = "coordinate"
+        self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
 
-        self.RGID_FLAG = "RGID="
-        self.RGID_ARG = "id"
+        self.ARGS = OrderedDict([
 
-        self.RGLB_FLAG = "RGLB="
-        self.RGLB_ARG = "library"
+            ("SO", "coordinate"),
+            ("RGID", "id"),
+            ("RGLB", "library"),
+            ("RGPL", "platform"),
+            ("RGPU", "machine"),
+            ("RGSM", "sample")
 
-        self.RGPL_FLAG = "RGPL="
-        self.RGPL_ARG = "platform"
-
-        self.RGPU_FLAG = "RGPU="
-        self.RGPU_ARG = "machine"
-
-        self.RGSM_FLAG = "RGSM="
-        self.RGSM_ARG = "sample"
+        ])
 
 
 class UserRunPicardMarkDuplicates:

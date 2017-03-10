@@ -27,7 +27,7 @@ def run(config, log):
 
     if run_pipeline_step(pipeline_start, STAR_ALIGN_READS, pipeline_order):
         align_reads_STAR(config, log)
-        config.RunSTAR.write_step_config(config)
+        config.RunSTAR.write_step_config()
 
 
 def align_reads_STAR(config, log=None):
@@ -40,7 +40,7 @@ def align_reads_STAR(config, log=None):
         log.info("Running STAR aligner on the provided fastq files...")
         log.info("Command used to run STAR Aligner:"+STR_CONST.NEW_LINE+star_command_args)
 
-    subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
+    #subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
 
     return config

@@ -131,11 +131,17 @@ class RunPicardAddOrReplaceReadGroups(UserRunPicardAddOrReplaceReadGroups):
     def __init__(self):
         super().__init__()
 
-        self.INPUT_FLAG = "I="
-        self.INPUT_ARG = None
+        self.inputSam = type("PicardInputSam", (),
+                             {
+                                 "flag": "I",
+                                 "path": None
+                             })
 
-        self.OUTPUT_FLAG = "O="
-        self.OUTPUT_ARG = None
+        self.inputSam = type("PicardOutputSam", (),
+                             {
+                                 "flag": "O",
+                                 "path": None
+                             })
 
 
 class RunPicardMarkDuplicates(UserRunPicardMarkDuplicates):
