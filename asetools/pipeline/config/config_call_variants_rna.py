@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from collections import OrderedDict
 import os, sys
-from os.path import basename
+from os.path import basename, dirname
 from recordclass import recordclass
 from config.user_config import *
 from glob import glob
@@ -45,7 +45,7 @@ class RunSTAR(UserRunSTAR):
         self.name = 'RunSTAR'
         self.output_dir = "STEP1_STAR_alignment"
 
-        self.run_star_json_path = "RunSTAR.json"
+        self.json_path = "RunSTAR.json"
 
         self.parse_version = lambda x: x.decode(STR_CONST.UTF8).strip()
         self.VERSION_ERROR = "The STAR aligner is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
@@ -74,7 +74,7 @@ class RunSTAR(UserRunSTAR):
 
 
     def get_json_path(self):
-        return os.path.join(self.output_dir, self.run_star_json_path)
+        return os.path.join(self.output_dir, self.json_path)
 
 
     def format_command_args(self, delim=STR_CONST.SPACE):
@@ -121,15 +121,16 @@ class RunSTAR(UserRunSTAR):
         self.output_dir = os.path.join(output_dir, self.output_dir)
         os.makedirs(self.output_dir, exist_ok=True)
 
-        self.run_star_json_path = os.path.join(
-            self.output_dir, self.run_star_json_path)
+        self.json_path = os.path.join(
+            self.output_dir, self.json_path)
 
 
 class RunAddReadGroups(UserRunAddReadGroups):
+
     def __init__(self):
         super().__init__()
         self.output_dir = "STEP2_add_read_groups"
-        self.run_add_groups_json_path = 'RunAddReadGroups.json'
+        self.json_path = 'RunAddReadGroups.json'
 
         self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
         self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
@@ -144,7 +145,7 @@ class RunAddReadGroups(UserRunAddReadGroups):
         self.input_file = inputFileClass(flag="I", path=None, suffix='.sam')
 
         outputFileClass = recordclass('outputFile', 'flag, path, suffix')
-        self.output_file = outputFileClass(flag="O", path=None, suffix='.bam')
+        self.output_file = outputFileClass(flag="O", path=None, suffix='.RG.bam')
 
         self.FLAG_ARG_DELIM = "="
 
@@ -170,7 +171,7 @@ class RunAddReadGroups(UserRunAddReadGroups):
         if self.input_file.path and self.output_file.path:
             return
         if not self.input_file.path:
-            input_path = RunSTAR_json['output_sam']
+            input_path = adjust_path_relative(dirname(self.output_dir), RunSTAR_json['output_sam'])
             assert input_path.endswith(self.input_file.suffix), \
                 'The input file for AddOrReplaceReadGroups must end in %s' % self.input_file.suffix
             self.input_file.path = input_path
@@ -188,12 +189,95 @@ class RunAddReadGroups(UserRunAddReadGroups):
             self.output_dir, self.run_add_groups_json_path)
 
 
-
     def set_input(self, input_path):
         self.input.path = os.path.abspath(input_path)
 
 
+    def get_json_path(self):
+        return os.path.join(self.output_dir, self.json_path)
 
-class RunPicardMarkDuplicates(UserRunPicardMarkDuplicates):
+
+class RunMarkDuplicates(UserRunMarkDuplicates):
+
     def __init__(self):
         super().__init__()
+        self.output_dir = "STEP3_mark_duplicates"
+        self.json_path = 'RunMarkDuplicates.json'
+
+        self.parse_java_version = lambda x: x.decode(STR_CONST.UTF8).split()[2].strip('\"')
+        self.JAVA_VERSION_ERROR = "Your java is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
+
+        self.parse_version = lambda x: x.decode(STR_CONST.UTF8).split()[x.decode(STR_CONST.UTF8).split().index(self.VERSION)]
+        self.VERSION_ERROR = "Your Picard is version {ACTUAL}, not {EXPECTED}, as specified in the config file."
+
+        self.ABSENT_INPUT_OUTPUT = "You are missing an input and an output file for MarkDuplicates."
+        self.ARGUMENT_TYPE_ERROR = "All flags and arguments must be strings or ints."
+
+        inputFileClass = recordclass('inputFile', 'flag, path, suffix')
+        self.input_file = inputFileClass(flag="I", path=None, suffix='.RG.bam')
+
+        outputFileClass = recordclass('outputFile', 'flag, path, suffix')
+        self.output_file = outputFileClass(flag="O", path=None, suffix='.RG.MD.bam')
+
+        self.FLAG_ARG_DELIM = "="
+
+
+    def format_command_args(self, delim=STR_CONST.SPACE):
+        assert self.input_file.path and self.output_file.path, self.ABSENT_INPUT_OUTPUT
+
+        out_command = [self.PATH, self.FLAG_ARG_DELIM.join([self.input_file.flag, self.input_file.path]),
+                       self.FLAG_ARG_DELIM.join([self.output_file.flag, self.output_file.path])]
+
+        for key, value in self.ARGS.items():
+            if not value:
+                continue
+            assert isinstance(value, str) and not isinstance(value, int), self.ARGUMENT_TYPE_ERROR
+
+            out_command.append(self.FLAG_ARG_DELIM.join(map(str, [key, value])))
+
+        return delim.join(out_command)
+
+
+    def adjust_input_output_RunAddReadGroups(self, RunAddReadGroups_json):
+        global STR_CONST
+        if self.input_file.path and self.output_file.path:
+            return
+        if not self.input_file.path:
+            input_path = adjust_path_relative(dirname(self.output_dir), RunAddReadGroups_json['output_sam'])
+            assert input_path.endswith(self.input_file.suffix), \
+                'The input file for AddOrReplaceReadGroups must end in %s' % self.input_file.suffix
+            self.input_file.path = input_path
+        if not self.output_file.path:
+            output_prefix = basename(RunAddReadGroups_json['outFileNamePrefix']['prefix'])
+            out_prefix = os.path.join(self.output_dir, output_prefix)
+            self.output_file.path = STR_CONST.EMPTY_STRING.join([out_prefix, self.output_file.suffix])
+
+
+    def update_paths_relative(self, output_dir):
+        self.output_dir = os.path.join(output_dir, self.output_dir)
+        os.makedirs(self.output_dir, exist_ok=True)
+
+        self.run_add_groups_json_path = os.path.join(
+            self.output_dir, self.run_add_groups_json_path)
+
+    def set_input(self, input_path):
+        self.input.path = os.path.abspath(input_path)
+
+    def get_json_path(self):
+        return os.path.join(self.output_dir, self.json_path)
+
+
+def adjust_path_relative(relative_path, path):
+    path = antijoin_paths(relative_path, path)
+    return os.path.join(relative_path, path)
+
+
+def antijoin_paths(short_path, long_path):
+    long_head, long_tail = os.path.split(long_path)
+    short_head, short_tail = os.path.split(short_path)
+    trimmed_path = ""
+    while short_tail != long_tail:
+        trimmed_path = os.path.join(short_tail, trimmed_path)
+        short_head, short_tail = os.path.split(short_path)
+    return trimmed_path
+

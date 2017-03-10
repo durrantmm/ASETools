@@ -32,6 +32,9 @@ def run(config, log):
     if run_pipeline_step(pipeline_start, PICARD_ADD_OR_REPLACE_READ_GROUPS, pipeline_order):
         add_read_groups_picard(config, log)
 
+    if run_pipeline_step(pipeline_start, PICARD_MARK_DUPLICATES, pipeline_order):
+        mark_duplicates_picard(config, log)
+
 
 def align_reads_STAR(config, log=None):
     global STR_CONST
@@ -75,7 +78,28 @@ def add_read_groups_picard(config, log):
     if log: log.info("Finished running Picard AddOrReplaceReadGroups, everything went well...")
 
 
+def mark_duplicates_picard(config, log):
+    global STR_CONST
+    config.RunMarkDuplicates.adjust_input_output_RunAddReadGroups(save_config.read_json_to_dict(config.RunAddReadGroups.get_json_path()))
 
+    check_version(config.RunMarkDuplicates.JAVA_PATH, config.RunMarkDuplicates.JAVA_VERSION_FLAG,
+                  config.RunMarkDuplicates.JAVA_VERSION, config.RunMarkDuplicates.parse_java_version,
+                  config.RunMarkDuplicates.JAVA_VERSION_ERROR, stdout=subprocess.STDOUT)
+    if log: log.info("Java version is correct...")
+
+    check_version(config.RunMarkDuplicates.PATH, config.RunMarkDuplicates.VERSION_FLAG, config.RunMarkDuplicates.VERSION,
+                  config.RunMarkDuplicates.parse_version, config.RunMarkDuplicates.VERSION_ERROR,
+                  stdout=subprocess.STDOUT, ignore_error=True)
+    if log: log.info("Picard version is correct...")
+
+    add_read_groups_command = config.RunMarkDuplicates.format_command_args()
+    if log:
+        log.info("Running Picard MarkDuplicates...")
+        log.info("Command used to run Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
+    subprocess.check_output(add_read_groups_command.split()).decode(STR_CONST.UTF8).strip()
+
+    save_config.RunMarkDuplicates.save(config.RunMarkDuplicates)
+    if log: log.info("Finished running Picard MarkDuplicates, everything went well...")
 
 
 def run_pipeline_step(start, step, order):
