@@ -88,7 +88,7 @@ def check_version(app_path, version_flag, version, parse_version, version_error,
         else:
             raise e
 
-    local_version = parse_version(result)
+    local_version = parse_version(output)
     assert version == local_version, version_error.format(ACTUAL=local_version, EXPECTED=version)
 
 
