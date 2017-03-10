@@ -39,6 +39,7 @@ def align_reads_STAR(config, log=None):
     if log:
         log.info("Running STAR aligner on the provided fastq files...")
         log.info("Command used to run STAR Aligner:"+STR_CONST.NEW_LINE+pretty_format_command(star_command_args.split()))
+
     sys.exit()
     subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
@@ -57,8 +58,9 @@ def pretty_format_command(commands, flag_prefix='--'):
         if command.startswith(flag_prefix):
             out_str += command + STR_CONST.SPACE
             tmp_index = index+1
-            while not commands[tmp_index].startswith(flag_prefix):
+            while not commands[tmp_index].startswith(flag_prefix) and tmp_index < len(commands):
                 out_str += commands[tmp_index] + STR_CONST.SPACE
+                tmp_index += 1
             out_str += STR_CONST.SPACE
 
 def run_pipeline_step(start, step, order):
