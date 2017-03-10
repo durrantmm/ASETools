@@ -20,7 +20,7 @@ class CallVariantsRNAConfig:
         self.MAIN_OUTPUT_DIR = None
 
         self.RunSTAR = RunSTAR()
-        self.RunPicardAddOrReplaceReadGroups = RunPicardAddOrReplaceReadGroups()
+        self.RunAddReadGroups = RunPicardAddOrReplaceReadGroups()
 
         self.STAR_ALIGN_READS = "align_reads"
         self.PICARD_ADD_OR_REPLACE_READ_GROUPS = "add_read_groups"
@@ -35,7 +35,7 @@ class CallVariantsRNAConfig:
         os.makedirs(self.MAIN_OUTPUT_DIR, exist_ok=True)
 
         self.RunSTAR.update_paths_relative(self.MAIN_OUTPUT_DIR)
-        self.RunPicardAddOrReplaceReadGroups.update_paths_relative(self.MAIN_OUTPUT_DIR)
+        self.RunAddReadGroups.update_paths_relative(self.MAIN_OUTPUT_DIR)
 
 
 class RunSTAR(UserRunSTAR):

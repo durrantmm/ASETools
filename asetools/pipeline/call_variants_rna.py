@@ -53,25 +53,19 @@ def align_reads_STAR(config, log=None):
 
 def add_read_groups_picard(config, log):
     global STR_CONST
-    config.RunPicardAddOrReplaceReadGroups.retrieve_input_output_from_RunSTAR(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
+    config.RunAddReadGroups.adjust_input_output_RunSTAR(save_config.read_json_to_dict(config.RunSTAR.get_json_path()))
 
-    check_version(config.RunPicardAddOrReplaceReadGroups.JAVA_PATH,
-                  config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_FLAG,
-                  config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION,
-                  config.RunPicardAddOrReplaceReadGroups.parse_java_version,
-                  config.RunPicardAddOrReplaceReadGroups.JAVA_VERSION_ERROR,
-                  stdout=subprocess.STDOUT)
+    check_version(config.RunAddReadGroups.JAVA_PATH, config.RunAddReadGroups.JAVA_VERSION_FLAG,
+                  config.RunAddReadGroups.JAVA_VERSION, config.RunAddReadGroups.parse_java_version,
+                  config.RunAddReadGroups.JAVA_VERSION_ERROR, stdout=subprocess.STDOUT)
     if log: log.info("Java version is correct...")
 
-    check_version(config.RunPicardAddOrReplaceReadGroups.PATH,
-                  config.RunPicardAddOrReplaceReadGroups.VERSION_FLAG,
-                  config.RunPicardAddOrReplaceReadGroups.VERSION,
-                  config.RunPicardAddOrReplaceReadGroups.parse_version,
-                  config.RunPicardAddOrReplaceReadGroups.VERSION_ERROR,
+    check_version(config.RunAddReadGroups.PATH, config.RunAddReadGroups.VERSION_FLAG, config.RunAddReadGroups.VERSION,
+                  config.RunAddReadGroups.parse_version, config.RunAddReadGroups.VERSION_ERROR,
                   stdout=subprocess.STDOUT, ignore_error=True)
     if log: log.info("Picard version is correct...")
 
-    add_read_groups_command = config.RunPicardAddOrReplaceReadGroups.format_command_args()
+    add_read_groups_command = config.RunAddReadGroups.format_command_args()
     # subprocess.check_output(star_command_args.split()).decode(STR_CONST.UTF8).strip()
 
 
