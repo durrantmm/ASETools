@@ -14,7 +14,7 @@ class ExecutionStepSuper:
 
         self.version = None
         self.version_flag = None
-        self.parse_version = None
+        self.version_parser = None
         self.args = None
 
         self.input = None
@@ -33,7 +33,7 @@ class ExecutionStepSuper:
             else:
                 raise e
 
-        local_version = self.parse_version(output)
+        local_version = self.version_parser(output)
 
         if self.version != local_version:
             raise VersionError(self.name, self.version, local_version)
