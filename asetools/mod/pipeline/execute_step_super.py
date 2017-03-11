@@ -52,7 +52,7 @@ class ExecutionStepSuper:
         self.check_version()
         self.execute_command()
         self.save_log()
-        self.run = True
+        self.ran = True
 
 
     def execute_command(self, stderr=subprocess.PIPE):
@@ -99,6 +99,6 @@ class ExecutionStepSuper:
             output = default_output
 
         if self.ran:
-            return os.path.join(self.output_dir, output)
+            return output
         else:
             raise ExecutionNotRanNoOutput(self.name)
