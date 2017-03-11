@@ -25,7 +25,7 @@ class ExecutionStepSuper:
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False):
         try:
 
-            output = subprocess.check_output(self.path.split() + self.version_flag.split(), stderr=stderr)
+            output = subprocess.check_output(self.execution_path.split() + self.version_flag.split(), stderr=stderr)
 
         except subprocess.CalledProcessError as e:
             if ignore_error:
