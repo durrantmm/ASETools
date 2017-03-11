@@ -32,7 +32,6 @@ class Log:
 
     @classmethod
     def info_chk(cls, log, msg):
-        print(log, msg)
         if log:
             log.info(msg)
 

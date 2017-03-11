@@ -7,6 +7,7 @@ from mod.misc.log import SimpleLog
 
 import os
 import json
+from glob import glob
 
 class RunStarAlign(ConfigStarAlign):
 
@@ -39,3 +40,8 @@ class RunStarAlign(ConfigStarAlign):
 
     def get_log_json(self):
         super().get_log_json(input_class_parse=FlagTwoArgs)
+
+    def retrieve_output_path(self):
+        output = glob(os.path.join(self.output_dir, self.output.arg)+'*.sam')[0]
+        super().retrieve_output_path(default_output=output)
+

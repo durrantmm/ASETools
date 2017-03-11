@@ -25,6 +25,8 @@ class ExecutionStepSuper:
 
         self.logger = None
 
+        self.ran = False
+
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False):
         Log.info_chk(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.name))
@@ -55,17 +57,13 @@ class ExecutionStepSuper:
     def execute_command(self, stderr=subprocess.PIPE):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
-        output = subprocess.check_output(command.split(), stderr=stderr)
+        #output = subprocess.check_output(command.split(), stderr=stderr)
 
 
     def save_log(self):
         Log.info_chk(self.logger, msg_saving_run_info.format(self.log_name))
         log_json = self.get_log_json()
         json.dumps(log_json, self.get_log_path())
-
-
-    def format_command(self):
-        raise NotImplementedError
 
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
@@ -85,3 +83,17 @@ class ExecutionStepSuper:
 
     def get_log_path(self):
         return os.path.join(self.output_dir, self.log_name)
+
+
+    def format_command(self):
+        raise NotImplementedError
+
+
+    def retrieve_output_path(self, default_output=True):
+        if default_output is True and isinstance(default_output, bool):
+            output = self.output.arg
+        else:
+            output = default_output
+
+        if self.ran:
+            return os.path.join(self.output_dir, output)
