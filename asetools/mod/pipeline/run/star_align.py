@@ -1,6 +1,6 @@
 from os.path import basename
 from mod.pipeline.config.fixed.discrete.star_align import ConfigStarAlign
-from mod.misc.string_methods import get_shared_prefix
+from mod.misc.path_methods import get_shared_prefix
 from mod.misc.string_constants import *
 from mod.misc.record_classes import FlagTwoArgs
 
@@ -21,7 +21,7 @@ class RunStarAlign(ConfigStarAlign):
         if out_prefix:
             return out_prefix
         else:
-            return get_shared_prefix(fastq1, fastq2, [DOT, UND])
+            return get_shared_prefix(fastq1, fastq2, strip_chars=[DOT, UND], base=True)
 
     def format_command(self):
 
