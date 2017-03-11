@@ -4,6 +4,7 @@ import json
 from collections import OrderedDict
 from mod.misc.record_classes import FlagArg_to_tuple
 from mod.misc.log import *
+from mod.misc.string_constants import *
 
 class ExecutionStepSuper:
 
@@ -53,10 +54,12 @@ class ExecutionStepSuper:
 
     def execute_command(self, stderr=subprocess.PIPE):
         command = self.format_command()
+        Log.info(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         output = subprocess.check_output(command.split(), stderr=stderr)
 
 
     def save_log(self):
+        Log.info(self.logger, msg_saving_run_info.format(self.log_name))
         log_json = self.get_log_json()
         json.dumps(log_json, self.get_log_path())
 
