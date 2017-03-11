@@ -3,7 +3,7 @@ import subprocess
 
 from mod.misc.string_constants import *
 from mod.pipeline.config.fixed.discrete.add_read_groups import FixedConfigAddReadGroups
-from run.discrete.version_parsers import parse_add_read_groups_version
+from mod.pipeline.run.discrete.version_parsers import parse_add_read_groups_version
 from os.path import basename, join
 
 
