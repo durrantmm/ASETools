@@ -61,7 +61,7 @@ class ExecutionStepSuper:
 
 
     def save_log(self):
-        Log.info_chk(self.logger, msg_saving_run_info.format(self.log_name))
+        Log.info_chk(self.logger, msg_saving_run_info.format(PATH=self.log_name))
         log_json = self.get_log_json()
         json.dumps(log_json, self.get_log_path())
 

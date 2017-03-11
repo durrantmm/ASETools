@@ -3,7 +3,8 @@ import logging, os, sys
 msg_checking_version = "Ensuring that {NAME} is version {VERSION}..."
 msg_starting_run = "Starting to run {NAME}..."
 msg_executing_command = "Executing the command:{DELIM}{COMMAND}"
-msg_saving_run_info = "Saving run info to {JSON}"
+msg_saving_run_info = "Saving run info to {PATH}"
+
 
 class Log:
 
