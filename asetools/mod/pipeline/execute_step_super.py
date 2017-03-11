@@ -29,6 +29,7 @@ class ExecutionStepSuper:
 
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
+        print("CHECKING VERSION %s" % self.name)
         Log.info_chk(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.version))
         Log.debug_chk(self.logger, msg_check_version_signature.format(STDERR=stderr, IGNORE_E=ignore_error,
                                                                       PVTP=pass_version_to_parser))
