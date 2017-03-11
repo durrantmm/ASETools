@@ -42,7 +42,6 @@ class RunStarAlign(ConfigStarAlign):
         return super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
 
     def retrieve_output_path(self):
-        print(self.output.arg+'*.sam')
-        output = glob(os.path.join(self.output_dir, self.output.arg)+'*.sam')[0]
+        output = glob(self.output.arg+'*.sam')[0]
         return super().retrieve_output_path(default_output=output)
 
