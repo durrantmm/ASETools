@@ -52,6 +52,7 @@ class ExecutionStepSuper:
         self.check_version()
         self.execute_command()
         self.save_log()
+        self.run = True
 
 
     def execute_command(self, stderr=subprocess.PIPE):
