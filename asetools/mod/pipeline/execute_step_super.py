@@ -75,7 +75,8 @@ class ExecutionStepSuper:
             ('execution_path', self.execution_path),
             ('version', 'version'),
             ('input', input_class_parse(self.input)),
-            ('output', output_class_parse(self.output))
+            ('output', output_class_parse(self.output)),
+            ('custom_args', self.args)
 
         })
 
