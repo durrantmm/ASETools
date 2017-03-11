@@ -1,10 +1,12 @@
 import sys
 from mod.pipeline.run.star_align import RunStarAlign
 from mod.misc.log import SimpleLog
+
 def test_star_align():
     log = SimpleLog()
     star_align = RunStarAlign('tests/star_align_output_dir', 'examples/small.1.fastq', 'examples/small.2.fastq', log)
     star_align.run()
+    print('Your output file of interest is at {PATH}'.format(star_align.retrieve_output_path()))
 
 
 if __name__ == '__main__':
