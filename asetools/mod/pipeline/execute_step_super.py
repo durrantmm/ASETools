@@ -27,7 +27,7 @@ class ExecutionStepSuper:
 
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False):
-        Log.info(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.name))
+        Log.info_chk(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.name))
         try:
 
             output = subprocess.check_output(self.execution_path.split() + self.version_flag.split(), stderr=stderr)
@@ -45,7 +45,7 @@ class ExecutionStepSuper:
 
 
     def run(self):
-        Log.info(self.logger, msg_starting_run.format(NAME=self.name))
+        Log.info_chk(self.logger, msg_starting_run.format(NAME=self.name))
         os.makedirs(self.output_dir)
         self.check_version()
         self.execute_command()
@@ -54,12 +54,12 @@ class ExecutionStepSuper:
 
     def execute_command(self, stderr=subprocess.PIPE):
         command = self.format_command()
-        Log.info(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
+        Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         output = subprocess.check_output(command.split(), stderr=stderr)
 
 
     def save_log(self):
-        Log.info(self.logger, msg_saving_run_info.format(self.log_name))
+        Log.info_chk(self.logger, msg_saving_run_info.format(self.log_name))
         log_json = self.get_log_json()
         json.dumps(log_json, self.get_log_path())
 

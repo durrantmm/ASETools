@@ -31,23 +31,23 @@ class Log:
         self.rootLogger.warning(s)
 
     @classmethod
-    def info(cls, log, msg):
+    def info_chk(cls, log, msg):
         print(log, msg)
         if log:
             log.info(msg)
 
     @classmethod
-    def error(cls, log, msg):
+    def error_chk(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def debug(cls, log, msg):
+    def debug_chk(cls, log, msg):
         if log:
             log.debug(msg)
 
     @classmethod
-    def warning(cls, log, msg):
+    def warning_chk(cls, log, msg):
         if log:
             log.warning(msg)
 
@@ -73,21 +73,21 @@ class SimpleLog:
         self.rootLogger.warning(s)
 
     @classmethod
-    def info(cls, log, msg):
+    def info_chk(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def error(cls, log, msg):
+    def error_chk(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def debug(cls, log, msg):
+    def debug_chk(cls, log, msg):
         if log:
             log.debug(msg)
 
     @classmethod
-    def warning(cls, log, msg):
+    def warning_chk(cls, log, msg):
         if log:
             log.warning(msg)
