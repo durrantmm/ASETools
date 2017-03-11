@@ -48,7 +48,7 @@ class ExecutionStepSuper:
 
     def run(self):
         Log.info_chk(self.logger, msg_starting_run.format(NAME=self.name))
-        os.makedirs(self.output_dir)
+        os.makedirs(self.output_dir, exist_ok=True)
         self.check_version()
         self.execute_command()
         self.save_log()
