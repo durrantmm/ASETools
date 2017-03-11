@@ -5,7 +5,7 @@ from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.fixed.discrete.star_align import FixedConfigStarAlign
-from run.discrete.version_parsers import parse_star_version
+from mod.pipeline.run.discrete.version_parsers import parse_star_version
 from os.path import basename
 
 
