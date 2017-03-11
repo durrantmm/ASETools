@@ -3,6 +3,7 @@ from mod.misc.exceptions import VersionError
 import json
 from collections import OrderedDict
 from mod.misc.record_classes import FlagArg_to_tuple
+from mod.misc.log import *
 
 class ExecutionStepSuper:
 
@@ -21,8 +22,11 @@ class ExecutionStepSuper:
         self.output = None
         self.log_name = 'asetools.log'
 
+        self.logger = None
+
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False):
+        Log.info(self.logger, msg_checking_version)
         try:
 
             output = subprocess.check_output(self.execution_path.split() + self.version_flag.split(), stderr=stderr)
@@ -40,6 +44,7 @@ class ExecutionStepSuper:
 
 
     def run(self):
+        Log.info()
         os.makedirs(self.output_dir)
         self.check_version()
         self.execute_command()

@@ -5,7 +5,7 @@ import subprocess
 
 from config import save_config
 from config.fixed.discrete.config_call_variants_rna import CallVariantsRNAConfig
-from config.log import Log
+from mod.misc.log import Log
 
 ### Global attributes and methods accessible to all classes
 STR_CONST = type("StringConstants", (),

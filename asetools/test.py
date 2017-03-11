@@ -1,8 +1,10 @@
 import sys
 from mod.pipeline.run.star_align import RunStarAlign
-
+from mod.misc.log import Log
 def test_star_align():
-    star_align = RunStarAlign('tests/star_align_output_dir', 'examples/small.1.fastq', 'examples/small.2.fastq')
+    log = Log()
+    star_align = RunStarAlign('tests/star_align_output_dir', 'examples/small.1.fastq', 'examples/small.2.fastq',
+                              Log('tests/star_align_output_dir'))
     star_align.run()
 
 

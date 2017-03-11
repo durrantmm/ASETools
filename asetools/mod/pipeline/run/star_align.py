@@ -3,13 +3,17 @@ from mod.pipeline.config.fixed.discrete.star_align import ConfigStarAlign
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.string_constants import *
 from mod.misc.record_classes import FlagTwoArgs
+from mod.misc.log import SimpleLog
 
+import os
 import json
 
 class RunStarAlign(ConfigStarAlign):
 
-    def __init__(self, output_dir, fastq1, fastq2, out_prefix=None):
+    def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
         super().__init__()
+
+        self.logger = logger
 
         self.output_dir = output_dir
 
@@ -21,7 +25,8 @@ class RunStarAlign(ConfigStarAlign):
         if out_prefix:
             return out_prefix
         else:
-            return get_shared_prefix(fastq1, fastq2, strip_chars=[DOT, UND], base=True)
+            prefix = get_shared_prefix(fastq1, fastq2, strip_chars=[DOT, UND], base=True)
+            return os.path.join(self.output_dir, prefix)
 
     def format_command(self):
 
@@ -32,8 +37,5 @@ class RunStarAlign(ConfigStarAlign):
 
         return SPACE.join(command)
 
-    def save_log(self):
-        log_json = self.get_log_json(input_class_parse=FlagTwoArgs)
-        json.dumps(log_json, self.get_log_path())
-
-
+    def get_log_json(self):
+        super().get_log_json(input_class_parse=FlagTwoArgs)
