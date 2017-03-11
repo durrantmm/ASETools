@@ -68,17 +68,17 @@ class ExecutionStepSuper:
 
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
-        log_json = OrderedDict({
+        log_json = {
 
-            ('name', self.name,),
-            ('output_dir', self.output_dir),
-            ('execution_path', self.execution_path),
-            ('version', 'version'),
-            ('input', input_class_parse(self.input)),
-            ('output', output_class_parse(self.output)),
-            ('custom_args', self.args)
+            'name': self.name,
+            'output_dir': self.output_dir,
+            'execution_path': self.execution_path,
+            'version': 'version',
+            'input': input_class_parse(self.input),
+            'output': output_class_parse(self.output),
+            'custom_args': self.args
 
-        })
+        }
 
         return log_json
 
