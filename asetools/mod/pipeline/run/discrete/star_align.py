@@ -9,7 +9,7 @@ from run.discrete.version_parsers import parse_star_version
 from os.path import basename
 
 
-class RunJava(FixedConfigStarAlign):
+class RunStarAlign(FixedConfigStarAlign):
 
     def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
         super().__init__()
