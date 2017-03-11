@@ -32,6 +32,7 @@ class Log:
 
     @classmethod
     def info(cls, log, msg):
+        print(log, msg)
         if log:
             log.info(msg)
 
