@@ -2,13 +2,13 @@ import os
 from glob import glob
 
 from mod.pipeline.config.fixed.discrete.java import FixedConfigJava
-from run.discrete.version_parsers import parse_java_version
+from mod.pipeline.run.discrete.version_parsers import parse_java_version
 import subprocess
 
 
 class RunJava(FixedConfigJava):
 
-    def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
+    def __init__(self, logger=None, out_prefix=None):
         super().__init__()
 
         self.logger = logger
