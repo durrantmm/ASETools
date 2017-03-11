@@ -38,7 +38,7 @@ class RunAddReadGroups(FixedConfigAddReadGroups):
         return SPACE.join(command)
 
 
-    def check_version(self, stderr=subprocess.PIPE, ignore_error=True, pass_version_to_parse=False):
+    def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
         super().check_version(stderr=subprocess.STDOUT, ignore_error=False)
 

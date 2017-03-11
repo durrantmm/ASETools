@@ -17,7 +17,7 @@ class RunJava(FixedConfigJava):
 
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
-        super().check_version(stderr=subprocess.STDOUT)
+        super().check_version(stderr=subprocess.STDOUT, ignore_error=True)
 
     def run(self):
         self.check_version()

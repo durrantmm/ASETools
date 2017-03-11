@@ -40,6 +40,7 @@ class ExecutionStepSuper:
             else:
                 raise e
 
+        Log.debug_chk(self.logger, output)
         if pass_version_to_parser:
             local_version = self.version_parser(output, self.version)
         else:
