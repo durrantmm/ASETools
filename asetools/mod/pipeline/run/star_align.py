@@ -16,7 +16,7 @@ class RunStarAlign(ConfigStarAlign):
 
         self.logger = logger
 
-        self.output_dir = output_dir
+        self.output_dir = os.path.abspath(output_dir)
 
         self.input.arg1, self.input.arg2 = fastq1, fastq2
 
