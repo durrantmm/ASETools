@@ -9,7 +9,7 @@ class CustomConfigAddReadGroups(ExecutionStepSuper):
     def __init__(self):
         super().__init__()
 
-        self.java = RunJava(self.logger)
+        self.java = RunJava(logger=self.logger)
 
         self.execution_path = SPACE.join([self.java.execution_path, '-jar',
                                           "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
