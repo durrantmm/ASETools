@@ -63,8 +63,7 @@ class ExecutionStepSuper:
     def save_log(self):
         Log.info_chk(self.logger, msg_saving_run_info.format(PATH=self.log_name))
         log_json = self.get_log_json()
-        with open(self.get_log_path(), 'w') as out:
-            out.write(json.dumps(log_json, indent=4))
+        json.dump(log_json, self.get_log_path(), indent=4)
 
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
