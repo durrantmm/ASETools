@@ -31,22 +31,22 @@ class Log:
         self.rootLogger.warning(s)
 
     @classmethod
-    def info(cls, msg, log):
+    def info(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def error(cls, msg, log):
+    def error(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def debug(cls, msg, log):
+    def debug(cls, log, msg):
         if log:
             log.debug(msg)
 
     @classmethod
-    def warning(cls, msg, log):
+    def warning(cls, log, msg):
         if log:
             log.warning(msg)
 
@@ -72,21 +72,21 @@ class SimpleLog:
         self.rootLogger.warning(s)
 
     @classmethod
-    def info(cls, msg, log):
+    def info(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def error(cls, msg, log):
+    def error(cls, log, msg):
         if log:
             log.info(msg)
 
     @classmethod
-    def debug(cls, msg, log):
+    def debug(cls, log, msg):
         if log:
             log.debug(msg)
 
     @classmethod
-    def warning(cls, msg, log):
+    def warning(cls, log, msg):
         if log:
             log.warning(msg)
