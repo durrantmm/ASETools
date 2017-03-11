@@ -1,9 +1,7 @@
 from mod.pipeline.config.custom.discrete.star_align import CustomConfigStarAlign
-from mod.misc.string_constants import *
 from mod.misc.record_classes import FlagArg, FlagTwoArgs
-from mod.pipeline.run.version_parsers import parse_star_version
 
-class ConfigStarAlign(CustomConfigStarAlign):
+class FixedConfigStarAlign(CustomConfigStarAlign):
 
     def __init__(self):
         super().__init__()
@@ -15,6 +13,3 @@ class ConfigStarAlign(CustomConfigStarAlign):
 
         # JSON File Name
         self.log_name = "star_align.json"
-
-        # Version Parser lambda function
-        self.version_parser = parse_star_version

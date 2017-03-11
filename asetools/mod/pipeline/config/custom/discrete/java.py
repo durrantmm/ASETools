@@ -1,26 +1,11 @@
-import sys
-from collections import OrderedDict
+from mod.pipeline.execute_step_super import ExecutionStepSuper
 
 
-class CustomConfigJava():
+
+class CustomConfigJava(ExecutionStepSuper):
 
     def __init__(self):
-        self.path = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
-        self.JAVA_VERSION = "1.8.0_66"
-        self.JAVA_VERSION_FLAG = "-version"
-
-        self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java -jar " \
-                    "/srv/gs1/software/picard-tools/2.8.0/picard.jar AddOrReplaceReadGroups"
-        self.VERSION = "2.8.0-SNAPSHOT"
-        self.VERSION_FLAG = "--help"
-
-        self.ARGS = OrderedDict([
-
-            ("SO", "coordinate"),
-            ("RGID", "id"),
-            ("RGLB", "library"),
-            ("RGPL", "platform"),
-            ("RGPU", "machine"),
-            ("RGSM", "sample")
-
-        ])
+        super().__init__()
+        self.execution_path = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
+        self.version = "1.8.0_66"
+        self.version_flag = "-version"

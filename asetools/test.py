@@ -1,6 +1,8 @@
 import sys
-from mod.pipeline.run.star_align import RunStarAlign
+
 from mod.misc.log import SimpleLog
+from run.discrete.star_align import RunStarAlign
+
 
 def test_star_align():
     log = SimpleLog()

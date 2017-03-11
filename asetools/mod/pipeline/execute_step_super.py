@@ -28,7 +28,7 @@ class ExecutionStepSuper:
         self.ran = False
 
 
-    def check_version(self, stderr=subprocess.PIPE, ignore_error=False):
+    def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         Log.info_chk(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.name))
         try:
 
@@ -40,7 +40,10 @@ class ExecutionStepSuper:
             else:
                 raise e
 
-        local_version = self.version_parser(output)
+        if pass_version_to_parser:
+            local_version = self.version_parser(output, self.version)
+        else:
+            local_version = self.version_parser(output)
 
         if self.version != local_version:
             raise VersionError(self.name, self.version, local_version)

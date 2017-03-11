@@ -1,20 +1,24 @@
-import sys
-from collections import OrderedDict
+from mod.pipeline.execute_step_super import ExecutionStepSuper
+from mod.pipeline.config.custom.discrete.java import CustomConfigJava
+from mod.misc.string_constants import *
 
 
-class CustomConfigAddReadGroups:
+
+class CustomConfigAddReadGroups(ExecutionStepSuper):
 
     def __init__(self):
-        self.JAVA_PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
-        self.JAVA_VERSION = "1.8.0_66"
-        self.JAVA_VERSION_FLAG = "-version"
+        super().__init__()
 
-        self.PATH = "/srv/gs1/software/java/jre1.8.0_66/bin/java -jar " \
-                    "/srv/gs1/software/picard-tools/2.8.0/picard.jar AddOrReplaceReadGroups"
-        self.VERSION = "2.8.0-SNAPSHOT"
-        self.VERSION_FLAG = "--help"
+        self.java = CustomConfigJava()
 
-        self.ARGS = OrderedDict([
+        self.execution_path = SPACE.join([self.java.execution_path, '-jar',
+                                          "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
+                                          "AddOrReplaceReadGroups"])
+
+        self.version = "2.8.0-SNAPSHOT"
+        self.version_flag = "--help"
+
+        self.args = [
 
             ("SO", "coordinate"),
             ("RGID", "id"),
@@ -23,4 +27,4 @@ class CustomConfigAddReadGroups:
             ("RGPU", "machine"),
             ("RGSM", "sample")
 
-        ])
+        ]
