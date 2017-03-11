@@ -1,8 +1,8 @@
 import sys
 
 from mod.misc.log import SimpleLog
-from run.discrete.star_align import RunStarAlign
-from run.discrete.add_read_groups import RunAddReadGroups
+from mod.pipeline.run.discrete.star_align import RunStarAlign
+from mod.pipeline.run.discrete.add_read_groups import RunAddReadGroups
 
 
 def test_star_align():
