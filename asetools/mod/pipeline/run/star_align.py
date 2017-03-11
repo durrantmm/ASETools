@@ -21,7 +21,7 @@ class RunStarAlign(ConfigStarAlign):
         if out_prefix:
             return out_prefix
         else:
-            return get_shared_prefix(fastq1, fastq2)
+            return get_shared_prefix(fastq1, fastq2, ['.','_'])
 
     def format_command(self):
 
