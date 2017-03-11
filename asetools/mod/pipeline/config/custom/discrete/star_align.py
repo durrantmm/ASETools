@@ -6,7 +6,7 @@ class CustomConfigStarAlign(ExecutionStepSuper):
     def __init__(self):
         super().__init__()
         # Path to the star aligner, absolute path is preferred over aliases
-        self.path = "/home/mdurrant/miniconda3/bin/STAR"
+        self.execution_path = "/home/mdurrant/miniconda3/bin/STAR"
         # The version of STAR aligner. Change at your own risk.
         # These are the options for the STAR alignment command
         # If the argument is optional, set its value to None to exclude.
