@@ -13,10 +13,9 @@ class RunStarAlign(ConfigStarAlign):
 
         self.output_dir = output_dir
 
-        self.readFilesIn.arg1 = fastq1
-        self.readFilesIn.arg2 = fastq2
+        self.input.arg1, self.input.arg2 = fastq1, fastq2
 
-        self.outFileNamePrefix.arg = self.handle_out_prefix(out_prefix, fastq1, fastq2)
+        self.output.arg = self.handle_out_prefix(out_prefix, fastq1, fastq2)
 
     def handle_out_prefix(self, out_prefix, fastq1, fastq2):
         if out_prefix:
