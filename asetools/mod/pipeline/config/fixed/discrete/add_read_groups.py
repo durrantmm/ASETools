@@ -7,7 +7,7 @@ class FixedConfigAddReadGroups(CustomConfigAddReadGroups):
         super().__init__()
         self.name = "AddOrReplaceReadGroups"
 
-        self.input = FlagArg(flag='I', arg1=None)
+        self.input = FlagArg(flag='I', arg=None)
 
         self.output = FlagArg(flag='O', arg=None)
 
