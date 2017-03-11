@@ -27,7 +27,7 @@ class RunStarAlign(ConfigStarAlign):
 
         command = [self.execution_path]
         command.extend([self.input.flag, self.input.arg1, self.input.arg2])
-        command.extend([SPACE.join([flag, arg]) for flag, arg in self.args])
+        command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
         command.extend([self.output.flag, self.output.arg])
 
         return SPACE.join(command)
