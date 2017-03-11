@@ -1,8 +1,8 @@
 import sys
-from mod.pipeline.run.star_align import RunStarAlign
+from asetools.mod.pipeline.run.star_align import RunStarAlign
 
 def test_star_align():
-    star_align = RunStarAlign('star_align_output_dir', 'examples/small.1.fastq', 'examples/small.2.fastq')
+    star_align = RunStarAlign('tests/star_align_output_dir', 'examples/small.1.fastq', 'examples/small.2.fastq')
     star_align.run()
 
 
