@@ -1,7 +1,7 @@
 import logging, os, sys
 
-msg_checking_version = "Ensuring that {NAME} is version {VERSION}...
-msg_starting_run = "Ensuring that {NAME} is version {VERSION}...
+msg_checking_version = "Ensuring that {NAME} is version {VERSION}..."
+msg_starting_run = "Starting to run {NAME}..."
 
 
 class Log:

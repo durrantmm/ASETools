@@ -7,6 +7,7 @@ class ConfigStarAlign(CustomConfigStarAlign):
 
     def __init__(self):
         super().__init__()
+        self.name = "STAR"
 
         self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
 
