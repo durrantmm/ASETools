@@ -6,7 +6,7 @@ from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.fixed.discrete.star_align import FixedConfigStarAlign
 from mod.pipeline.run.discrete.version_parsers import parse_star_version
-from os.path import basename
+from os.path import basename, join
 
 
 class RunStarAlign(FixedConfigStarAlign):
@@ -36,7 +36,7 @@ class RunStarAlign(FixedConfigStarAlign):
         command = [self.execution_path]
         command.extend([self.input.flag, self.input.arg1, self.input.arg2])
         command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.extend([self.output.flag, os.path.join(self.output_dir, self.output.arg)])
+        command.extend([self.output.flag, join(self.output_dir, self.output.arg)])
 
         return SPACE.join(command)
 
@@ -44,6 +44,6 @@ class RunStarAlign(FixedConfigStarAlign):
         return super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
 
     def retrieve_output_path(self):
-        output = glob(self.output.arg+'*.sam')[0]
+        output = glob(join(self.output_dir, self.output.arg)+'*.sam')[0]
         return super().retrieve_output_path(default_output=output)
 
