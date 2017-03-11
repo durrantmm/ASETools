@@ -1,5 +1,5 @@
 import subprocess, os
-from mod.misc.exceptions import VersionError
+from mod.misc.exceptions import VersionError, ExecutionNotRanNoOutput
 import json
 from collections import OrderedDict
 from mod.misc.record_classes import FlagArg_to_tuple
@@ -99,3 +99,5 @@ class ExecutionStepSuper:
 
         if self.ran:
             return os.path.join(self.output_dir, output)
+        else:
+            raise ExecutionNotRanNoOutput(self.name)
