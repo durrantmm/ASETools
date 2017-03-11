@@ -2,7 +2,7 @@ from os.path import basename
 from mod.pipeline.config.fixed.discrete.star_align import ConfigStarAlign
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.string_constants import *
-from mod.misc.record_classes import FlagTwoArgs
+from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.log import SimpleLog
 
 import os
@@ -39,7 +39,7 @@ class RunStarAlign(ConfigStarAlign):
         return SPACE.join(command)
 
     def get_log_json(self):
-        super().get_log_json(input_class_parse=FlagTwoArgs)
+        super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
 
     def retrieve_output_path(self):
         output = glob(os.path.join(self.output_dir, self.output.arg)+'*.sam')[0]
