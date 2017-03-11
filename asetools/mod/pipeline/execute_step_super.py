@@ -30,6 +30,8 @@ class ExecutionStepSuper:
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         Log.info_chk(self.logger, msg_checking_version.format(NAME=self.name, VERSION=self.name))
+        Log.debug_chk(self.logger, msg_check_version_signature.format(STDERR=stderr, IGNORE_E=ignore_error,
+                                                                      PVTP=pass_version_to_parser))
         try:
 
             output = subprocess.check_output(self.execution_path.split() + self.version_flag.split(), stderr=stderr)
