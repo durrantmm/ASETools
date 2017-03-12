@@ -54,3 +54,6 @@ if __name__ == '__main__':
     if which == 'add_read_groups':
         test_add_read_groups()
 
+    if which == 'mark_duplicates':
+        test_mark_duplicates()
+
