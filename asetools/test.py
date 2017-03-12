@@ -3,6 +3,7 @@ import sys
 from mod.misc.log import SimpleLog
 from mod.pipeline.run.steps.star_align import RunStarAlign
 from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
+from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
 
 
 def test_star_align():
@@ -29,6 +30,17 @@ def test_add_read_groups():
                                               logger=log)
     add_read_groups2.run()
     print('Your output file of interest is at {PATH}'.format(PATH=add_read_groups2.retrieve_output_path()))
+
+
+def test_mark_duplicates():
+    log = SimpleLog()
+
+    mark_duplicates = RunPicardMarkDuplicates(output_dir='tests/add_mark_duplicates_test1',
+                                               input_bam='examples/smallAligned.RG.bam',
+                                               output_bam='examples/smallAligned.RG.MG.bam',
+                                               logger=log)
+    mark_duplicates.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=mark_duplicates.retrieve_output_path()))
 
 
 
