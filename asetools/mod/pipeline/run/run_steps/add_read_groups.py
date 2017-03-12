@@ -3,8 +3,6 @@ import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run.run_steps.java import RunJava
-from mod.pipeline.version_parsers import parse_add_read_groups_version
 from mod.pipeline.run.run_step_super import RunStepSuper
 from mod.pipeline.config.custom import PicardAddReadGroupsCustomConfig
 from mod.pipeline.config.fixed import PicardAddReadGroupsFixedConfig
