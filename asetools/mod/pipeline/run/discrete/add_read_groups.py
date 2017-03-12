@@ -5,24 +5,40 @@ from os.path import basename, join
 from mod.misc.string_constants import *
 from mod.pipeline.run.discrete.java import RunJava
 from mod.pipeline.version_parsers import parse_add_read_groups_version
+from mod.pipeline.run.run_step_super import RunStepSuper
+from mod.pipeline.config.custom import PicardAddReadGroupsCustomConfig
+from mod.pipeline.config.fixed import PicardAddReadGroupsFixedConfig
 
+class RunPicardAddReadGroups(RunStepSuper):
 
-class RunAddReadGroups(ExecuteSuperStep):
+    def __init__(self, output_dir, input_sam, output_bam = None, logger=None, out_prefix=None):
 
-    def __init__(self, output_dir, input_sam, output_bam=None, logger=None, out_prefix=None):
-        super().__init__()
+        custom_config = PicardAddReadGroupsCustomConfig()
+        fixed_config = PicardAddReadGroupsFixedConfig()
 
-        self.logger = logger
+        name = fixed_config.name
+        output_dir = output_dir
+        execution_path = custom_config.execution_path
 
-        self.output_dir = os.path.abspath(output_dir)
+        version = custom_config.version
+        version_flag = custom_config.version_flag
+        version_parser = fixed_config.version_parser
 
-        self.input.arg = input_sam
+        input = fixed_config.input
+        output = fixed_config.output
 
-        self.output.arg = self.handle_output_bam(output_bam, input_sam)
+        args = custom_config.args
 
-        self.version_parser = parse_add_read_groups_version
+        log_name = fixed_config.log_name
+        logger = logger
 
-        self.java_run = RunJava(self.logger)
+        # Adjusting attributes based on relevant input variables
+        input.arg = input_sam
+        output.arg = self.handle_output_bam(out_prefix, input_sam)
+
+        super().__init__(name, output_dir, execution_path, version, version_flag,
+                         version_parser, input, output, args, log_name, logger)
+
 
     def handle_output_bam(self, output_bam, input_sam):
         if output_bam:
@@ -30,6 +46,7 @@ class RunAddReadGroups(ExecuteSuperStep):
         else:
             output_bam = basename(input_sam).split('.')[0] + '.bam'
             return basename(output_bam)
+
 
     def format_command(self):
         command = [self.execution_path]
