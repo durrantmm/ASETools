@@ -23,7 +23,7 @@ def test_add_read_groups():
     add_read_groups1.run()
     print('Your output file of interest is at {PATH}'.format(PATH=add_read_groups1.retrieve_output_path()))
 
-    add_read_groups2 = RunPicardAddReadGroups(output_dir='tests/add_read_groups_test1',
+    add_read_groups2 = RunPicardAddReadGroups(output_dir='tests/add_read_groups_test2',
                                               input_sam='examples/smallAligned.out.sam',
                                               output_bam='specified_file.bam',
                                               logger=log)
