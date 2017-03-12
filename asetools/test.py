@@ -4,6 +4,7 @@ from mod.misc.log import SimpleLog
 from mod.pipeline.run.steps.star_align import RunStarAlign
 from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
 from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
+from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
 
 
 def test_star_align():
@@ -35,7 +36,7 @@ def test_add_read_groups():
 def test_mark_duplicates():
     log = SimpleLog()
 
-    mark_duplicates = RunPicardMarkDuplicates(output_dir='tests/add_mark_duplicates_test1',
+    mark_duplicates = RunPicardMarkDuplicates(output_dir='tests/mark_duplicates_test1',
                                                input_bam='examples/smallAligned.RG.bam',
                                                output_bam='examples/smallAligned.RG.MG.bam',
                                                logger=log)
@@ -46,7 +47,7 @@ def test_mark_duplicates():
 def test_split_n_cigar_reads():
     log = SimpleLog()
 
-    split_reads = RunPicardMarkDuplicates(output_dir='tests/add_split_reads_test1',
+    split_reads = RunGATKSplitNCigarReads(output_dir='tests/split_reads_test1',
                                           input_bam='examples/smallAligned.RG.MG.bam',
                                           output_bam='examples/smallAligned.RG.MG.SPLIT.bam',
                                           logger=log)
@@ -60,15 +61,15 @@ if __name__ == '__main__':
 
     which = sys.argv[1]
 
-    if which == 'star_align':
+    if which == 'star_align' or 'all':
         test_star_align()
 
-    if which == 'add_read_groups':
+    if which == 'add_read_groups' or 'all':
         test_add_read_groups()
 
-    if which == 'mark_duplicates':
+    if which == 'mark_duplicates' or 'all':
         test_mark_duplicates()
 
-    if which == 'split_reads':
+    if which == 'split_reads' or 'all':
         test_split_n_cigar_reads()
 
