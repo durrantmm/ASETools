@@ -10,7 +10,7 @@ from mod.pipeline.run.steps.java import RunJava
 
 class RunPicardAddReadGroups(RunStepSuper):
 
-    def __init__(self, output_dir, input_sam, output_bam = None, logger=None, out_prefix=None):
+    def __init__(self, output_dir, input_sam, output_bam = None, logger=None):
 
         custom_config = PicardAddReadGroupsCustomConfig()
         fixed_config = PicardAddReadGroupsFixedConfig()
@@ -33,7 +33,7 @@ class RunPicardAddReadGroups(RunStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg = input_sam
-        output.arg = self.handle_output_bam(out_prefix, input_sam)
+        output.arg = self.handle_output_bam(output_bam, input_sam)
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
