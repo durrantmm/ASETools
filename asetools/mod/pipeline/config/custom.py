@@ -12,7 +12,8 @@ REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/ref
 
 DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/All_20151104.vcf.gz"
 EXAC_VCF = "/home/mdurrant/montgomery/mdurrant/data/ExAC.r1.sites.vep.vcf.gz"
-THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/ALL.genotypes.vcf.gz"
+THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/" \
+                       "ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
 class StarAlignCustomConfig:
