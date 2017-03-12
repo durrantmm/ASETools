@@ -1,4 +1,3 @@
-import os
 from glob import glob
 from os.path import basename, join
 
@@ -7,7 +6,7 @@ from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import StarAlignCustomConfig
 from mod.pipeline.config.fixed import StarAlignFixedConfig
-from mod.pipeline.run_step_super import RunStepSuper
+from mod.pipeline.run.run_step_super import RunStepSuper
 
 
 class RunStarAlign(RunStepSuper):

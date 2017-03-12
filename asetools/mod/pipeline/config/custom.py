@@ -1,4 +1,5 @@
 import sys
+from mod.misc.string_constants import *
 
 class StarAlignCustomConfig:
 
@@ -28,5 +29,61 @@ class StarAlignCustomConfig:
             ("--sjdbScore", 1),
             ("--twopassMode", "Basic"),
             ("--twopass1readsN", -1)
+
+        ]
+
+class JavaCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
+        self.version = "1.8.0_66"
+        self.version_flag = "-version"
+
+        self.args = None
+
+
+class PicardAddReadGroupsCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
+                                          "AddOrReplaceReadGroups"])
+
+        self.version = "2.8.0-SNAPSHOT"
+        self.version_flag = "--help"
+
+        self.args = [
+
+            ("SO", "coordinate"),
+            ("RGID", "id"),
+            ("RGLB", "library"),
+            ("RGPL", "platform"),
+            ("RGPU", "machine"),
+            ("RGSM", "sample")
+
+        ]
+
+
+class PicardMarkDuplicatesCustomConfig:
+    from collections import OrderedDict
+
+    def __init__(self):
+
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
+                                          "MarkDuplicates"])
+
+        self.version = "2.8.0-SNAPSHOT"
+        self.version_flag = "--help"
+
+        self.ARGS = [
+
+            ("CREATE_INDEX", "true"),
+            ("VALIDATION_STRINGENCY", "SILENT"),
+            ("M", "output.metrics")
 
         ]
