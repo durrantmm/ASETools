@@ -75,7 +75,7 @@ class PicardAddReadGroupsCustomConfig:
             ("SO", "coordinate"),
             ("RGID", "id"),
             ("RGLB", "library"),
-            ("RGPL", "platform"),
+            ("RGPL", "ILLUMINA"),
             ("RGPU", "machine"),
             ("RGSM", "sample")
 
