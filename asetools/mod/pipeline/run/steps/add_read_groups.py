@@ -60,9 +60,9 @@ class RunPicardAddReadGroups(RunStepSuper):
         print(self.output.arg)
 
         command = [self.execution_path]
-        command.extend(EQ.join([self.input.flag, self.input.arg]))
+        command.append(EQ.join([self.input.flag, self.input.arg]))
         command.extend([EQ.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.extend(EQ.join([self.output.flag, join(self.output_dir, self.output.arg)]))
+        command.append(EQ.join([self.output.flag, join(self.output_dir, self.output.arg)]))
 
         return SPACE.join(command)
 
