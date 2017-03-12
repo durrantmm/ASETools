@@ -36,8 +36,9 @@ class RunStarAlign(RunStepSuper):
         input.arg1, input.arg2 = fastq1, fastq2
         output.arg = self.handle_out_prefix(out_prefix, fastq1, fastq2)
 
-        super().__init__(name, output_dir, execution_path, version, version_flag,
-                         version_parser, input, output, args, log_name, logger)
+        super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
+                         version_flag=version_flag, version_parser=version_parser, input=input,
+                         output=output, args=args, log_name=log_name, logger=logger)
 
 
     def handle_out_prefix(self, out_prefix, fastq1, fastq2):

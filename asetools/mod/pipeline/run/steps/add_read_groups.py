@@ -38,8 +38,9 @@ class RunPicardAddReadGroups(RunStepSuper):
         # Adding a java step to check its version
         self.java = RunJava()
 
-        super().__init__(name, output_dir, execution_path, version, version_flag,
-                         version_parser, input, output, args, log_name, logger)
+        super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
+                         version_flag=version_flag, version_parser=version_parser, input=input,
+                         output=output, args=args, log_name=log_name, logger=logger)
 
 
     def handle_output_bam(self, output_bam, input_sam):
