@@ -60,6 +60,7 @@ class PicardMarkDuplicatesFixedConfig:
 
         self.log_name = "mark_duplicates.json"
 
+
 class GATKSplitNCigarReadsFixedConfig:
 
     def __init__(self):
