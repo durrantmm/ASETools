@@ -43,6 +43,18 @@ def test_mark_duplicates():
     print('Your output file of interest is at {PATH}'.format(PATH=mark_duplicates.retrieve_output_path()))
 
 
+def test_split_n_cigar_reads():
+    log = SimpleLog()
+
+    split_reads = RunPicardMarkDuplicates(output_dir='tests/add_split_reads_test1',
+                                          input_bam='examples/smallAligned.RG.MG.bam',
+                                          output_bam='examples/smallAligned.RG.MG.SPLIT.bam',
+                                          logger=log)
+
+    split_reads.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=split_reads.retrieve_output_path()))
+
+
 
 if __name__ == '__main__':
 
@@ -56,4 +68,7 @@ if __name__ == '__main__':
 
     if which == 'mark_duplicates':
         test_mark_duplicates()
+
+    if which == 'split_reads':
+        test_split_n_cigar_reads()
 
