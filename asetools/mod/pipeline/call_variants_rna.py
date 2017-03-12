@@ -4,7 +4,7 @@ import os
 import subprocess
 
 from config import save_config
-from config.fixed.discrete.config_call_variants_rna import CallVariantsRNAConfig
+from config.fixed_old.discrete.config_call_variants_rna import CallVariantsRNAConfig
 from mod.misc.log import Log
 
 ### Global attributes and methods accessible to all classes

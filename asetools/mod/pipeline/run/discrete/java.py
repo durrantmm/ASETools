@@ -1,9 +1,7 @@
-import os
-from glob import glob
-
-from mod.pipeline.config.fixed.discrete.java import FixedConfigJava
-from mod.pipeline.run.discrete.version_parsers import parse_java_version
 import subprocess
+
+from mod.pipeline.config.fixed_old.discrete.java import FixedConfigJava
+from mod.pipeline.version_parsers import parse_java_version
 
 
 class RunJava(FixedConfigJava):

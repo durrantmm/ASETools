@@ -1,13 +1,13 @@
 import os
 import subprocess
-
-from mod.misc.string_constants import *
-from mod.pipeline.config.fixed.discrete.add_read_groups import FixedConfigAddReadGroups
-from mod.pipeline.run.discrete.version_parsers import parse_add_read_groups_version
 from os.path import basename, join
 
+from mod.misc.string_constants import *
+from mod.pipeline.run.discrete.java import RunJava
+from mod.pipeline.version_parsers import parse_add_read_groups_version
 
-class RunAddReadGroups(FixedConfigAddReadGroups):
+
+class RunAddReadGroups(ExecuteSuperStep):
 
     def __init__(self, output_dir, input_sam, output_bam=None, logger=None, out_prefix=None):
         super().__init__()
@@ -21,6 +21,8 @@ class RunAddReadGroups(FixedConfigAddReadGroups):
         self.output.arg = self.handle_output_bam(output_bam, input_sam)
 
         self.version_parser = parse_add_read_groups_version
+
+        self.java_run = RunJava(self.logger)
 
     def handle_output_bam(self, output_bam, input_sam):
         if output_bam:

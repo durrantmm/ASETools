@@ -1,28 +1,45 @@
 import os
 from glob import glob
+from os.path import basename, join
 
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
-from mod.pipeline.config.fixed.discrete.star_align import FixedConfigStarAlign
-from mod.pipeline.run.discrete.version_parsers import parse_star_version
-from os.path import basename, join
+from mod.pipeline.config.custom import StarAlignCustomConfig
+from mod.pipeline.config.fixed import StarAlignFixedConfig
+from mod.pipeline.run_step_super import RunStepSuper
 
 
-class RunStarAlign(FixedConfigStarAlign):
+class RunStarAlign(RunStepSuper):
 
-    def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
-        super().__init__()
+    def __init__(self, output_dir_in, fastq1_in, fastq2_in, logger_in=None, out_prefix_in=None):
 
-        self.logger = logger
+        custom_config = StarAlignCustomConfig()
+        fixed_config = StarAlignFixedConfig()
 
-        self.output_dir = os.path.abspath(output_dir)
+        name = fixed_config.name
+        output_dir = output_dir_in
+        execution_path = custom_config.execution_path
 
-        self.input.arg1, self.input.arg2 = fastq1, fastq2
+        version = custom_config.version
+        version_flag = custom_config.version_flag
+        version_parser = fixed_config.version_parser
 
-        self.output.arg = self.handle_out_prefix(out_prefix, fastq1, fastq2)
+        input = fixed_config.input
+        output = fixed_config.output
 
-        self.version_parser = parse_star_version
+        args = custom_config.args
+
+        log_name = fixed_config.log_name
+        logger = logger_in
+
+        # Adjusting attributes based on relevant input variables
+        input.arg1, input.arg2 = fastq1_in, fastq2_in
+        output.arg = self.handle_out_prefix(out_prefix_in, fastq1_in, fastq2_in)
+
+        super().__init__(name, output_dir, execution_path, version, version_flag,
+                         version_parser, input, output, args, log_name, logger)
+
 
     def handle_out_prefix(self, out_prefix, fastq1, fastq2):
         if out_prefix:
@@ -30,6 +47,7 @@ class RunStarAlign(FixedConfigStarAlign):
         else:
             prefix = get_shared_prefix(fastq1, fastq2, strip_chars=[DOT, UND], base=True)
             return basename(prefix)
+
 
     def format_command(self):
 
