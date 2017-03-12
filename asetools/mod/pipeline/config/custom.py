@@ -138,7 +138,7 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),
-            ("–knownSites", EXAC_VCF),
+            ("–knownSites", DBSNP_VCF),
             ("-L", GENCODE_EXONS_BED)
 
         ]
