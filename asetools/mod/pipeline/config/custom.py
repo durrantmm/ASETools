@@ -80,7 +80,7 @@ class PicardMarkDuplicatesCustomConfig:
         self.version = "2.8.0-SNAPSHOT"
         self.version_flag = "--help"
 
-        self.ARGS = [
+        self.args = [
 
             ("CREATE_INDEX", "true"),
             ("VALIDATION_STRINGENCY", "SILENT"),
