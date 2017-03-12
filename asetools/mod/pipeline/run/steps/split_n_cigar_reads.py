@@ -63,5 +63,5 @@ class RunGATKSplitNCigarReads(RunStepSuper):
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
-        super().check_version(stderr=subprocess.STDOUT, ignore_error=True, pass_version_to_parser=True)
+        super().check_version()
 
