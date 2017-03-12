@@ -12,13 +12,13 @@ from mod.pipeline.run_step_super import RunStepSuper
 
 class RunStarAlign(RunStepSuper):
 
-    def __init__(self, output_dir_in, fastq1_in, fastq2_in, logger_in=None, out_prefix_in=None):
+    def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
 
         custom_config = StarAlignCustomConfig()
         fixed_config = StarAlignFixedConfig()
 
         name = fixed_config.name
-        output_dir = output_dir_in
+        output_dir = output_dir
         execution_path = custom_config.execution_path
 
         version = custom_config.version
@@ -31,11 +31,11 @@ class RunStarAlign(RunStepSuper):
         args = custom_config.args
 
         log_name = fixed_config.log_name
-        logger = logger_in
+        logger = logger
 
         # Adjusting attributes based on relevant input variables
-        input.arg1, input.arg2 = fastq1_in, fastq2_in
-        output.arg = self.handle_out_prefix(out_prefix_in, fastq1_in, fastq2_in)
+        input.arg1, input.arg2 = fastq1, fastq2
+        output.arg = self.handle_out_prefix(out_prefix, fastq1, fastq2)
 
         super().__init__(name, output_dir, execution_path, version, version_flag,
                          version_parser, input, output, args, log_name, logger)
