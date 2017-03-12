@@ -84,3 +84,7 @@ if __name__ == '__main__':
     if which == 'split_reads' or which == 'all':
         test_split_n_cigar_reads()
 
+    if which == 'base_recal' or which == 'all':
+        test_base_recalibrator()
+
+
