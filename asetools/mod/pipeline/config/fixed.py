@@ -71,6 +71,6 @@ class GATKSplitNCigarReadsFixedConfig:
 
         self.output = FlagArg(flag='-o', arg=None)
 
-        self.version_parser = parse_mark_duplicates_version
+        self.version_parser = parse_gatk_version
 
         self.log_name = "split_n_cigar_reads.json"
