@@ -55,7 +55,10 @@ class RunPicardMarkDuplicates(RunStepSuper):
 
         command = [self.execution_path]
         command.append(EQ.join([self.input.flag, self.input.arg]))
-        command.extend([EQ.join(map(str, [flag, arg])) for flag, arg in self.args])
+        for flag, arg in self.args:
+            if flag == 'M':
+                arg = join(self.output_dir, arg)
+            command.append(EQ.join(map(str, [flag, arg])))
         command.append(EQ.join([self.output.flag, join(self.output_dir, self.output.arg)]))
 
         return SPACE.join(command)
