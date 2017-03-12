@@ -61,15 +61,15 @@ if __name__ == '__main__':
 
     which = sys.argv[1]
 
-    if which == 'star_align' or 'all':
+    if which == 'star_align' or which == 'all':
         test_star_align()
 
-    if which == 'add_read_groups' or 'all':
+    if which == 'add_read_groups' or which == 'all':
         test_add_read_groups()
 
-    if which == 'mark_duplicates' or 'all':
+    if which == 'mark_duplicates' or which == 'all':
         test_mark_duplicates()
 
-    if which == 'split_reads' or 'all':
+    if which == 'split_reads' or which == 'all':
         test_split_n_cigar_reads()
 
