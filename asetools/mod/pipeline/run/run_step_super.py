@@ -10,7 +10,7 @@ class RunStepSuper:
     def __init__(self, name, output_dir, execution_path, version, version_flag, version_parser, input, output, args,
                  log_name, logger):
         self.name = name
-        self.output_dir = os.path.abspath(output_dir)
+        self.output_dir = output_dir
         self.execution_path = execution_path
 
 
