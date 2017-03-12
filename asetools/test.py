@@ -39,6 +39,6 @@ if __name__ == '__main__':
     if which == 'star_align':
         test_star_align()
 
-    #if which == 'add_read_groups':
-    #    test_add_read_groups()
+    if which == 'add_read_groups':
+        test_add_read_groups()
 
