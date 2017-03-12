@@ -5,6 +5,7 @@ from mod.pipeline.run.steps.star_align import RunStarAlign
 from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
 from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
 from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
 
 
 def test_star_align():
@@ -55,6 +56,16 @@ def test_split_n_cigar_reads():
     split_reads.run()
     print('Your output file of interest is at {PATH}'.format(PATH=split_reads.retrieve_output_path()))
 
+
+def test_base_recalibrator():
+    log = SimpleLog()
+
+    split_reads = RunGATKRNAseqBaseRecalibrator(output_dir='tests/base_recalibrator_test1',
+                                                input_bam='examples/smallAligned.RG.MG.SPLIT.bam',
+                                                logger=log)
+
+    split_reads.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=split_reads.retrieve_output_path()))
 
 
 if __name__ == '__main__':

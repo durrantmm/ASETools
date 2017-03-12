@@ -74,3 +74,35 @@ class GATKSplitNCigarReadsFixedConfig:
         self.version_parser = parse_gatk_version
 
         self.log_name = "split_n_cigar_reads.json"
+
+
+class GATKRNAseqBaseRecalibratorFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-BaseRecalibrator"
+
+        self.input = FlagArg(flag='-I', arg=None)
+
+        self.output = FlagArg(flag='-o', arg="recal.table")
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "base_recalibrator.json"
+
+
+class GATKPrintReadsFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-PrintReads"
+
+        self.input = FlagArg(flag='-I', arg=None)
+
+        self.input_recal_table = FlagArg(flag='-BQSR', arg=None)
+
+        self.output = FlagArg(flag='-o', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "print_reads.json"

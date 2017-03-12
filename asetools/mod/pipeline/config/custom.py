@@ -5,7 +5,15 @@ from mod.misc.string_constants import *
 PICARD_EXECUTION_PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
 PICARD_VERSION = "2.8.0-SNAPSHOT"
 
+GATK_EXECUTION_PATH = "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar"
+GATK_VERSION = "3.6-0-g89b7209"
+
 REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
+
+DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/All_20151104.vcf.gz"
+EXAC_VCF = "/home/mdurrant/montgomery/mdurrant/data/ExAC.r1.sites.vep.vcf.gz"
+THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/ALL.genotypes.vcf.gz"
+GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
 class StarAlignCustomConfig:
 
@@ -98,10 +106,10 @@ class GATKSplitNCigarReadsCustomConfig:
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-jar",
-                                          "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar",
+                                          GATK_EXECUTION_PATH,
                                           "-T SplitNCigarReads"])
 
-        self.version = "3.6-0-g89b7209"
+        self.version = GATK_VERSION
         self.version_flag = "--version"
 
         self.args = [
@@ -113,3 +121,43 @@ class GATKSplitNCigarReadsCustomConfig:
             ("-U", "ALLOW_N_CIGAR_READS")
 
         ]
+
+
+class GATKRNAseqBaseRecalibratorCustomConfig:
+
+    def __init__(self):
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          GATK_EXECUTION_PATH,
+                                          "-T BaseRecalibrator"])
+
+        self.version = GATK_VERSION
+        self.version_flag = "--version"
+
+        self.args = [
+
+            ("-R", REFERENCE_GENOME_FASTA),
+            ("-knownSites", DBSNP_VCF),
+            ("–knownSites", EXAC_VCF),
+            ("–knownSites", THOUSAND_GENOMES_VCF),
+            ("-L", GENCODE_EXONS_BED)
+
+        ]
+
+class GATKPrintReadsCustomConfig:
+
+    def __init__(self):
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          GATK_EXECUTION_PATH,
+                                          "-T PrintReads"])
+
+        self.version = GATK_VERSION
+        self.version_flag = "--version"
+
+        self.args = [
+
+            ("-R", REFERENCE_GENOME_FASTA)
+
+        ]
+
