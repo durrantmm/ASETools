@@ -8,8 +8,8 @@ from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
 def test_star_align():
     log = SimpleLog()
     star_align = RunStarAlign(output_dir='tests/star_align_test1',
-                              fastq1='examples/small.1.fastq.gz',
-                              fastq2='examples/small.2.fastq.gz',
+                              fastq1='examples/small.1.fq.gz',
+                              fastq2='examples/small.2.fq.gz',
                               logger=log)
     star_align.run()
     print('Your output file of interest is at {PATH}'.format(PATH=star_align.retrieve_output_path()))
