@@ -1,6 +1,12 @@
 import sys
 from mod.misc.string_constants import *
 
+
+PICARD_EXECUTION_PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
+PICARD_VERSION = "2.8.0-SNAPSHOT"
+
+REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
+
 class StarAlignCustomConfig:
 
     def __init__(self):
@@ -49,10 +55,10 @@ class PicardAddReadGroupsCustomConfig:
 
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-jar",
-                                          "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
+                                          PICARD_EXECUTION_PATH,
                                           "AddOrReplaceReadGroups"])
 
-        self.version = "2.8.0-SNAPSHOT"
+        self.version = PICARD_VERSION
         self.version_flag = "--help"
 
         self.args = [
@@ -68,16 +74,15 @@ class PicardAddReadGroupsCustomConfig:
 
 
 class PicardMarkDuplicatesCustomConfig:
-    from collections import OrderedDict
 
     def __init__(self):
 
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-jar",
-                                          "/srv/gs1/software/picard-tools/2.8.0/picard.jar",
+                                          PICARD_EXECUTION_PATH,
                                           "MarkDuplicates"])
 
-        self.version = "2.8.0-SNAPSHOT"
+        self.version = PICARD_VERSION
         self.version_flag = "--help"
 
         self.args = [
@@ -85,5 +90,26 @@ class PicardMarkDuplicatesCustomConfig:
             ("CREATE_INDEX", "true"),
             ("VALIDATION_STRINGENCY", "SILENT"),
             ("M", "output.metrics")
+
+        ]
+
+class GATKSplitNCigarReadsCustomConfig:
+
+    def __init__(self):
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar",
+                                          "-T SplitNCigarReads"])
+
+        self.version = "3.6-0-g89b7209"
+        self.version_flag = "--version"
+
+        self.args = [
+
+            ("-R", REFERENCE_GENOME_FASTA),
+            ("-rf", "ReassignOneMappingQuality"),
+            ("-RMQF", 255),
+            ("-RMQT", 60),
+            ("-U", "ALLOW_N_CIGAR_READS")
 
         ]

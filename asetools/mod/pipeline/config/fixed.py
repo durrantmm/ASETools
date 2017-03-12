@@ -59,3 +59,17 @@ class PicardMarkDuplicatesFixedConfig:
         self.version_parser = parse_mark_duplicates_version
 
         self.log_name = "mark_duplicates.json"
+
+class GATKSplitNCigarReadsFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-SplitNCigarReads"
+
+        self.input = FlagArg(flag='-I', arg=None)
+
+        self.output = FlagArg(flag='-o', arg=None)
+
+        self.version_parser = parse_mark_duplicates_version
+
+        self.log_name = "split_n_cigar_reads.json"
