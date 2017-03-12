@@ -6,6 +6,7 @@ from mod.misc.string_constants import *
 from mod.pipeline.run.run_step_super import RunStepSuper
 from mod.pipeline.config.custom import PicardAddReadGroupsCustomConfig
 from mod.pipeline.config.fixed import PicardAddReadGroupsFixedConfig
+from mod.pipeline.run.steps.java import RunJava
 
 class RunPicardAddReadGroups(RunStepSuper):
 
@@ -33,6 +34,9 @@ class RunPicardAddReadGroups(RunStepSuper):
         # Adjusting attributes based on relevant input variables
         input.arg = input_sam
         output.arg = self.handle_output_bam(out_prefix, input_sam)
+
+        # Adding a java step to check its version
+        self.java = RunJava()
 
         super().__init__(name, output_dir, execution_path, version, version_flag,
                          version_parser, input, output, args, log_name, logger)

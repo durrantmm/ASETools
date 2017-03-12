@@ -1,10 +1,9 @@
 import subprocess
 
-from mod.pipeline.config.fixed_old.discrete.java import FixedConfigJava
 from mod.pipeline.version_parsers import parse_java_version
+from mod.pipeline.run.run_step_super import RunStepSuper
 
-
-class RunJava(FixedConfigJava):
+class RunJava(RunStepSuper):
 
     def __init__(self, logger=None, out_prefix=None):
         super().__init__()
