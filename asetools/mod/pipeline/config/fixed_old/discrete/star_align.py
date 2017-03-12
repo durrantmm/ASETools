@@ -1,5 +1,5 @@
 from mod.misc.record_classes import FlagArg, FlagTwoArgs
-from pipeline.config.discrete.star_align import CustomConfigStarAlign
+from mod.pipeline.config.discrete.star_align import CustomConfigStarAlign
 
 
 class FixedConfigStarAlign(CustomConfigStarAlign):

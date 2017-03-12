@@ -1,7 +1,5 @@
 import sys
 
-
-
 class StarAlignCustomConfig:
 
     def __init__(self):
