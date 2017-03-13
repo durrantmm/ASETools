@@ -1,4 +1,4 @@
-import vcf
+import vcf, os
 from mod.misc.string_constants import *
 from os.path import basename, join
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
@@ -41,6 +41,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
             with open(filename, 'rb') as infile:
                 with gzip.open(filename+self.gzip_suffix, 'wb') as outfile:
                     outfile.writelines(infile)
+            os.remove(filename)
 
 
 
