@@ -14,7 +14,7 @@ class RunPythonStepSuper:
         self.output_dir = output_dir
 
         self.input = input
-        self.output = self.handle_output(output_dir, output)
+        self.output = self.handle_output(output_dir, output, input)
 
         self.log_name = log_name
         self.logger = logger
@@ -68,10 +68,8 @@ class RunPythonStepSuper:
         else:
             raise ExecutionNotRanNoOutput(self.name)
 
-    def handle_output(self, output_dir, output):
-        output_dir = os.path.abspath(os.path.realpath(output_dir))
-        output = os.path.abspath(os.path.abspath(output))
-        if output.startswith(output):
-            return output
-        else:
-            return os.path.join(output_dir, os.path.basename(output))
+    def handle_output(self, output_dir, output, input):
+        if os.path.realpath(output) == os.path.realpath(input) or not output:
+            output = DOT.join(output.split()[:-1])+DOT+self.name+DOT+output.split()[-1]
+
+        return os.path.basename(output)

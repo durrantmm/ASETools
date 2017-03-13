@@ -1,4 +1,5 @@
 import vcf
+from os.path import basename, join
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 
 class RunFilterVCF(RunPythonStepSuper):
@@ -28,8 +29,9 @@ class RunFilterVCF(RunPythonStepSuper):
 
 
     def process(self):
-        reader = vcf.Reader(open(self.input),)
-        writer = vcf.Writer(open(self.output, 'w'), reader)
+        reader = vcf.Reader(open(self.input))
+        writer = vcf.Writer(open(join(self.output_dir, self.output), 'w'), reader)
+        print(join(self.output_dir, self.output))
 
         for rec in reader:
 
@@ -37,17 +39,30 @@ class RunFilterVCF(RunPythonStepSuper):
                             rec.CHROM not in [c.strip('chr') for c in self.autosomal_chroms]:
                 continue
 
-            if self.biallelic_only and not self.is_biallelic(rec):
+            elif self.biallelic_only and not self.is_biallelic(rec):
                 continue
 
-            print(rec)
+            elif self.no_indels and rec.is_indel:
+                continue
 
+            elif self.min_one_het and not self.contains_min_one_het(rec):
+                continue
+            else:
+                writer.write_record(rec)
 
 
     def is_biallelic(self, record):
-        return True
+        if len(record.ALT) == 1:
+            return True
+        else:
+            return False
 
 
+    def contains_min_one_het(self, record):
+        if len(record.get_hets()) >= 1:
+            return True
+        else:
+            return False
 
 
 
