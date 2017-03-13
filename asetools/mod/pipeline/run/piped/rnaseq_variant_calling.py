@@ -25,7 +25,7 @@ class RunRNASeqVariantCalling(RunPipedSuper):
 
         logger = logger
 
-        super().__init__(self, name, output_dir, input, logger)
+        super().__init__(name, output_dir, input, logger)
 
     def execute_steps(self):
         # STAR ALIGN
