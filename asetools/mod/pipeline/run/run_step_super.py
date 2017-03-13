@@ -71,7 +71,7 @@ class RunStepSuper:
             if not shell:
                 command = command.split()
 
-            subprocess.check_output(command, stderr=stderr, shell=shell)
+            subprocess.call(command, stderr=stderr, shell=shell)
         except subprocess.CalledProcessError as e:
             print(e.output)
             raise e
