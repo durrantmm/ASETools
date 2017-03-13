@@ -38,7 +38,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
             filename = out.name
             out.close()
 
-            gzip_file(filename)
+            #gzip_file(filename)
 
 
 
