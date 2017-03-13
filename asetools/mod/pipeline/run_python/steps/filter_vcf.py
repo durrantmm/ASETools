@@ -45,7 +45,7 @@ class RunFilterVCF(RunPythonStepSuper):
 
 
     def is_biallelic(self, record):
-        True
+        return True
 
 
 
