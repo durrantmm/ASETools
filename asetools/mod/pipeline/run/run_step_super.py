@@ -71,12 +71,11 @@ class RunStepSuper:
             if not shell:
                 command = command.split()
 
-            output = subprocess.check_output(command, stderr=stderr, shell=shell)
+            subprocess.check_output(command, stderr=stderr, shell=shell)
         except subprocess.CalledProcessError as e:
             print(e.output)
             raise e
 
-        Log.debug_chk(self.logger, output)
 
 
     def save_log(self):
