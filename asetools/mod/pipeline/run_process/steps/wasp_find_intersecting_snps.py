@@ -51,6 +51,7 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
         command = [self.execution_path]
         command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
         command.extend([self.output.flag, self.output.arg])
+        command.extend([self.input_snp_dir.flag, self.input_snp_dir.arg])
         command.append(self.input.arg)
 
         return SPACE.join(command)
