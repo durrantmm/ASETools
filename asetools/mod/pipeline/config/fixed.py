@@ -122,3 +122,29 @@ class GATKHaplotypeCallerFixedConfig:
         self.version_parser = parse_gatk_version
 
         self.log_name = "haplotype_caller.json"
+
+class GATKVariantFiltrationFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-VariantFiltration"
+
+        self.input = FlagArg(flag='-V', arg=None)
+
+
+        self.output = FlagArg(flag='-o', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "variant_filtration.json"
+
+
+class RNASeqVariantCallingFixedConfig:
+
+    def __init__(self):
+
+        self.name = "RNAseqVariantCaller"
+
+        self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
+
+

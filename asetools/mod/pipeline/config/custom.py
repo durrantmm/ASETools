@@ -180,3 +180,27 @@ class GATKHaplotypeCallerCustomConfig:
             ("-stand_call_conf", 20.0)
 
         ]
+
+
+class GATKVariantFiltrationCustomConfig:
+
+    def __init__(self):
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          GATK_EXECUTION_PATH,
+                                          "-T VariantFiltration"])
+
+        self.version = GATK_VERSION
+        self.version_flag = "--version"
+
+        self.args = [
+
+            ("-R", REFERENCE_GENOME_FASTA),
+            ("-window", 35),
+            ("-cluster", 3),
+            ("-filterName", "FS"),
+            ("-filter", '"FS > 30.0"'),
+            ("-filterName", "QD"),
+            ("-filter", '"QD < 2.0"')
+
+        ]
