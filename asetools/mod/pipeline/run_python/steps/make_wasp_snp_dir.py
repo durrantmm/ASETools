@@ -19,7 +19,8 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
         super().__init__(name, output_dir, input, output, log_name, logger)
 
-        self.file_suffix = '.snps.txt.gz'
+        self.file_suffix = '.snps.txt'
+        self.gzip_suffix = '.gz'
 
 
     def process(self):
@@ -29,9 +30,19 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
-                snp_files[rec.CHROM] = gzip.open(join(self.output_dir, rec.CHROM+self.file_suffix), 'wt')
+                snp_files[rec.CHROM] = open(join(self.output_dir, rec.CHROM+self.file_suffix), 'w')
 
             snp_files[rec.CHROM].write(SPACE.join(map(str, [rec.POS, rec.REF, rec.ALT[0]]))+NL)
+        for chrom, out in snp_files.items():
+
+            filename = out.name
+            out.close()
+
+            with open(filename, 'rb') as infile:
+                with gzip.open(filename+self.gzip_suffix, 'wb') as outfile:
+                    outfile.writelines(infile)
+
+
 
     def save_log(self):
         pass
