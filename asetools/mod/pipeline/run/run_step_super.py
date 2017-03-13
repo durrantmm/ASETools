@@ -41,6 +41,7 @@ class RunStepSuper:
             if ignore_error:
                 output = e.output
             else:
+                print(e.output)
                 raise e
 
         Log.debug_chk(self.logger, output)
