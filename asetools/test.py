@@ -98,7 +98,7 @@ def test_haplotype_caller():
 def test_variant_filtration():
     log = SimpleLog()
 
-    variant_filtration = RunGATKVariantFiltration(output_dir='tests/haplotype_caller_test1',
+    variant_filtration = RunGATKVariantFiltration(output_dir='tests/variant_filtration_test1',
                                                 input_vcf='examples/smallAligned.vcf',
                                                 logger=log)
 
