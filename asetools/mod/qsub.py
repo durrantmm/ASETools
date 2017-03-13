@@ -28,7 +28,7 @@ class QSubmit:
     def create_submission_script(self, command):
         with open(self.qsub_script) as infile:
 
-            with open(join(self.output_dir, self.output_file)) as outfile:
+            with open(join(self.output_dir, self.output_file), 'w') as outfile:
 
                 for line in infile:
                     outfile.write(line)
