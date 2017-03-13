@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, subprocess
 from os.path import join
 from mod.misc.string_constants import *
 class QSubmit:
@@ -18,6 +18,7 @@ class QSubmit:
         os.makedirs(self.output_dir, exist_ok=True)
         command = self.remove_qsub_flag(self.command, self.qsub_flag)
         self.create_submission_script(command)
+        self.execute_qsub(command)
 
 
     def remove_qsub_flag(self, command, qsub_flag):
@@ -35,4 +36,5 @@ class QSubmit:
                     outfile.write(line)
                 outfile.write(command)
 
-    #def execute_qsub(self):
+    def execute_qsub(self, command):
+        subprocess.check_call(['qsub', join(self.output_dir, self.output_file)])
