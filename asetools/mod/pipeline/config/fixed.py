@@ -139,6 +139,22 @@ class GATKVariantFiltrationFixedConfig:
         self.log_name = "variant_filtration.json"
 
 
+
+class WASPFindIntersectingSnpsCustomConfig:
+
+    def __init__(self):
+
+        self.name = "WASP-FindIntersectingSnps"
+
+        self.input = FlagArg(flag='', arg=None)
+
+        self.output = FlagArg(flag='--output_dir', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "variant_filtration.json"
+
+
 class RNASeqVariantCallingFixedConfig:
 
     def __init__(self):

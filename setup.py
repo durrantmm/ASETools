@@ -10,5 +10,5 @@ setup(name='ASETools',
       author='Matt Durrant',
       author_email='mdurrant@stanford.edu',
       url='www.stanford.edu',
-      packages=['sys', 'pysam', 'vcf', 'argparse', 'recordclass'],
+      packages=['sys', 'pysam', 'vcf', 'argparse', 'recordclass', 'numpy', 'util', 'tables'],
      )

@@ -68,6 +68,7 @@ class RunPythonStepSuper:
         else:
             raise ExecutionNotRanNoOutput(self.name)
 
+
     def handle_output(self, output_dir, output, input):
         if os.path.realpath(output) == os.path.realpath(input) or not output:
             output = DOT.join(output.split()[:-1])+DOT+self.name+DOT+output.split()[-1]

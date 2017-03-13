@@ -11,6 +11,8 @@ from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCall
 from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
+from mod.pipeline.run_python.steps.make_wasp_snp_dir import RunMakeWaspSnpDir
+from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 
 
 def test_star_align():
@@ -126,6 +128,22 @@ def test_filter_vcf():
                                logger=log)
     vcf_filter.run()
 
+def test_make_wasp_snp_dir():
+    log = SimpleLog()
+
+    make_snp_dir = RunMakeWaspSnpDir(output_dir="tests/make_wasp_snp_dir",
+                                     input_sorted_vcf="examples/smallAligned.FILTERED.HET.vcf",
+                                     logger=log)
+    make_snp_dir.run()
+
+def test_find_intersecting_snps():
+    log = SimpleLog()
+
+    inter_snps = RunWaspFindIntersectingSnps(output_dir="tests/wasp_find_intersecting_snps",
+                                             input_bam="examples/smallAligned.RG.MG.SPLIT.RECAL.bam",
+                                             input_snp_dir="examples/)
+    inter_snps.run()
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -159,5 +177,8 @@ if __name__ == '__main__':
 
     if which == 'filter_vcf' or which == 'all':
         test_filter_vcf()
+
+    if which == 'make_wasp_snp_dir' or which == 'all':
+        test_make_wasp_snp_dir()
 
 
