@@ -12,7 +12,7 @@ class QSubmit:
 
 
     def submit(self):
-        os.makedirs(self.output_dir)
+        os.makedirs(self.output_dir, exist_ok=True)
         command = self.remove_qsub_flag(self.command, self.qsub_flag)
         self.create_submission_script(command)
 
