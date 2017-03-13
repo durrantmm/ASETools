@@ -17,7 +17,7 @@ FASTQ2_FLAG = '--fastq2'
 
 
 def main(args):
-    os.makedirs(args.output_dir)
+    os.makedirs(args.output_dir, exist_ok=True)
     if args.pipeline_or_analysis==PIPELINE_SUBPARSER_STR:
 
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
