@@ -16,7 +16,7 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
     def __init__(self, output_dir, input_bam, input_snp_dir, output_bam=None, logger=None):
 
         custom_config = WASPFindIntersectingSnpsCustomConfig()
-        fixed_config = WASPFindIntersectingSnpsCustomConfig()
+        fixed_config = WASPFindIntersectingSnpsFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
