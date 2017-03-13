@@ -1,4 +1,5 @@
 import sys, os
+from os.path import join
 from mod.misc.string_constants import *
 class QSubmit:
 
@@ -6,6 +7,7 @@ class QSubmit:
 
         self.output_dir = output_dir
         self.execution_path = 'python'
+        self.output_file = 'job_submission.sh'
         self.qsub_script = qsub_script
         self.command = command
         self.qsub_flag = qsub_flag
@@ -25,5 +27,8 @@ class QSubmit:
 
     def create_submission_script(self, command):
         with open(self.qsub_script) as infile:
-            for line in infile:
-                print(line)
+
+            with open(join(self.output_dir, self.output_file)) as outfile:
+
+                for line in infile:
+                    outfile.write(line)
