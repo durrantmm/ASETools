@@ -19,7 +19,7 @@ class RunRNASeqVariantCalling(RunPipedSuper):
         name = fixed_config.name
         output_dir = output_dir
 
-        input = input
+        input = fixed_config.input
         input.arg1 = fastq1
         input.arg2 = fastq2
 
