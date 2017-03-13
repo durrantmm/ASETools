@@ -4,6 +4,7 @@ import json
 from mod.misc.record_classes import FlagArg_to_tuple
 from mod.misc.log import *
 from mod.misc.string_constants import *
+from io import StringIO
 
 class RunStepSuper:
 
