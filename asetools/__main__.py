@@ -25,6 +25,7 @@ def main(args):
                                                         fastq1=args.fastq1,
                                                         fastq2=args.fastq2,
                                                         logger=Log(args.output_dir))
+            rnaseq_var_caller.run()
 
 
 
