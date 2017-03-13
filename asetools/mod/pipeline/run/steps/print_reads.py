@@ -33,7 +33,7 @@ class RunGATKPrintReads(RunStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg = input_bam
-        output.arg = handle_output_bam(output_bam, input_bam)
+        output.arg = self.handle_output_bam(output_bam, input_bam)
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
