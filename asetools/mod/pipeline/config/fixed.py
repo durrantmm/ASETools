@@ -140,7 +140,7 @@ class GATKVariantFiltrationFixedConfig:
 
 
 
-class WASPFindIntersectingSnpsCustomConfig:
+class WASPFindIntersectingSnpsFixedConfig:
 
     def __init__(self):
 

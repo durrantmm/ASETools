@@ -7,7 +7,7 @@ from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import WASPFindIntersectingSnpsCustomConfig
-from mod.pipeline.config.fixed import WASPFindIntersectingSnpsCustomConfig
+from mod.pipeline.config.fixed import WASPFindIntersectingSnpsFixedConfig
 from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 
 
@@ -17,7 +17,7 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
 
         custom_config = WASPFindIntersectingSnpsCustomConfig()
         fixed_config = WASPFindIntersectingSnpsCustomConfig()
-        print(dir(custom_config))
+
         name = fixed_config.name
         output_dir = output_dir
         execution_path = custom_config.execution_path
