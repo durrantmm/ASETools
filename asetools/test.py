@@ -75,7 +75,7 @@ def test_print_reads():
     print_reads = RunGATKPrintReads(output_dir='tests/print_reads_test1',
                                                 input_bam='examples/smallAligned.RG.MG.SPLIT.bam',
                                                 input_recal_table="examples/recal.table",
-                                                output_bam='examples/smallAligned.RG.MG.SPLIT.RECAL.bam',
+                                                output_bam='smallAligned.RG.MG.SPLIT.RECAL.bam',
                                                 logger=log)
 
     print_reads.run()

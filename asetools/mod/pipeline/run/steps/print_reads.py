@@ -10,7 +10,7 @@ from mod.pipeline.run.steps.java import RunJava
 
 class RunGATKPrintReads(RunStepSuper):
 
-    def __init__(self, output_dir, input_bam, input_recal_table, output_bam, logger=None):
+    def __init__(self, output_dir, input_bam, input_recal_table, output_bam=None, logger=None):
 
         custom_config = GATKPrintReadsCustomConfig()
         fixed_config = GATKPrintReadsFixedConfig()
@@ -33,7 +33,7 @@ class RunGATKPrintReads(RunStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg = input_bam
-        output.arg = output_bam
+        output.arg = handle_output_bam(output_bam, input_bam)
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
@@ -47,11 +47,11 @@ class RunGATKPrintReads(RunStepSuper):
 
 
 
-    def handle_output_bam(self, output_bam, input_sam):
+    def handle_output_bam(self, output_bam, input_bam):
         if output_bam:
             return basename(output_bam)
         else:
-            output_bam = basename(input_sam).split('.')[0] + '.bam'
+            output_bam = basename(input_bam).split('.')[0] + '.RECAL.bam'
             return basename(output_bam)
 
 
