@@ -74,7 +74,7 @@ class RunStepSuper:
 
             popen = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=stderr, shell=shell, universal_newlines=True)
             for stdout_line in iter(popen.stdout.readline, ""):
-                Log.info_chk(self.logger, stdout_line)
+                Log.info_chk(self.logger, stdout_line.strip())
             popen.stdout.close()
             return_code = popen.wait()
             if return_code:
