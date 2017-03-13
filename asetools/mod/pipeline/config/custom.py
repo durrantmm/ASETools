@@ -185,6 +185,7 @@ class GATKHaplotypeCallerCustomConfig:
 class WASPFindIntersectingSnpsCustomConfig:
 
     def __init__(self):
+
         self.execution_path = "python /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"
 
         self.version = None
