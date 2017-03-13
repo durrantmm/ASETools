@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse
+import argparse, os
 
 from mod.misc.log import Log
 from mod.pipeline.run.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
@@ -17,7 +17,7 @@ FASTQ2_FLAG = '--fastq2'
 
 
 def main(args):
-
+    os.makedirs(args.output_dir)
     if args.pipeline_or_analysis==PIPELINE_SUBPARSER_STR:
 
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
