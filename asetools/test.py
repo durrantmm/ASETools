@@ -182,4 +182,7 @@ if __name__ == '__main__':
     if which == 'make_wasp_snp_dir' or which == 'all':
         test_make_wasp_snp_dir()
 
+    if which == 'find_intersecting_snps' or which == 'all':
+        test_find_intersecting_snps()
+
 
