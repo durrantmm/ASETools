@@ -199,8 +199,8 @@ class GATKVariantFiltrationCustomConfig:
             ("-window", 35),
             ("-cluster", 3),
             ("-filterName", "FS"),
-            ("-filter", '"FS > 30.0"'),
+            ("-filter", '\"FS > 30.0\"'),
             ("-filterName", "QD"),
-            ("-filter", '"QD < 2.0"')
+            ("-filter", '\"QD < 2.0\"')
 
         ]
