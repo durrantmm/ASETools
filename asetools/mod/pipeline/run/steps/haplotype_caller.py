@@ -4,16 +4,16 @@ from os.path import basename, join
 
 from mod.misc.string_constants import *
 from mod.pipeline.run.run_step_super import RunStepSuper
-from mod.pipeline.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
-from mod.pipeline.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
+from mod.pipeline.config.custom import GATKHaplotypeCallerCustomConfig
+from mod.pipeline.config.fixed import GATKHaplotypeCallerFixedConfig
 from mod.pipeline.run.steps.java import RunJava
 
 class RunGATKHaplotypeCaller(RunStepSuper):
 
     def __init__(self, output_dir, input_bam, output_vcf=None, logger=None):
 
-        custom_config = GATKRNAseqBaseRecalibratorCustomConfig()
-        fixed_config = GATKRNAseqBaseRecalibratorFixedConfig()
+        custom_config = GATKHaplotypeCallerCustomConfig()
+        fixed_config = GATKHaplotypeCallerFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
