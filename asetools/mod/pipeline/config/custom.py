@@ -8,7 +8,7 @@ PICARD_VERSION = "2.8.0-SNAPSHOT"
 GATK_EXECUTION_PATH = "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar"
 GATK_VERSION = "3.6-0-g89b7209"
 
-REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
+REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.nochr.fasta"
 
 DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/All_20151104.vcf.gz"
 EXAC_VCF = "/home/mdurrant/montgomery/mdurrant/data/ExAC.r1.sites.vep.vcf.gz"
@@ -26,7 +26,7 @@ class StarAlignCustomConfig:
 
         self.args = [
 
-            ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19"),
+            ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19noChr"),
             ("--readFilesCommand", "zcat"),
             ("--runThreadN", 2),
             ("--genomeLoad", "NoSharedMemory"),
