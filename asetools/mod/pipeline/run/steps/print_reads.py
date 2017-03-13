@@ -37,7 +37,7 @@ class RunGATKPrintReads(RunStepSuper):
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
         self.input_recal_table = fixed_config.input_recal_table
-        self.input_recal_table.arg = self.input_recal_table
+        self.input_recal_table.arg = input_recal_table
 
         super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
                          version_flag=version_flag, version_parser=version_parser, input=input,
