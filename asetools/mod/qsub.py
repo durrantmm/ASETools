@@ -6,7 +6,8 @@ class QSubmit:
     def __init__(self, output_dir, qsub_script, command, qsub_flag='--qsub'):
 
         self.output_dir = output_dir
-        self.execution_path = 'python'
+        self.qsub_execution_path = 'qsub'
+        self.python_execution_path = 'python'
         self.output_file = 'job_submission.sh'
         self.qsub_script = qsub_script
         self.command = command
@@ -23,7 +24,7 @@ class QSubmit:
         command = command.split()
         qsub_index = command.index(qsub_flag)
         command = command[:qsub_index] + command[qsub_index+2:]
-        return SPACE.join(command)
+        return SPACE.join(self.python_execution_path+command)
 
     def create_submission_script(self, command):
         with open(self.qsub_script) as infile:
@@ -32,3 +33,6 @@ class QSubmit:
 
                 for line in infile:
                     outfile.write(line)
+                outfile.write(command)
+
+    #def execute_qsub(self):
