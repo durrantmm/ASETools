@@ -65,6 +65,8 @@ class RunStepSuper:
     def execute_command(self, stderr=subprocess.PIPE, shell=False):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
+        Log.debug_chk(self.logger, msg_execute_command_signature.format(STDERR=stderr, SHELL=shell)
+
         try:
             if not shell:
                 command = command.split()
