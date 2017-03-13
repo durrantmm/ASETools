@@ -33,7 +33,7 @@ class RunFilterVCF(RunPythonStepSuper):
 
         for rec in reader:
 
-            if self.autosomal_only and rec.CHROM not in self.autosomal_chroms or \
+            if self.autosomal_only and rec.CHROM not in self.autosomal_chroms and \
                             rec.CHROM not in [c.strip('chr') for c in self.autosomal_chroms]:
                 continue
 
