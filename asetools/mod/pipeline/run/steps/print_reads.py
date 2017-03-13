@@ -10,7 +10,7 @@ from mod.pipeline.run.steps.java import RunJava
 
 class RunGATKPrintReads(RunStepSuper):
 
-    def __init__(self, output_dir, input_bam, input_recal_table, logger=None):
+    def __init__(self, output_dir, input_bam, input_recal_table, output_bam, logger=None):
 
         custom_config = GATKPrintReadsCustomConfig()
         fixed_config = GATKPrintReadsFixedConfig()
@@ -33,6 +33,7 @@ class RunGATKPrintReads(RunStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg = input_bam
+        output.arg = output_bam
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
