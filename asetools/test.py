@@ -7,6 +7,7 @@ from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
 from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
 from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
 from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
+from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
 
 
 def test_star_align():
@@ -82,6 +83,18 @@ def test_print_reads():
     print('Your output file of interest is at {PATH}'.format(PATH=print_reads.retrieve_output_path()))
 
 
+def test_haplotype_caller():
+    log = SimpleLog()
+
+    haplotype_caller = RunGATKHaplotypeCaller(output_dir='tests/haplotype_caller_test1',
+                                                input_bam='examples/smallAligned.RG.MG.SPLIT.RECAL.bam',
+                                                output_vcf='smallAligned.vcf',
+                                                logger=log)
+
+    haplotype_caller.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=haplotype_caller.retrieve_output_path()))
+
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -103,5 +116,8 @@ if __name__ == '__main__':
 
     if which == 'print_reads' or which == 'all':
         test_print_reads()
+
+    if which == 'haplotype_caller' or which == 'all':
+        test_haplotype_caller()
 
 

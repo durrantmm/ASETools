@@ -8,7 +8,7 @@ from mod.pipeline.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
 from mod.pipeline.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
 from mod.pipeline.run.steps.java import RunJava
 
-class RunGATKRNAseqBaseRecalibrator(RunStepSuper):
+class RunGATKHaplotypeCaller(RunStepSuper):
 
     def __init__(self, output_dir, input_bam, output_vcf=None, logger=None):
 
