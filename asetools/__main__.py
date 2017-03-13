@@ -27,7 +27,7 @@ def main(args):
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
             if args.qsub:
 
-                qsub = QSubmit(args.qsub, SPACE.join(sys.argv))
+                qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
                 qsub.submit()
 
             else:
