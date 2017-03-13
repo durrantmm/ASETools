@@ -40,10 +40,12 @@ class RunFilterVCF(RunPythonStepSuper):
             if self.biallelic_only and not self.is_biallelic(rec):
                 continue
 
+            print(rec)
+
 
 
     def is_biallelic(self, record):
-        print(record)
+        True
 
 
 
