@@ -8,6 +8,7 @@ from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
 from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
 from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
 from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.pipeline.run.steps.variant_filtration import RunGATKVariantFiltration
 
 
 def test_star_align():
@@ -94,6 +95,16 @@ def test_haplotype_caller():
     haplotype_caller.run()
     print('Your output file of interest is at {PATH}'.format(PATH=haplotype_caller.retrieve_output_path()))
 
+def test_variant_filtration():
+    log = SimpleLog()
+
+    variant_filtration = RunGATKVariantFiltration(output_dir='tests/haplotype_caller_test1',
+                                                input_vcf='examples/smallAligned.vcf',
+                                                logger=log)
+
+    variant_filtration.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=variant_filtration .retrieve_output_path()))
+
 
 if __name__ == '__main__':
 
@@ -119,5 +130,8 @@ if __name__ == '__main__':
 
     if which == 'haplotype_caller' or which == 'all':
         test_haplotype_caller()
+
+    if which == 'variant_filter' or which == 'all':
+        test_variant_filtration()
 
 
