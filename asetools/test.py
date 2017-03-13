@@ -85,7 +85,7 @@ def test_print_reads():
 
 
 def test_haplotype_caller():
-    log = SimpleLog()
+    log = SimpgileLog()
 
     haplotype_caller = RunGATKHaplotypeCaller(output_dir='tests/haplotype_caller_test1',
                                                 input_bam='examples/smallAligned.RG.MG.SPLIT.RECAL.bam',
