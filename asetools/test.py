@@ -6,6 +6,7 @@ from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
 from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
 from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
 from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
 
 
 def test_star_align():
@@ -60,12 +61,24 @@ def test_split_n_cigar_reads():
 def test_base_recalibrator():
     log = SimpleLog()
 
-    split_reads = RunGATKRNAseqBaseRecalibrator(output_dir='tests/base_recalibrator_test1',
+    recal = RunGATKRNAseqBaseRecalibrator(output_dir='tests/base_recalibrator_test1',
                                                 input_bam='examples/smallAligned.RG.MG.SPLIT.bam',
                                                 logger=log)
 
-    split_reads.run()
-    print('Your output file of interest is at {PATH}'.format(PATH=split_reads.retrieve_output_path()))
+    recal.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=recal.retrieve_output_path()))
+
+
+def test_print_reads():
+    log = SimpleLog()
+
+    print_reads = RunGATKPrintReads(output_dir='tests/print_reads_test1',
+                                                input_bam='examples/smallAligned.RG.MG.SPLIT.bam',
+                                                input_recal_table="examples/recal.table",
+                                                logger=log)
+
+    print_reads.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=print_reads.retrieve_output_path()))
 
 
 if __name__ == '__main__':
@@ -86,5 +99,8 @@ if __name__ == '__main__':
 
     if which == 'base_recal' or which == 'all':
         test_base_recalibrator()
+
+    if which == 'print_reads' or which == 'all':
+        test_print_reads()
 
 

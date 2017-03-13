@@ -106,6 +106,6 @@ class RunStepSuper:
             output = default_output
 
         if self.ran:
-            return output
+            return os.path.join(self.output_dir, os.path.basename(output))
         else:
             raise ExecutionNotRanNoOutput(self.name)
