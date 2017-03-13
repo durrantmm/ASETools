@@ -9,6 +9,7 @@ from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRec
 from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
 from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
 from mod.pipeline.run.steps.variant_filtration import RunGATKVariantFiltration
+from mod.pipeline.run.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 
 
 def test_star_align():
@@ -105,6 +106,16 @@ def test_variant_filtration():
     variant_filtration.run()
     print('Your output file of interest is at {PATH}'.format(PATH=variant_filtration .retrieve_output_path()))
 
+def test_rnaseq_variant_calling_pipe():
+    log = SimpleLog()
+
+    var_caller = RunRNASeqVariantCalling(output_dir="tests/VARIANT_CALLER",
+                                         fastq1='examples/small.1.fq.gz',
+                                         fastq2='examples/small.2.fq.gz',
+                                         logger=log)
+
+    var_caller.run()
+
 
 if __name__ == '__main__':
 
@@ -133,5 +144,8 @@ if __name__ == '__main__':
 
     if which == 'variant_filter' or which == 'all':
         test_variant_filtration()
+
+    if which == 'rnaseq_var' or which == 'all':
+        test_rnaseq_variant_calling_pipe()
 
 

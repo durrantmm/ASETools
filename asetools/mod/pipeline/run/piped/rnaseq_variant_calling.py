@@ -9,11 +9,12 @@ from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
 from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
 from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
 from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.pipeline.run.steps.variant_filtration import RunGATKVariantFiltration
 
 class RunRNASeqVariantCalling(RunPipedSuper):
 
-    def __init__(self, name, output_dir, fastq1, fastq2, logger):
-        fixed_config = RunRNASeqVariantCallingFixedConfig()
+    def __init__(self, output_dir, fastq1, fastq2, logger):
+        fixed_config = RNASeqVariantCallingFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
@@ -85,7 +86,15 @@ class RunRNASeqVariantCalling(RunPipedSuper):
         haplotype_caller.run()
         raw_vcf = haplotype_caller.retrieve_output_path()
 
-        #
+        # variant_filtration
+        variant_filtration_output_dir = join(self.output_dir, "STEP8_VARIANT_FILTRATION")
+        variant_filter = RunGATKVariantFiltration(output_dir=variant_filtration_output_dir,
+                                                  input_vcf=raw_vcf,
+                                                  logger=self.logger)
+        variant_filter.run()
+        filtered_vcf = variant_filter.retrieve_output_path()
+
+
 
 
 
