@@ -141,7 +141,8 @@ def test_find_intersecting_snps():
 
     inter_snps = RunWaspFindIntersectingSnps(output_dir="tests/wasp_find_intersecting_snps",
                                              input_bam="examples/smallAligned.RG.MG.SPLIT.RECAL.bam",
-                                             input_snp_dir="examples/)
+                                             input_snp_dir="examples/make_wasp_snp_dir",
+                                             logger=log)
     inter_snps.run()
 
 if __name__ == '__main__':
