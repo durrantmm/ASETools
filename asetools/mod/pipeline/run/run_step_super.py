@@ -62,11 +62,11 @@ class RunStepSuper:
         self.ran = True
 
 
-    def execute_command(self, stderr=subprocess.PIPE):
+    def execute_command(self, stderr=subprocess.PIPE, shell=False):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         try:
-            output = subprocess.check_output(command.split(), stderr=stderr)
+            output = subprocess.check_output(command.split(), stderr=stderr, shell=shell)
         except subprocess.CalledProcessError as e:
             print(e.output)
             raise e
