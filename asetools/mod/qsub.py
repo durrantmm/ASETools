@@ -24,7 +24,7 @@ class QSubmit:
         command = command.split()
         qsub_index = command.index(qsub_flag)
         command = command[:qsub_index] + command[qsub_index+2:]
-        return SPACE.join(self.python_execution_path+command)
+        return SPACE.join([self.python_execution_path]+command)
 
     def create_submission_script(self, command):
         with open(self.qsub_script) as infile:
