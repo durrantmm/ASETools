@@ -106,3 +106,19 @@ class GATKPrintReadsFixedConfig:
         self.version_parser = parse_gatk_version
 
         self.log_name = "print_reads.json"
+
+
+class GATKHaplotypeCallerFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-HaplotypeCaller"
+
+        self.input = FlagArg(flag='-I', arg=None)
+
+
+        self.output = FlagArg(flag='-o', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "haplotype_caller.json"
