@@ -124,6 +124,7 @@ def test_filter_vcf():
                                input_vcf="examples/smallAligned.FILTERED.vcf",
                                output_vcf="smallAligned.FILTERED.HET.vcf",
                                logger=log)
+    vcf_filter.process()
 
 if __name__ == '__main__':
 
