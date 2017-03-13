@@ -1,19 +1,19 @@
-
+import os
 import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run.run_step_super import RunStepSuper
-from mod.pipeline.config.custom import GATKVariantFiltrationCustomConfig
-from mod.pipeline.config.fixed import GATKVariantFiltrationFixedConfig
-from mod.pipeline.run.steps.java import RunJava
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
+from mod.pipeline.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
+from mod.pipeline.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
+from mod.pipeline.run_process.steps.java import RunJava
 
-class RunGATKVariantFiltration(RunStepSuper):
+class RunGATKRNAseqBaseRecalibrator(RunProcessStepSuper):
 
-    def __init__(self, output_dir, input_vcf, output_vcf=None, logger=None):
+    def __init__(self, output_dir, input_bam, logger=None):
 
-        custom_config = GATKVariantFiltrationCustomConfig()
-        fixed_config = GATKVariantFiltrationFixedConfig()
+        custom_config = GATKRNAseqBaseRecalibratorCustomConfig()
+        fixed_config = GATKRNAseqBaseRecalibratorFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
@@ -32,8 +32,7 @@ class RunGATKVariantFiltration(RunStepSuper):
         logger = logger
 
         # Adjusting attributes based on relevant input variables
-        input.arg = input_vcf
-        output.arg = self.handle_output_vcf(output_vcf, input_vcf)
+        input.arg = input_bam
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
@@ -43,11 +42,11 @@ class RunGATKVariantFiltration(RunStepSuper):
                          output=output, args=args, log_name=log_name, logger=logger)
 
 
-    def handle_output_vcf(self, output_vcf, input_vcf):
-        if output_vcf:
-            return basename(output_vcf)
+    def handle_output_bam(self, output_bam, input_sam):
+        if output_bam:
+            return basename(output_bam)
         else:
-            output_bam = basename(input_vcf).split('.')[0] + '.FILTERED.vcf'
+            output_bam = basename(input_sam).split('.')[0] + '.bam'
             return basename(output_bam)
 
 
@@ -65,5 +64,3 @@ class RunGATKVariantFiltration(RunStepSuper):
         self.java.check_version()
         super().check_version()
 
-    def execute_command(self, stderr=subprocess.PIPE, shell=False):
-        super().execute_command(shell=True)

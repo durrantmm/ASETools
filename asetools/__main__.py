@@ -4,7 +4,8 @@ import argparse, os, sys
 from mod.misc.string_constants import *
 from mod.misc.log import Log
 from mod.qsub import QSubmit
-from mod.pipeline.run.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
 
 PIPELINE_SUBPARSER_STR = 'pipeline'
 ANALYSIS_SUBPARSER_STR = 'analysis'
@@ -25,6 +26,7 @@ def main(args):
     if args.pipeline_or_analysis==PIPELINE_SUBPARSER_STR:
 
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
+
             if args.qsub:
 
                 qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
@@ -39,17 +41,21 @@ def main(args):
                 rnaseq_var_caller.run()
 
 
+
+
+
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
 
-    subparsers = parser.add_subparsers(help='Specify if you want to run a pipeline or a specific analysis',
+    subparsers = parser.add_subparsers(help='Specify if you want to run_process a pipeline or a specific analysis',
                                        dest='pipeline_or_analysis')
     subparsers.required = True
     pipeline_parser = subparsers.add_parser(PIPELINE_SUBPARSER_STR)
     analysis_parser = subparsers.add_parser(ANALYSIS_SUBPARSER_STR)
 
-    pipeline_subparsers = pipeline_parser.add_subparsers(help="Specify which pipeline you'd like to run.'",
+    pipeline_subparsers = pipeline_parser.add_subparsers(help="Specify which pipeline you'd like to run_process.'",
                                                          dest=PIPELINE_NAME_STR)
     pipeline_subparsers.required = True
     rnaseq_var_call_pipeline = pipeline_subparsers.add_parser(RNASEQ_VARIANT_CALLER_STR)

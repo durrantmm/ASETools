@@ -3,17 +3,17 @@ import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run.run_step_super import RunStepSuper
-from mod.pipeline.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
-from mod.pipeline.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
-from mod.pipeline.run.steps.java import RunJava
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
+from mod.pipeline.config.custom import GATKHaplotypeCallerCustomConfig
+from mod.pipeline.config.fixed import GATKHaplotypeCallerFixedConfig
+from mod.pipeline.run_process.steps.java import RunJava
 
-class RunGATKRNAseqBaseRecalibrator(RunStepSuper):
+class RunGATKHaplotypeCaller(RunProcessStepSuper):
 
-    def __init__(self, output_dir, input_bam, logger=None):
+    def __init__(self, output_dir, input_bam, output_vcf=None, logger=None):
 
-        custom_config = GATKRNAseqBaseRecalibratorCustomConfig()
-        fixed_config = GATKRNAseqBaseRecalibratorFixedConfig()
+        custom_config = GATKHaplotypeCallerCustomConfig()
+        fixed_config = GATKHaplotypeCallerFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
@@ -33,6 +33,7 @@ class RunGATKRNAseqBaseRecalibrator(RunStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg = input_bam
+        output.arg = self.handle_output_vcf(output_vcf, input_bam)
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
@@ -42,12 +43,12 @@ class RunGATKRNAseqBaseRecalibrator(RunStepSuper):
                          output=output, args=args, log_name=log_name, logger=logger)
 
 
-    def handle_output_bam(self, output_bam, input_sam):
-        if output_bam:
-            return basename(output_bam)
+    def handle_output_vcf(self, output_vcf, input_bam):
+        if output_vcf:
+            return basename(output_vcf)
         else:
-            output_bam = basename(input_sam).split('.')[0] + '.bam'
-            return basename(output_bam)
+            output_vcf = basename(input_bam).split('.')[0] + '.vcf'
+            return basename(output_vcf)
 
 
     def format_command(self):

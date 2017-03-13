@@ -1,15 +1,16 @@
 import sys
 
 from mod.misc.log import SimpleLog
-from mod.pipeline.run.steps.star_align import RunStarAlign
-from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
-from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
-from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.pipeline.run.steps.variant_filtration import RunGATKVariantFiltration
-from mod.pipeline.run.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipeline.run_process.steps.star_align import RunStarAlign
+from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
+from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
+from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
+from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
+from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
 
 
 def test_star_align():
@@ -116,6 +117,13 @@ def test_rnaseq_variant_calling_pipe():
 
     var_caller.run()
 
+def test_filter_vcf():
+    log = SimpleLog()
+
+    vcf_filter =  RunFilterVCF(output_dir="tests/filter_vcf",
+                               input_vcf="examples/smallAligned.FILTERED.vcf",
+                               output_vcf="smallAligned.FILTERED.HET.vcf",
+                               logger=log)
 
 if __name__ == '__main__':
 
@@ -147,5 +155,8 @@ if __name__ == '__main__':
 
     if which == 'rnaseq_var' or which == 'all':
         test_rnaseq_variant_calling_pipe()
+
+    if which == 'filter_vcf' or which == 'all':
+        test_filter_vcf()
 
 

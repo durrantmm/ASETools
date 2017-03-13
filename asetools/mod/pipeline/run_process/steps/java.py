@@ -1,11 +1,11 @@
 import subprocess
 
 from mod.pipeline.version_parsers import parse_java_version
-from mod.pipeline.run.run_step_super import RunStepSuper
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import JavaCustomConfig
 from mod.pipeline.config.fixed import JavaFixedConfig
 
-class RunJava(RunStepSuper):
+class RunJava(RunProcessStepSuper):
 
     def __init__(self, logger=None):
         custom_config = JavaCustomConfig()

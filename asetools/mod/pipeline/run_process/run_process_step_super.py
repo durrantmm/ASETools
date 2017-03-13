@@ -6,10 +6,11 @@ from mod.misc.log import *
 from mod.misc.string_constants import *
 from io import StringIO
 
-class RunStepSuper:
+class RunProcessStepSuper:
 
     def __init__(self, name, output_dir, execution_path, version, version_flag, version_parser, input, output, args,
-                 log_name, logger):
+                 log_name, logger=None):
+
         self.name = name
         self.output_dir = output_dir
         self.execution_path = execution_path

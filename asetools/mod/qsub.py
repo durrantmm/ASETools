@@ -27,6 +27,7 @@ class QSubmit:
         command = command[:qsub_index] + command[qsub_index+2:]
         return SPACE.join([self.python_execution_path]+command)
 
+
     def create_submission_script(self, command):
         with open(self.qsub_script) as infile:
 
@@ -35,6 +36,7 @@ class QSubmit:
                 for line in infile:
                     outfile.write(line)
                 outfile.write(command)
+
 
     def execute_qsub(self, command):
         subprocess.check_call(['qsub', join(self.output_dir, self.output_file)])

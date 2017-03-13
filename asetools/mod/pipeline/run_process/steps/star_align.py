@@ -6,10 +6,10 @@ from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import StarAlignCustomConfig
 from mod.pipeline.config.fixed import StarAlignFixedConfig
-from mod.pipeline.run.run_step_super import RunStepSuper
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 
 
-class RunStarAlign(RunStepSuper):
+class RunStarAlign(RunProcessStepSuper):
 
     def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
 

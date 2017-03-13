@@ -1,9 +1,9 @@
 import logging, os, sys
 
 msg_checking_version = "Ensuring that {NAME} is version {VERSION}..."
-msg_starting_run = "Starting to run {NAME}..."
+msg_starting_run = "Starting to run_process {NAME}..."
 msg_executing_command = "Executing the command:{DELIM}{COMMAND}"
-msg_saving_run_info = "Saving run info to {PATH}"
+msg_saving_run_info = "Saving run_process info to {PATH}"
 msg_check_version_signature = "stderr={STDERR}, ignore_error={IGNORE_E}, pass_version_to_parser={PVTP}"
 msg_execute_command_signature = "stderr={STDERR}, shell={SHELL}"
 

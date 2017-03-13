@@ -56,7 +56,7 @@ def add_read_groups_picard(config, log):
     add_read_groups_command = config.RunAddReadGroups.format_command_args()
     if log:
         log.info("Running Picard AddOrReplaceReadGroups...")
-        log.info("Command used to run Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
+        log.info("Command used to run_process Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
     subprocess.check_output(add_read_groups_command.split()).decode(STR_CONST.UTF8).strip()
 
     save_config.RunAddReadGroups.save(config.RunAddReadGroups)
@@ -81,7 +81,7 @@ def mark_duplicates_picard(config, log):
     add_read_groups_command = config.RunMarkDuplicates.format_command_args()
     if log:
         log.info("Running Picard MarkDuplicates...")
-        log.info("Command used to run Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
+        log.info("Command used to run_process Picard:"+STR_CONST.NEW_LINE+add_read_groups_command)
     subprocess.check_output(add_read_groups_command.split()).decode(STR_CONST.UTF8).strip()
 
     save_config.RunMarkDuplicates.save(config.RunMarkDuplicates)

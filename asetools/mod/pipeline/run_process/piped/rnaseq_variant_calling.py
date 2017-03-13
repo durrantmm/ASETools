@@ -1,17 +1,17 @@
 import sys
 from os.path import join, basename
-from mod.pipeline.run.run_piped_super import RunPipedSuper
+from mod.pipeline.run_process.run_process_piped_super import RunProcessPipedSuper
 from mod.pipeline.config.fixed import RNASeqVariantCallingFixedConfig
-from mod.pipeline.run.steps.star_align import RunStarAlign
-from mod.pipeline.run.steps.add_read_groups import RunPicardAddReadGroups
-from mod.pipeline.run.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.pipeline.run.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.pipeline.run.steps.print_reads import RunGATKPrintReads
-from mod.pipeline.run.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.pipeline.run.steps.variant_filtration import RunGATKVariantFiltration
+from mod.pipeline.run_process.steps.star_align import RunStarAlign
+from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
+from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
+from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
+from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
 
-class RunRNASeqVariantCalling(RunPipedSuper):
+class RunRNASeqVariantCalling(RunProcessPipedSuper):
 
     def __init__(self, output_dir, fastq1, fastq2, logger):
         fixed_config = RNASeqVariantCallingFixedConfig()

@@ -3,17 +3,17 @@ import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run.run_step_super import RunStepSuper
-from mod.pipeline.config.custom import PicardAddReadGroupsCustomConfig
-from mod.pipeline.config.fixed import PicardAddReadGroupsFixedConfig
-from mod.pipeline.run.steps.java import RunJava
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
+from mod.pipeline.config.custom import GATKSplitNCigarReadsCustomConfig
+from mod.pipeline.config.fixed import GATKSplitNCigarReadsFixedConfig
+from mod.pipeline.run_process.steps.java import RunJava
 
-class RunPicardAddReadGroups(RunStepSuper):
+class RunGATKSplitNCigarReads(RunProcessStepSuper):
 
-    def __init__(self, output_dir, input_sam, output_bam = None, logger=None):
+    def __init__(self, output_dir, input_bam, output_bam = None, logger=None):
 
-        custom_config = PicardAddReadGroupsCustomConfig()
-        fixed_config = PicardAddReadGroupsFixedConfig()
+        custom_config = GATKSplitNCigarReadsCustomConfig()
+        fixed_config = GATKSplitNCigarReadsFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
@@ -32,8 +32,8 @@ class RunPicardAddReadGroups(RunStepSuper):
         logger = logger
 
         # Adjusting attributes based on relevant input variables
-        input.arg = input_sam
-        output.arg = self.handle_output_bam(output_bam, input_sam)
+        input.arg = input_bam
+        output.arg = self.handle_output_bam(output_bam, input_bam)
 
         # Adding a java step to check its version
         self.java = RunJava(logger=logger)
@@ -54,14 +54,14 @@ class RunPicardAddReadGroups(RunStepSuper):
     def format_command(self):
 
         command = [self.execution_path]
-        command.append(EQ.join([self.input.flag, self.input.arg]))
-        command.extend([EQ.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.append(EQ.join([self.output.flag, join(self.output_dir, self.output.arg)]))
+        command.append(SPACE.join([self.input.flag, self.input.arg]))
+        command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
+        command.append(SPACE.join([self.output.flag, join(self.output_dir, self.output.arg)]))
 
         return SPACE.join(command)
 
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
-        super().check_version(stderr=subprocess.STDOUT, ignore_error=True, pass_version_to_parser=True)
+        super().check_version()
 

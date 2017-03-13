@@ -3,12 +3,12 @@ import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run.run_step_super import RunStepSuper
+from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import PicardMarkDuplicatesCustomConfig
 from mod.pipeline.config.fixed import PicardMarkDuplicatesFixedConfig
-from mod.pipeline.run.steps.java import RunJava
+from mod.pipeline.run_process.steps.java import RunJava
 
-class RunPicardMarkDuplicates(RunStepSuper):
+class RunPicardMarkDuplicates(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_bam, output_bam = None, logger=None):
 

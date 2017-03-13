@@ -1,7 +1,7 @@
 from mod.misc.log import *
 
 
-class RunPipedSuper:
+class RunProcessPipedSuper:
 
     def __init__(self, name, output_dir, input, logger):
 
