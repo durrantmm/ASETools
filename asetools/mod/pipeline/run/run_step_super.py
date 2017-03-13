@@ -72,7 +72,14 @@ class RunStepSuper:
             if not shell:
                 command = command.split()
 
-            subprocess.check_call(command, stdout=subprocess.PIPE, stderr=stderr, shell=shell)
+            popen = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=stderr, shell=shell, universal_newlines=True)
+            for stdout_line in iter(popen.stdout.readline, ""):
+                yield Log.info_chk(self.logger, stdout_line)
+            popen.stdout.close()
+            return_code = popen.wait()
+            if return_code:
+                raise subprocess.CalledProcessError(return_code, command)
+
         except subprocess.CalledProcessError as e:
             print(e.output)
             raise e
