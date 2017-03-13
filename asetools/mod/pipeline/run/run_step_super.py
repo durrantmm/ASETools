@@ -41,7 +41,6 @@ class RunStepSuper:
             if ignore_error:
                 output = e.output
             else:
-                print(e.output)
                 raise e
 
         Log.debug_chk(self.logger, output)
@@ -66,7 +65,12 @@ class RunStepSuper:
     def execute_command(self, stderr=subprocess.PIPE):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
-        output = subprocess.check_output(command.split(), stderr=stderr)
+        try:
+            output = subprocess.check_output(command.split(), stderr=stderr)
+        except subprocess.CalledProcessError as e:
+            print(e.output)
+            raise e
+
         Log.debug_chk(self.logger, output)
 
 
