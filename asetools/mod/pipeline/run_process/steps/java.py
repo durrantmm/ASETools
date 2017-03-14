@@ -54,7 +54,6 @@ class RunJava(RunProcessStepSuper):
     def format_command(self):
         raise NotImplementedError
 
-
     def retrieve_output_path(self, default_output=True):
         raise NotImplementedError
 

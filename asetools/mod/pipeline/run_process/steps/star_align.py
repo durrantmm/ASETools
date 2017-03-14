@@ -1,6 +1,6 @@
 from glob import glob
 from os.path import basename, join
-
+import subprocess
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
@@ -64,3 +64,6 @@ class RunStarAlign(RunProcessStepSuper):
     def retrieve_output_path(self):
         output = glob(join(self.output_dir, self.output.arg)+'*.sam')[0]
         return super().retrieve_output_path(default_output=output)
+
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
+        pass

@@ -65,3 +65,6 @@ class RunGATKSplitNCigarReads(RunProcessStepSuper):
         self.java.check_version()
         super().check_version()
 
+
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
+        pass

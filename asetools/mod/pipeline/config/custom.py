@@ -16,6 +16,8 @@ THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/"
                        "ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
+MAX_JAVA_MEMORY = "50000m"
+
 
 
 class StarAlignCustomConfig:
@@ -65,6 +67,7 @@ class PicardAddReadGroupsCustomConfig:
     def __init__(self):
 
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           PICARD_EXECUTION_PATH,
                                           "AddOrReplaceReadGroups"])
@@ -89,6 +92,7 @@ class PicardMarkDuplicatesCustomConfig:
     def __init__(self):
 
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           PICARD_EXECUTION_PATH,
                                           "MarkDuplicates"])
@@ -108,6 +112,7 @@ class GATKSplitNCigarReadsCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T SplitNCigarReads"])
@@ -130,6 +135,7 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T BaseRecalibrator"])
@@ -151,6 +157,7 @@ class GATKPrintReadsCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T PrintReads"])
@@ -168,6 +175,7 @@ class GATKHaplotypeCallerCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T HaplotypeCaller"])
@@ -292,6 +300,7 @@ class GATKASEReadCounterCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T ASEReadCounter"])
@@ -308,5 +317,8 @@ class GATKASEReadCounterCustomConfig:
             ("--minMappingQuality", -1)
 
         ]
+
+
+
 
 

@@ -251,4 +251,12 @@ class RNASeqVariantCallingFixedConfig:
 
         self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
 
+class WASPAlleleSpecificExpressionPipelineFixedConfig:
+
+    def __init__(self):
+
+        self.name = "WASP-ASE-pipeline"
+
+        self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
+
 
