@@ -15,6 +15,7 @@ from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
 from mod.pipeline.run_process.steps.samtools import RunSamtools
+from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
 
 
 def test_star_align():
@@ -188,6 +189,9 @@ def test_samtools():
     samtools = RunSamtools(logger=log)
     samtools.run()
 
+def test_samtools_merge():
+    log = SimpleLog()
+    samtools_merge = RunSamtoolsMerge()
 
 
 if __name__ == '__main__':
@@ -241,3 +245,6 @@ if __name__ == '__main__':
 
     if which == 'samtools' or which == 'all':
         test_samtools()
+
+    if which == 'samtools_merge' or which == 'all':
+        test_samtools_merge()
