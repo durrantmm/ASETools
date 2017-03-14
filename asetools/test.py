@@ -178,7 +178,7 @@ def test_filter_remapped():
     log = SimpleLog()
     filter_remapped = RunWaspFilterRemappedReads(output_dir='tests/filter_remapped',
                                                   input_bam_to_remap='examples/smallAligned.RG.MG.to.remap.bam',
-                                                  input_bam_remapped='examples/smallAligned.remapped.sam',
+                                                  input_bam_remapped='examples/smallAligned.remapped.prepped.bam',
                                                   logger=log)
     filter_remapped.run()
     print('Your output file of interest is at {PATH}'.format(PATH=filter_remapped.retrieve_output_path()))
@@ -191,7 +191,9 @@ def test_samtools():
 
 def test_samtools_merge():
     log = SimpleLog()
-    samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge')
+    samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge',
+                                      input_bam1='examples/smallAligned.remap.keep.bam',
+                                      input_bam2='')
 
 
 if __name__ == '__main__':
