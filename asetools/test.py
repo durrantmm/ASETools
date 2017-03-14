@@ -273,3 +273,6 @@ if __name__ == '__main__':
 
     if which == 'samtools_sort' or which == 'all':
         test_samtools_sort()
+
+    if which == 'samtools_index' or which == 'all':
+        test_samtools_index()
