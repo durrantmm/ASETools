@@ -199,6 +199,18 @@ class WASPFindIntersectingSnpsCustomConfig:
 
         ]
 
+class WASPFilterRemappedReadsCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = "/home/mdurrant/miniconda3/envs/venv2.7/bin/python" \
+                              " /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/filter_remapped_reads.py"
+
+        self.version = None
+        self.version_flag = None
+
+        self.args = []
+
 class GATKVariantFiltrationCustomConfig:
 
     def __init__(self):

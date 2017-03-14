@@ -25,7 +25,6 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
     def process(self):
         reader = vcf.Reader(open(self.input))
 
-
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
@@ -35,9 +34,6 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
         for chrom, out in snp_files.items():
             out.close()
-
-
-
 
 
 

@@ -146,6 +146,17 @@ def test_find_intersecting_snps():
     inter_snps.run()
     print('Your output file of interest is at {PATH}'.format(PATH=inter_snps.retrieve_output_path()))
 
+
+def test_star_remap():
+    log = SimpleLog()
+    star_remap = RunStarAlign(output_dir='tests/star_remap',
+                              fastq1='examples/smallAligned.RG.MG.remap.fq1.gz',
+                              fastq2='examples/smallAligned.RG.MG.remap.fq2.gz',
+                              logger=log)
+    star_remap.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=star_remap.retrieve_output_path()))
+
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -186,4 +197,6 @@ if __name__ == '__main__':
     if which == 'find_intersecting_snps' or which == 'all':
         test_find_intersecting_snps()
 
+    if which == 'star_remap' or which == 'all':
+        test_star_remap()
 

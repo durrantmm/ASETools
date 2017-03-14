@@ -148,11 +148,26 @@ class WASPFindIntersectingSnpsFixedConfig:
 
         self.input = FlagArg(flag='', arg=None)
 
+        self.output = FlagArg(flag='', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "wasp_find_intersecting_snps.json"
+
+
+class WASPFilterRemappedReadsFixedConfig:
+
+    def __init__(self):
+
+        self.name = "WASP-FilterRemappedReads"
+
+        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+
         self.output = FlagArg(flag='--output_dir', arg=None)
 
         self.version_parser = parse_gatk_version
 
-        self.log_name = "variant_filtration.json"
+        self.log_name = "wasp_filter_remapped_reads.json"
 
 
 class RNASeqVariantCallingFixedConfig:
