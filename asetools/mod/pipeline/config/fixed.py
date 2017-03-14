@@ -204,7 +204,7 @@ class SamtoolsSortFixedConfig:
 
         self.input = FlagArg(flag='', arg=None)
 
-        self.output = FlagArg(flag='', arg=None)
+        self.output = FlagArg(flag='-o', arg=None)
 
         self.version_parser = None
 
@@ -218,7 +218,7 @@ class SamtoolsIndexFixedConfig:
 
         self.input = FlagArg(flag='', arg=None)
 
-        self.output = FlagArg(flag='-o', arg=None)
+        self.output = FlagArg(flag='', arg=None)
 
         self.version_parser = None
 
