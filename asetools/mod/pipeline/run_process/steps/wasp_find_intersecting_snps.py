@@ -1,5 +1,6 @@
 from glob import glob
 from os.path import basename, join
+import os
 import subprocess
 
 from mod.misc.record_classes import FlagArg
@@ -56,6 +57,17 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
 
         return SPACE.join(command)
 
+    def retrieve_output_path(self, default_output=True):
+        bam_keep = glob(self.output_dir+os.sep+AST+'keep.bam')[0]
+        bam_remap = glob(self.output_dir+os.sep+AST+'to.keep.bam')[0]
+        fastq1_remap = glob(self.output_dir+os.sep+AST+'fq1.gz')[0]
+        fastq2_remap = glob(self.output_dir + os.sep + AST + 'fq2.gz')[0]
+        fastq_single_remap = glob(self.output_dir + os.sep + AST + 'single.fq.gz')[0]
+
+        return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
+
+    def execute_command(self, stderr=subprocess.PIPE, shell=False):
+        super().execute_command(shell=True)
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass

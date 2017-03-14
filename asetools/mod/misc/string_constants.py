@@ -7,3 +7,4 @@ UTF8 = 'utf-8'
 DOT = '.'
 UND = '_'
 EQ = "="
+AST = '*'
