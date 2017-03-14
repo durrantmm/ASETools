@@ -156,6 +156,23 @@ def test_star_remap():
     star_remap.run()
     print('Your output file of interest is at {PATH}'.format(PATH=star_remap.retrieve_output_path()))
 
+def test_prep_star_remap():
+    log = SimpleLog()
+    add_read_groups1 = RunPicardAddReadGroups(output_dir='tests/prep_star_remap',
+                                              input_sam='examples/smallAligned.remapped.sam',
+                                              logger=log)
+    add_read_groups1.run()
+    out_bam = add_read_groups1.retrieve_output_path()
+
+    mark_duplicates = RunPicardMarkDuplicates(output_dir='tests/prep_star_remap',
+                                              input_bam=out_bam,
+                                              output_bam=out_bam.split('.')[0]+'remapped.prepped.bam',
+                                              logger=log)
+    mark_duplicates.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=mark_duplicates.retrieve_output_path()))
+
+
+
 
 if __name__ == '__main__':
 
@@ -200,3 +217,5 @@ if __name__ == '__main__':
     if which == 'star_remap' or which == 'all':
         test_star_remap()
 
+    if which == 'prep_star_remap' or which == 'all':
+        test_prep_star_remap()
