@@ -67,7 +67,7 @@ class RunProcessStepSuper:
         self.ran = True
 
 
-    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         Log.debug_chk(self.logger, msg_execute_command_signature.format(STDERR=stderr, SHELL=shell))
