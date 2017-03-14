@@ -36,7 +36,7 @@ class RunJava(RunProcessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         super().check_version(stderr=subprocess.STDOUT, ignore_error=True)
 
-    def run(self):
+    def run(self, make_output_dir=True):
         self.check_version()
 
     def execute_command(self):

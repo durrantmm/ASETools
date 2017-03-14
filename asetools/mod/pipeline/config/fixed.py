@@ -224,6 +224,25 @@ class SamtoolsIndexFixedConfig:
 
         self.log_name = "samtools_index.json"
 
+
+
+class GATKASEReadCounterFixedConfig:
+
+    def __init__(self):
+
+        self.name = "GATK-ASEReadCounter"
+
+        self.input = FlagArg(flag='-I', arg=None)
+
+        self.input_sites = FlagArg(flag='-sites', arg=None)
+
+        self.output = FlagArg(flag='-o', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "ase_read_counter.json"
+
+
 class RNASeqVariantCallingFixedConfig:
 
     def __init__(self):

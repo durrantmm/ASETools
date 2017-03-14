@@ -288,3 +288,25 @@ class GATKVariantFiltrationCustomConfig:
         ]
 
 
+class GATKASEReadCounterCustomConfig:
+
+    def __init__(self):
+        self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-jar",
+                                          GATK_EXECUTION_PATH,
+                                          "-T ASEReadCounter"])
+
+        self.version = GATK_VERSION
+        self.version_flag = "--version"
+
+        self.args = [
+
+            ("-R", REFERENCE_GENOME_FASTA),
+            ("-U", "ALLOW_N_CIGAR_READS"),
+            ("-minDepth", -1)
+            ("--minBaseQuality", -1)
+            ("--minMappingQuality", -1)
+
+        ]
+
+
