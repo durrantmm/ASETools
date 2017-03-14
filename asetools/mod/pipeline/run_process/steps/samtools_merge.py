@@ -52,7 +52,7 @@ class RunSamtoolsMerge(RunProcessStepSuper):
         if output_bam:
             return basename(output_bam)
         else:
-            return basename(input_bam).split('.')[0]+'merged.bam'
+            return basename(input_bam).split('.')[0]+'.merged.bam'
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         self.samtools.run()
@@ -60,9 +60,10 @@ class RunSamtoolsMerge(RunProcessStepSuper):
     def format_command(self):
 
         command = [self.execution_path]
+        command.append(join(self.output_dir, self.output.arg))
         command.append(self.input.arg1)
         command.append(self.input.arg2)
-        command.append(join(self.output_dir, self.output.arg))
+
 
         return SPACE.join(command)
 
