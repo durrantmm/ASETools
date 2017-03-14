@@ -60,17 +60,6 @@ class RunWaspFilterRemappedReads(RunProcessStepSuper):
 
         return SPACE.join(command)
 
-    def retrieve_output_path(self, default_output=True):
-        print(glob(self.output_dir+os.sep+AST+'keep.bam'))
-        print(self.output_dir+os.sep+AST+'to.keep.bam')
-        bam_keep = glob(self.output_dir+os.sep+AST+'keep.bam').pop()
-        bam_remap = glob(self.output_dir+os.sep+AST+'to.remap.bam').pop()
-        fastq1_remap = glob(self.output_dir+os.sep+AST+'fq1.gz').pop()
-        fastq2_remap = glob(self.output_dir + os.sep + AST + 'fq2.gz').pop()
-        fastq_single_remap = glob(self.output_dir + os.sep + AST + 'single.fq.gz').pop()
-
-        return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
-
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
