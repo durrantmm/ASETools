@@ -232,4 +232,4 @@ if __name__ == '__main__':
         test_prep_star_remap()
 
     if which == 'filter_remapped' or which == 'all':
-        test_prep_star_remap()
+        test_filter_remapped()
