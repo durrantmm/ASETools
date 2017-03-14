@@ -72,7 +72,7 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         Log.debug_chk(self.logger, msg_execute_command_signature.format(STDERR=stderr, SHELL=shell))
 
-        subprocess.check_call(command.split(), shell=True, universal_newlines=True)
+        subprocess.check_call(command, shell=True, universal_newlines=True)
 
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
