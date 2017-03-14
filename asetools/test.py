@@ -191,8 +191,7 @@ def test_samtools():
 
 def test_samtools_merge():
     log = SimpleLog()
-    samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge',
-                                      input_bam1=)
+    samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge')
 
 
 if __name__ == '__main__':
