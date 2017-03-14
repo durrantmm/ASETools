@@ -3,6 +3,7 @@ from os.path import basename, join
 import os
 import subprocess
 
+from mod.misc.log import *
 from mod.misc.record_classes import FlagArg
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
@@ -67,7 +68,12 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
         return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
-        super().execute_command(stdout=subprocess.PIPE, shell=True)
+        command = self.format_command()
+        Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
+        Log.debug_chk(self.logger, msg_execute_command_signature.format(STDERR=stderr, SHELL=shell))
+
+        subprocess.check_call(command, stdout=stdout, stderr=stderr, shell=shell, universal_newlines=True)
+
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass
