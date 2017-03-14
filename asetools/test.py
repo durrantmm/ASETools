@@ -240,4 +240,4 @@ if __name__ == '__main__':
         test_filter_remapped()
 
     if which == 'samtools' or which == 'all':
-        test_filter_remapped()
+        test_samtools()
