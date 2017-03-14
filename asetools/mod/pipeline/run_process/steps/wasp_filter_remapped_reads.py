@@ -36,7 +36,7 @@ class RunWaspFilterRemappedReads(RunProcessStepSuper):
 
         # Adjusting attributes based on relevant input variables
         input.arg1 = input_bam_to_remap
-        input.arg2 = input_bam_to_remap
+        input.arg2 = input_bam_remapped
         output.arg = self.handle_output_bam(output_bam, input_bam_to_remap)
 
         super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
