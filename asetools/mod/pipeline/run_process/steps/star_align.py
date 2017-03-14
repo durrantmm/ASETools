@@ -1,6 +1,5 @@
 from glob import glob
 from os.path import basename, join
-import subprocess
 
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
