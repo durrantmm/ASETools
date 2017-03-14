@@ -235,7 +235,9 @@ class SamtoolsMergeCustomConfig:
         self.version = None
         self.version_flag = None
 
-        self.args = []
+        self.args = [
+            ('-f', '')
+        ]
 
 class SamtoolsSortCustomConfig:
 
