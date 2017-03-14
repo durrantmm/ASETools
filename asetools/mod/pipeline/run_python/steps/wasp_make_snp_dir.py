@@ -31,14 +31,16 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
-                snp_files[rec.CHROM] = vcf.Writer(open(join(self.output_dir, rec.CHROM+self.vcf_file_suffix), 'w'),
-                                                  reader)
+                snp_files[rec.CHROM] = [join(self.output_dir, rec.CHROM+self.vcf_file_suffix),
+                                        vcf.Writer(open(join(self.output_dir, rec.CHROM+self.vcf_file_suffix), 'w'), reader)]
 
-            snp_files[rec.CHROM].write_record(rec)
+            snp_files[rec.CHROM][1].write_record(rec)
 
-        for chrom, out in snp_files.items():
-            pass
-            #gzip_file(filename)
+        for chrom, value in snp_files.items():
+            filename, out = value
+            out.close()
+            gzip_file(filename)
+
 
 
 
