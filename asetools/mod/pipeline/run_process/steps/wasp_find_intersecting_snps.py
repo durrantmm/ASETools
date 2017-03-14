@@ -67,6 +67,8 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
 
         return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
 
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
+        super().execute_command(shell=True)
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass
