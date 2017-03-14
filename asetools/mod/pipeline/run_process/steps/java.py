@@ -1,5 +1,5 @@
 import subprocess
-
+from mod.misc.record_classes import *
 from mod.pipeline.version_parsers import parse_java_version
 from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import JavaCustomConfig
@@ -39,13 +39,13 @@ class RunJava(RunProcessStepSuper):
     def run(self, make_output_dir=True):
         self.check_version()
 
-    def execute_command(self):
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         raise NotImplementedError
 
     def save_log(self):
         raise NotImplementedError
 
-    def get_log_json(self):
+    def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
         raise NotImplementedError
 
     def get_log_path(self):

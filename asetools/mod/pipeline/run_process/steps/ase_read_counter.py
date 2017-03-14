@@ -71,6 +71,3 @@ class RunGATKASEReadCounter(RunProcessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
         super().check_version()
-
-    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
-        super().execute_command(stderr=subprocess.STDOUT)

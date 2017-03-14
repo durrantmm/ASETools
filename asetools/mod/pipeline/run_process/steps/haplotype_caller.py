@@ -65,7 +65,3 @@ class RunGATKHaplotypeCaller(RunProcessStepSuper):
         self.java.check_version()
         super().check_version()
 
-
-    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
-        super().execute_command(stderr=subprocess.STDOUT)
-

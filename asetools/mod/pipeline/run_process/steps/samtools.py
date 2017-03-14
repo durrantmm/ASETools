@@ -38,7 +38,7 @@ class RunSamtools(RunProcessStepSuper):
     def run(self, make_output_dir=True):
         self.check_version()
 
-    def execute_command(self):
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         raise NotImplementedError
 
     def save_log(self):

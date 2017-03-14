@@ -65,5 +65,5 @@ class RunGATKVariantFiltration(RunProcessStepSuper):
         self.java.check_version()
         super().check_version()
 
-    def execute_command(self, stderr=subprocess.PIPE, shell=False):
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         super().execute_command(shell=True)
