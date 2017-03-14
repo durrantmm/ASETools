@@ -159,7 +159,9 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
         ase_read_counter_output_dir = join(self.output_dir, "STEP%d_ASE_READ_COUNTER" % step_num)
         ase_read_counter = RunGATKASEReadCounter(output_dir=ase_read_counter_output_dir,
                                                  input_bam=sorted_bam,
+                                                 input_sites_vcf=self.input_vcf,
                                                  logger=self.logger)
+        ase_read_counter.run()
 
 
 

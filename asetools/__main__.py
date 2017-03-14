@@ -5,9 +5,10 @@ from mod.misc.string_constants import *
 from mod.misc.log import Log
 from mod.qsub import QSubmit
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.pipeline.run_process.piped.wasp_bias_removal import WASPAlleleSpecificExpressionPipeline
-from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
+from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
 
+
+# Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'pipeline'
 ANALYSIS_SUBPARSER_STR = 'analysis'
 
@@ -26,9 +27,18 @@ QSUB_FLAG = '--qsub'
 
 
 def main(args):
+    """
+    This is the main function that carries out all of the arguments passed to the __main__.py script.
+    :param args: The arguments passed in through the command line and parsed with argparse
+    :return:
+    """
+    # Make the main directory that will be used to output all of the information.
     os.makedirs(args.output_dir, exist_ok=True)
+
+    # Checks to see if the user is running a pipeline or performing an analysis.
     if args.pipeline_or_analysis==PIPELINE_SUBPARSER_STR:
 
+        # If pipeline, then checks for the type of pipeline being run.
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
 
             if args.qsub:
@@ -47,12 +57,16 @@ def main(args):
         elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
 
             if args.qsub:
-                qsub = QSubmit(args.output_dir, ar)
-            wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
-                                                                 input_bam=args.bam,
-                                                                 input_vcf=args.vcf,
-                                                                 logger=Log(args.output_dir))
-            wasp_pipeline.run()
+                qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
+                qsub.submit()
+
+            else:
+
+                wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
+                                                                     input_bam=args.bam,
+                                                                     input_vcf=args.vcf,
+                                                                     logger=Log(args.output_dir))
+                wasp_pipeline.run()
 
 
 
