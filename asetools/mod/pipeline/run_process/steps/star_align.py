@@ -64,6 +64,3 @@ class RunStarAlign(RunProcessStepSuper):
     def retrieve_output_path(self):
         output = glob(join(self.output_dir, self.output.arg)+'*.sam')[0]
         return super().retrieve_output_path(default_output=output)
-
-    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
-        pass
