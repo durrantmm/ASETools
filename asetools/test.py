@@ -144,6 +144,7 @@ def test_find_intersecting_snps():
                                              input_snp_dir="examples/make_wasp_snp_dir",
                                              logger=log)
     inter_snps.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=inter_snps.retrieve_output_path()))
 
 if __name__ == '__main__':
 
