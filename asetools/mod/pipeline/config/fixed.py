@@ -186,15 +186,15 @@ class SamtoolsFixedConfig:
 class SamtoolsMergeFixedConfig:
 
     def __init__(self):
-        self.name = "WASP-FilterRemappedReads"
+        self.name = "Samtools Merge"
 
         self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
 
         self.output = FlagArg(flag='', arg=None)
 
-        self.version_parser = parse_gatk_version
+        self.version_parser = None
 
-        self.log_name = "samtools_merge_.json"
+        self.log_name = "samtools_merge.json"
 
 
 class SamtoolsSortFixedConfig:
@@ -202,11 +202,11 @@ class SamtoolsSortFixedConfig:
     def __init__(self):
         self.name = "Samtools Sort"
 
-        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+        self.input = FlagArg(flag='', arg=None)
 
         self.output = FlagArg(flag='', arg=None)
 
-        self.version_parser = parse_gatk_version
+        self.version_parser = None
 
         self.log_name = "samtools_sort_index.json"
 
@@ -216,11 +216,11 @@ class SamtoolsIndexFixedConfig:
     def __init__(self):
         self.name = "Samtools Index"
 
-        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+        self.input = FlagArg(flag='', arg=None)
 
-        self.output = FlagArg(flag='', arg=None)
+        self.output = FlagArg(flag='-o', arg=None)
 
-        self.version_parser = parse_gatk_version
+        self.version_parser = None
 
         self.log_name = "samtools_index.json"
 

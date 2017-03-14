@@ -16,6 +16,7 @@ from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFi
 from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
 from mod.pipeline.run_process.steps.samtools import RunSamtools
 from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
+from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
 
 
 def test_star_align():
@@ -199,6 +200,16 @@ def test_samtools_merge():
     print('Your output file of interest is at {PATH}'.format(PATH=samtools_merge.retrieve_output_path()))
 
 
+def test_samtools_sort():
+    log = SimpleLog()
+    samtools_merge = RunSamtoolsSort(output_dir='tests/samtools_sort',
+                                      input_bam='examples/smallAligned.merged.bam',
+                                      logger=log)
+    samtools_merge.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=samtools_merge.retrieve_output_path()))
+
+
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -253,3 +264,6 @@ if __name__ == '__main__':
 
     if which == 'samtools_merge' or which == 'all':
         test_samtools_merge()
+
+    if which == 'samtools_sort' or which == 'all':
+        test_samtools_sort()
