@@ -176,7 +176,7 @@ def test_prep_star_remap():
 
 def test_filter_remapped():
     log = SimpleLog()
-    filter_remapped = RunWaspFilterRemappedReads(output_dir='tests/prep_star_remap',
+    filter_remapped = RunWaspFilterRemappedReads(output_dir='tests/filter_remapped',
                                                   input_bam_to_remap='examples/smallAligned.RG.MG.to.remap.bam',
                                                   input_bam_remapped='examples/smallAligned.remapped.sam',
                                                   logger=log)
@@ -191,7 +191,8 @@ def test_samtools():
 
 def test_samtools_merge():
     log = SimpleLog()
-    samtools_merge = RunSamtoolsMerge()
+    samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge',
+                                      input_bam1=)
 
 
 if __name__ == '__main__':
