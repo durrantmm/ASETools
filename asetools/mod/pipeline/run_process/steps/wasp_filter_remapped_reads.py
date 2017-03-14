@@ -4,6 +4,7 @@ import os
 import subprocess
 
 from mod.misc.log import *
+from mod.misc.record_classes import *
 from mod.misc.record_classes import FlagArg
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import WASPFilterRemappedReadsCustomConfig
@@ -80,4 +81,7 @@ class RunWaspFilterRemappedReads(RunProcessStepSuper):
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass
+
+    def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
+        super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
 
