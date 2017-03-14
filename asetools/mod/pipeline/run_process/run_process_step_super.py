@@ -58,7 +58,7 @@ class RunProcessStepSuper:
     def run(self, make_output_dir=True):
         Log.info_chk(self.logger, msg_starting_run.format(NAME=self.name))
 
-        if os.make_output_dir:
+        if make_output_dir:
             os.makedirs(self.output_dir, exist_ok=True)
 
         self.check_version()
