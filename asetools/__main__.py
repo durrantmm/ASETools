@@ -46,6 +46,8 @@ def main(args):
 
         elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
 
+            if args.qsub:
+                qsub = QSubmit(args.output_dir, ar)
             wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
                                                                  input_bam=args.bam,
                                                                  input_vcf=args.vcf,

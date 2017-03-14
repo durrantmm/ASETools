@@ -54,7 +54,7 @@ class RunSamtoolsSort(RunProcessStepSuper):
             return basename(input_bam).split('.')[0]+'.sorted.bam'
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
-        self.samtools.c()
+        self.samtools.run()
 
     def format_command(self):
 
