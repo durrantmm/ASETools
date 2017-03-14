@@ -65,21 +65,52 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
             mark_dups.run()
             self.input_bam = mark_dups.retrieve_output_path()
 
+
         # MAKE WASP SNP DIR
-        snp_dir = join(self.output_dir, 'STEP$d_MAKE_SNP_DIR' % step_num)
+        snp_dir = join(self.output_dir, 'STEP%d_MAKE_SNP_DIR' % step_num)
         make_snp_dir = RunMakeWaspSnpDir(output_dir=snp_dir,
                                          input_sorted_vcf=self.input_vcf,
                                          logger=self.logger)
+        make_snp_dir.run()
 
         # WASP - FIND INTERSECTING SNPS
-        find_intersecting_snps_output_dir = join(self.output_dir, 'STEP$d_FIND_INTERSECTING_SNPS' % step_num)
+        find_intersecting_snps_output_dir = join(self.output_dir, 'STEP%d_FIND_INTERSECTING_SNPS' % step_num)
         find_intersecting_snps = RunWaspFindIntersectingSnps(output_dir=find_intersecting_snps_output_dir,
                                                              input_bam=self.input_bam,
                                                              input_snp_dir=snp_dir,
                                                              logger=self.logger)
+        find_intersecting_snps.run()
+
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
 
-        #WASP
+        # WASP - STAR REMAP
+        star_remap_output_dir = join(self.output_dir, 'STEP%d_REMAP_OUTPUT_DIR' % step_num)
+        star_remap = RunStarAlign(output_dir=star_remap_output_dir,
+                                  fastq1=fastq1_remap,
+                                  fastq2=fastq2_remap,
+                                  logger=self.logger)
+        star_remap.run()
+        remap_sam = star_remap.retrieve_output_path()
+
+
+        # STAR REMAP ADD READ GROUPS
+        add_read_groups_output_dir = join(self.output_dir, "STEP%d_STAR_REMAP_ADD_READ_GROUPS" % step_num)
+        run_star_remap_add_read_groups = RunPicardAddReadGroups(output_dir=add_read_groups_output_dir,
+                                                                input_sam=remap_sam,
+                                                                logger=self.logger)
+        run_star_remap_add_read_groups.run()
+        arg_output_bam = run_star_remap_add_read_groups.retrieve_output_path()
+
+
+        # STAR REMAP MARK DUPLICATES
+        mark_dups_output_dir = join(self.output_dir, "STEP%d_STAR_REMAP_MARK_DUPLICATES" % step_num)
+        star_remap_mark_dups = RunPicardMarkDuplicates(output_dir=mark_dups_output_dir,
+                                                       input_bam=arg_output_bam,
+                                                       logger=self.logger)
+        star_remap_mark_dups.run()
+        self.input_bam = star_remap_mark_dups.retrieve_output_path()
+
+        #
 
 
 

@@ -8,15 +8,15 @@ PICARD_VERSION = "2.8.0-SNAPSHOT"
 GATK_EXECUTION_PATH = "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar"
 GATK_VERSION = "3.6-0-g89b7209"
 
-REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.nochr.fasta"
+REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
 
-DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/All_20151104.vcf.gz"
+DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/dbsnp_138.hg19.vcf.gz"
 EXAC_VCF = "/home/mdurrant/montgomery/mdurrant/data/ExAC.r1.sites.vep.vcf.gz"
 THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/" \
                        "ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
-MAX_JAVA_MEMORY = "50000m"
+MAX_JAVA_MEMORY = "50g"
 
 
 
@@ -30,7 +30,7 @@ class StarAlignCustomConfig:
 
         self.args = [
 
-            ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19noChr"),
+            ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19"),
             ("--readFilesCommand", "zcat"),
             ("--runThreadN", 2),
             ("--genomeLoad", "NoSharedMemory"),
@@ -147,8 +147,6 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
 
             ("-R", REFERENCE_GENOME_FASTA),
             ("-knownSites", DBSNP_VCF),
-            ("-knownSites", EXAC_VCF),
-            ("-knownSites", THOUSAND_GENOMES_VCF),
             ("-L", GENCODE_EXONS_BED)
 
         ]
