@@ -63,7 +63,7 @@ class RunSamtoolsSort(RunProcessStepSuper):
 
         command = [self.execution_path]
         command.extend([self.output.flag, join(self.output_dir, self.output.arg)])
-        command.append(self.input.arg1)
+        command.append(self.input.arg)
 
         return SPACE.join(command)
 
