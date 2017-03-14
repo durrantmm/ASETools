@@ -56,9 +56,6 @@ class RunSamtoolsSort(RunProcessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         self.samtools.run()
 
-    def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
-        super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
-
     def format_command(self):
 
         command = [self.execution_path]
