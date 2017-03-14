@@ -2,7 +2,7 @@ import vcf, os
 from mod.misc.string_constants import *
 from os.path import basename, join
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
-from mod.misc.bash import gzip_file
+import gzip
 
 class RunMakeWaspSnpDir(RunPythonStepSuper):
 
@@ -19,8 +19,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
         super().__init__(name, output_dir, input, output, log_name, logger)
 
-        self.file_suffix = '.snps.txt'
-        self.gzip_suffix = '.gz'
+        self.file_suffix = '.snps.txt.gz'
 
 
     def process(self):
@@ -30,15 +29,14 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
-                snp_files[rec.CHROM] = open(join(self.output_dir, rec.CHROM+self.file_suffix), 'w')
+                snp_files[rec.CHROM] = gzip.open(join(self.output_dir, rec.CHROM+self.file_suffix), 'wt')
 
             snp_files[rec.CHROM].write(SPACE.join(map(str, [rec.POS, rec.REF, rec.ALT[0]]))+NL)
-        for chrom, out in snp_files.items():
 
-            filename = out.name
+        for chrom, out in snp_files.items():
             out.close()
 
-            #gzip_file(filename)
+
 
 
 
