@@ -55,9 +55,12 @@ class RunProcessStepSuper:
             raise VersionError(self.name, self.version, local_version)
 
 
-    def run(self):
+    def run(self, make_output_dir=True):
         Log.info_chk(self.logger, msg_starting_run.format(NAME=self.name))
-        os.makedirs(self.output_dir, exist_ok=True)
+
+        if os.make_output_dir:
+            os.makedirs(self.output_dir, exist_ok=True)
+
         self.check_version()
         self.execute_command()
         self.save_log()

@@ -52,6 +52,10 @@ class RunSamtoolsIndex(RunProcessStepSuper):
     def save_log(self):
         pass
 
+    def run(self, make_output_dir=True):
+        super().run(make_output_dir=False)
+
+
     def format_command(self):
 
         command = [self.execution_path]
