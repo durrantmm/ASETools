@@ -19,7 +19,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
         super().__init__(name, output_dir, input, output, log_name, logger)
 
-        self.vcf_file_suffix = '.vcf.gz'
+        self.vcf_file_suffix = '.vcf'
         self.file_suffix = '.snps.txt'
         self.gzip_suffix = '.gz'
 
@@ -31,7 +31,8 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
-                snp_files[rec.CHROM] = vcf.Writer(open(rec.CHROM+self.vcf_file_suffix, 'w'), reader)
+                snp_files[rec.CHROM] = vcf.Writer(open(join(self.output_dir, rec.CHROM+self.vcf_file_suffix), 'w'),
+                                                  reader)
 
             snp_files[rec.CHROM].write_record(rec)
 
