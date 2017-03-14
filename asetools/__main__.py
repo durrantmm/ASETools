@@ -5,6 +5,7 @@ from mod.misc.string_constants import *
 from mod.misc.log import Log
 from mod.qsub import QSubmit
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipeline.run_process.piped.wasp_bias_removal import WASPAlleleSpecificExpressionPipeline
 from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
 
 PIPELINE_SUBPARSER_STR = 'pipeline'
@@ -13,10 +14,13 @@ ANALYSIS_SUBPARSER_STR = 'analysis'
 PIPELINE_NAME_STR = 'pipeline_name'
 
 RNASEQ_VARIANT_CALLER_STR = 'RNAseqVariantCaller'
+WASP_ASE_READ_COUNTER_STR = 'WASP-ASEReadCounter'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
 FASTQ2_FLAG = '--fastq2'
+BAM_FLAG = '--bam'
+VCF_FLAG = '--vcf'
 
 QSUB_FLAG = '--qsub'
 
@@ -40,6 +44,13 @@ def main(args):
                                                             logger=Log(args.output_dir))
                 rnaseq_var_caller.run()
 
+        elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
+
+            wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
+                                                                 input_bam=args.bam,
+                                                                 input_vcf=args.vcf,
+                                                                 logger=Log(args.output_dir))
+            wasp_pipeline.run()
 
 
 
@@ -58,12 +69,21 @@ if __name__ == '__main__':
     pipeline_subparsers = pipeline_parser.add_subparsers(help="Specify which pipeline you'd like to run_process.'",
                                                          dest=PIPELINE_NAME_STR)
     pipeline_subparsers.required = True
+
+    ### RNASEQ VARIANT CALLER PIPELINE
     rnaseq_var_call_pipeline = pipeline_subparsers.add_parser(RNASEQ_VARIANT_CALLER_STR)
 
     rnaseq_var_call_pipeline.add_argument(OUTPUT_DIR_STR)
     rnaseq_var_call_pipeline.add_argument(FASTQ1_FLAG, required=True)
     rnaseq_var_call_pipeline.add_argument(FASTQ2_FLAG, required=True)
     rnaseq_var_call_pipeline.add_argument(QSUB_FLAG)
+
+    # WASP PIPELINE
+    wasp_pipeline = pipeline_subparsers.add_parser(WASP_ASE_READ_COUNTER_STR)
+    wasp_pipeline.add_argument(OUTPUT_DIR_STR)
+    wasp_pipeline.add_argument(BAM_FLAG, required=True)
+    wasp_pipeline.add_argument(VCF_FLAG, required=True)
+    wasp_pipeline.add_argument(QSUB_FLAG)
 
     args = parser.parse_args()
     main(args)

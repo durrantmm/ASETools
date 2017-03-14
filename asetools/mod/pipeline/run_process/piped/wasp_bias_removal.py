@@ -45,8 +45,9 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                     fastq2=self.input.arg2,
                                     logger=self.logger)
             run_star.run()
-            star_output_sam = run_star.retrieve_output_path()
             step_num += 1
+            star_output_sam = run_star.retrieve_output_path()
+
 
             # ADD READ GROUPS
             add_read_groups_output_dir = join(self.output_dir, "STEP%d_ADD_READ_GROUPS" % step_num)
@@ -54,6 +55,7 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                          input_sam=star_output_sam,
                                                          logger=self.logger)
             run_add_read_groups.run()
+            step_num += 1
             arg_output_bam = run_add_read_groups.retrieve_output_path()
 
 
@@ -63,6 +65,7 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                 input_bam=arg_output_bam,
                                                 logger=self.logger)
             mark_dups.run()
+            step_num += 1
             self.input_bam = mark_dups.retrieve_output_path()
 
 
@@ -72,6 +75,7 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                          input_sorted_vcf=self.input_vcf,
                                          logger=self.logger)
         make_snp_dir.run()
+        step_num += 1
 
         # WASP - FIND INTERSECTING SNPS
         find_intersecting_snps_output_dir = join(self.output_dir, 'STEP%d_FIND_INTERSECTING_SNPS' % step_num)
@@ -80,6 +84,7 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                              input_snp_dir=snp_dir,
                                                              logger=self.logger)
         find_intersecting_snps.run()
+        step_num += 1
 
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
 
@@ -90,8 +95,9 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                   fastq2=fastq2_remap,
                                   logger=self.logger)
         star_remap.run()
-        remap_sam = star_remap.retrieve_output_path()
+        step_num += 1
 
+        remap_sam = star_remap.retrieve_output_path()
 
         # STAR REMAP ADD READ GROUPS
         add_read_groups_output_dir = join(self.output_dir, "STEP%d_STAR_REMAP_ADD_READ_GROUPS" % step_num)
@@ -99,6 +105,8 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                                 input_sam=remap_sam,
                                                                 logger=self.logger)
         run_star_remap_add_read_groups.run()
+        step_num += 1
+
         arg_output_bam = run_star_remap_add_read_groups.retrieve_output_path()
 
 
@@ -108,9 +116,51 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                        input_bam=arg_output_bam,
                                                        logger=self.logger)
         star_remap_mark_dups.run()
+        step_num += 1
+
         self.input_bam = star_remap_mark_dups.retrieve_output_path()
 
-        #
+        # WASP - FILTER REMAP
+        filter_remapped_output_dir = join(self.output_dir, "STEP%d_WASP_FILTER_REMAPPED" % step_num)
+        filter_remapped = RunWaspFilterRemappedReads(output_dir=filter_remapped_output_dir,
+                                                     input_bam_to_remap=bam_remap,
+                                                     input_bam_remapped=self.input_bam,
+                                                     logger=self.logger)
+        filter_remapped.run()
+        step_num += 1
+
+        remapped_output_bam = filter_remapped.retrieve_output_path()
+
+        # SAMTOOLS MERGE
+        samtools_merge_output_dir = join(self.output_dir, "STEP%d_MERGE_WASP_BAMS" % step_num)
+        samtools_merge = RunSamtoolsMerge(output_dir=samtools_merge_output_dir,
+                                          input_bam1=remapped_output_bam,
+                                          input_bam2=bam_keep,
+                                          logger=self.logger)
+        samtools_merge.run()
+        step_num += 1
+        merged_bam = samtools_merge.retrieve_output_path()
+
+        # SAMTOOLS SORT
+        samtools_sort_output_dir = join(self.output_dir, "STEP%d_SORT_BAM" % step_num)
+        samtools_sort = RunSamtoolsSort(output_dir=samtools_sort_output_dir,
+                                         input_bam=merged_bam,
+                                         logger=self.logger)
+        samtools_sort.run()
+        step_num += 1
+        sorted_bam = samtools_sort.retrieve_output_path()
+
+        # SAMTOOLS INDEX
+        samtools_index = RunSamtoolsIndex(input_bam=sorted_bam,
+                                          logger=self.logger)
+        samtools_index.run()
+
+        # ASE READ COUNTER
+        ase_read_counter_output_dir = join(self.output_dir, "STEP%d_ASE_READ_COUNTER" % step_num)
+        ase_read_counter = RunGATKASEReadCounter(output_dir=ase_read_counter_output_dir,
+                                                 input_bam=sorted_bam,
+                                                 logger=self.logger)
+
 
 
 
