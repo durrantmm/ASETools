@@ -221,7 +221,7 @@ def test_ase_read_counter():
     log = SimpleLog()
 
     ase_read_counter = RunGATKASEReadCounter(output_dir='tests/ase_read_counter',
-                                             input_bam='examples/smallAligned.RG.MG.SPLIT.RECAL.bam',
+                                             input_bam='examples/smallAligned.sorted.bam',
                                              input_sites_vcf='examples/smallAligned.FILTERED.HET.vcf',
                                              logger=log)
 
