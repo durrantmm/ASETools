@@ -169,6 +169,60 @@ class WASPFilterRemappedReadsFixedConfig:
 
         self.log_name = "wasp_filter_remapped_reads.json"
 
+class SamtoolsFixedConfig:
+
+    def __init__(self):
+
+        self.name = "Samtools"
+
+        self.input = None
+
+        self.output = None
+
+        self.version_parser = parse_samtools_version
+
+        self.log_name = None
+
+class SamtoolsMergeFixedConfig:
+
+    def __init__(self):
+        self.name = "WASP-FilterRemappedReads"
+
+        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+
+        self.output = FlagArg(flag='', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "samtools_merge_.json"
+
+
+class SamtoolsSortFixedConfig:
+
+    def __init__(self):
+        self.name = "Samtools Sort"
+
+        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+
+        self.output = FlagArg(flag='', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "samtools_sort_index.json"
+
+
+class SamtoolsIndexFixedConfig:
+
+    def __init__(self):
+        self.name = "Samtools Index"
+
+        self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
+
+        self.output = FlagArg(flag='', arg=None)
+
+        self.version_parser = parse_gatk_version
+
+        self.log_name = "samtools_index.json"
 
 class RNASeqVariantCallingFixedConfig:
 

@@ -16,6 +16,8 @@ THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/"
                        "ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
+
+
 class StarAlignCustomConfig:
 
     def __init__(self):
@@ -211,6 +213,55 @@ class WASPFilterRemappedReadsCustomConfig:
 
         self.args = []
 
+
+class SamtoolsCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = "/home/mdurrant/miniconda3/envs/venv3.5/bin/samtools"
+        self.version = "1.3.1"
+        self.version_flag = "--version"
+
+        self.args = None
+
+
+class SamtoolsMergeCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
+                                          "merge"])
+
+        self.version = None
+        self.version_flag = None
+
+        self.args = []
+
+class SamtoolsSortCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
+                                          "sort"])
+
+        self.version = None
+        self.version_flag = None
+
+        self.args = []
+
+class SamtoolsIndexCustomConfig:
+
+    def __init__(self):
+
+        self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
+                                          "index"])
+
+        self.version = None
+        self.version_flag = None
+
+        self.args = []
+
+
 class GATKVariantFiltrationCustomConfig:
 
     def __init__(self):
@@ -233,3 +284,5 @@ class GATKVariantFiltrationCustomConfig:
             ("-filter", '\"QD < 2.0\"')
 
         ]
+
+
