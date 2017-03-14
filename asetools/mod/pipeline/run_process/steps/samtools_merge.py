@@ -58,7 +58,7 @@ class RunSamtoolsMerge(RunProcessStepSuper):
         self.samtools.run()
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
-        super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple())
+        super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
 
     def format_command(self):
 
