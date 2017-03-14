@@ -186,7 +186,8 @@ class WASPFindIntersectingSnpsCustomConfig:
 
     def __init__(self):
 
-        self.execution_path = "python /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"
+        self.execution_path = "/home/mdurrant/miniconda3/envs/venv3.5/bin/python" \
+                              " /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"
 
         self.version = None
         self.version_flag = None
