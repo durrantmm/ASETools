@@ -303,8 +303,8 @@ class GATKASEReadCounterCustomConfig:
 
             ("-R", REFERENCE_GENOME_FASTA),
             ("-U", "ALLOW_N_CIGAR_READS"),
-            ("-minDepth", -1)
-            ("--minBaseQuality", -1)
+            ("-minDepth", -1),
+            ("--minBaseQuality", -1),
             ("--minMappingQuality", -1)
 
         ]
