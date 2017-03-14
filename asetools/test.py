@@ -193,7 +193,10 @@ def test_samtools_merge():
     log = SimpleLog()
     samtools_merge = RunSamtoolsMerge(output_dir='tests/samtools_merge',
                                       input_bam1='examples/smallAligned.remap.keep.bam',
-                                      input_bam2='')
+                                      input_bam2='examples/smallAligned.RG.MG.keep.bam',
+                                      logger=log)
+    samtools_merge.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=samtools_merge.retrieve_output_path()))
 
 
 if __name__ == '__main__':
