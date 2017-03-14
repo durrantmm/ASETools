@@ -36,10 +36,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
             snp_files[rec.CHROM].write_record(rec)
 
         for chrom, out in snp_files.items():
-
-            filename = out.name
-            out.close()
-
+            pass
             #gzip_file(filename)
 
 
