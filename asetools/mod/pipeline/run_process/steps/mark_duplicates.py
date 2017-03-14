@@ -67,6 +67,3 @@ class RunPicardMarkDuplicates(RunProcessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
         super().check_version(stderr=subprocess.STDOUT, ignore_error=True, pass_version_to_parser=True)
-
-    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
-        pass

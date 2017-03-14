@@ -5,15 +5,19 @@ from mod.pipeline.config.fixed import WASPAlleleSpecificExpressionPipelineFixedC
 from mod.pipeline.run_process.steps.star_align import RunStarAlign
 from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
 from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
-from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
+from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
+from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
+from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
+from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
+from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
+
+
 
 class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
 
-    def __init__(self, output_dir, fastq1=None, fastq2=None, input_bam=None, logger=None):
+    def __init__(self, output_dir, input_vcf, input_bam=None, fastq1=None, fastq2=None, logger=None):
         fixed_config = WASPAlleleSpecificExpressionPipelineFixedConfig()
 
         name = fixed_config.name
@@ -28,6 +32,7 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
         super().__init__(name, output_dir, input, logger)
 
         self.input_bam = input_bam
+        self.input_vcf = input_vcf
 
     def execute_steps(self):
         step_num = 1
@@ -53,53 +58,32 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
 
 
             # MARK DUPLICATES
-            mark_dups_output_dir = join(self.output_dir, "STEP3_MARK_DUPLICATES")
+            mark_dups_output_dir = join(self.output_dir, "STEP%d_MARK_DUPLICATES" % step_num)
             mark_dups = RunPicardMarkDuplicates(output_dir = mark_dups_output_dir,
                                                 input_bam=arg_output_bam,
                                                 logger=self.logger)
             mark_dups.run()
-            mark_dups_bam = mark_dups.retrieve_output_path()
+            self.input_bam = mark_dups.retrieve_output_path()
 
-        # SPLIT READS
-        split_reads_output_dir = join(self.output_dir, "STEP4_SPLIT_READS")
-        split_reads = RunGATKSplitNCigarReads(output_dir = split_reads_output_dir,
-                                              input_bam=mark_dups_bam,
-                                              logger=self.logger)
-        split_reads.run()
-        split_reads_bam = split_reads.retrieve_output_path()
+        # MAKE WASP SNP DIR
+        snp_dir = join(self.output_dir, 'STEP$d_MAKE_SNP_DIR' % step_num)
+        make_snp_dir = RunMakeWaspSnpDir(output_dir=snp_dir,
+                                         input_sorted_vcf=self.input_vcf,
+                                         logger=self.logger)
 
-        # RECALIBRATE BASES
-        recal_bases_output_dir = join(self.output_dir, "STEP5_RECAL_BASES")
-        recal_bases = RunGATKRNAseqBaseRecalibrator(output_dir=recal_bases_output_dir,
-                                                    input_bam=split_reads_bam,
-                                                    logger=self.logger)
-        recal_bases.run()
-        recal_table = recal_bases.retrieve_output_path()
+        # WASP - FIND INTERSECTING SNPS
+        find_intersecting_snps_output_dir = join(self.output_dir, 'STEP$d_FIND_INTERSECTING_SNPS' % step_num)
+        find_intersecting_snps = RunWaspFindIntersectingSnps(output_dir=find_intersecting_snps_output_dir,
+                                                             input_bam=self.input_bam,
+                                                             input_snp_dir=snp_dir,
+                                                             logger=self.logger)
+        bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
 
-        # PRINT READS
-        print_reads_output_dir = join(self.output_dir, "STEP6_PRINT_READS")
-        print_reads = RunGATKPrintReads(output_dir=print_reads_output_dir,
-                                        input_bam=split_reads_bam,
-                                        input_recal_table=recal_table,
-                                        logger=self.logger)
-        print_reads.run()
-        recal_bam = print_reads.retrieve_output_path()
+        #WASP
 
-        # HAPLOTYPE CALLER
-        haplotype_caller_output_dir = join(self.output_dir, "STEP7_HAPLOTYPE_CALLER")
-        haplotype_caller = RunGATKHaplotypeCaller(output_dir=haplotype_caller_output_dir,
-                                                  input_bam=recal_bam,
-                                                  logger=self.logger)
-        haplotype_caller.run()
-        raw_vcf = haplotype_caller.retrieve_output_path()
 
-        # variant_filtration
-        variant_filtration_output_dir = join(self.output_dir, "STEP8_VARIANT_FILTRATION")
-        variant_filter = RunGATKVariantFiltration(output_dir=variant_filtration_output_dir,
-                                                  input_vcf=raw_vcf,
-                                                  logger=self.logger)
-        variant_filter.run()
-        filtered_vcf = variant_filter.retrieve_output_path()
+
+
 
 
 
