@@ -18,6 +18,7 @@ from mod.pipeline.run_process.steps.samtools import RunSamtools
 from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
 from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
 from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
+from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
 
 
 def test_star_align():
@@ -216,6 +217,17 @@ def test_samtools_index():
     samtools_index.run()
 
 
+def test_ase_read_counter():
+    log = SimpleLog()
+
+    ase_read_counter = RunGATKASEReadCounter(output_dir='tests/ase_read_counter',
+                                             input_bam='examples/smallAligned.RG.MG.SPLIT.RECAL.bam',
+                                             input_sites_vcf='examples/smallAligned.FILTERED.HET.vcf',
+                                             logger=log)
+
+    ase_read_counter.run()
+    print('Your output file of interest is at {PATH}'.format(PATH=ase_read_counter.retrieve_output_path()))
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -276,3 +288,6 @@ if __name__ == '__main__':
 
     if which == 'samtools_index' or which == 'all':
         test_samtools_index()
+
+    if which == 'ase_read_counter' or which == 'all':
+        test_ase_read_counter()
