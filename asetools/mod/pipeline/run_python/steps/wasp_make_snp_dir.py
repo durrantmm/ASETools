@@ -31,7 +31,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
         snp_files = {}
         for rec in reader:
             if rec.CHROM not in snp_files.keys():
-                snp_files[rec.CHROM] = vcf.Writer(open(rec.chrom+self.vcf_file_suffix, 'w'), reader)
+                snp_files[rec.CHROM] = vcf.Writer(open(rec.CHROM+self.vcf_file_suffix, 'w'), reader)
 
             snp_files[rec.CHROM].write_record(rec)
 
