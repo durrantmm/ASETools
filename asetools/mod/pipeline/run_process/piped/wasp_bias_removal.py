@@ -1,7 +1,7 @@
 import sys
 from os.path import join, basename
 from mod.pipeline.run_process.run_process_piped_super import RunProcessPipedSuper
-from mod.pipeline.run_python.steps.make_wasp_snp_dir import RunMakeWaspSnpDir
+from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 from mod.pipeline.run_process.steps.star_align import RunStarAlign
 

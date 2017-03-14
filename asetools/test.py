@@ -11,7 +11,7 @@ from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCall
 from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
-from mod.pipeline.run_python.steps.make_wasp_snp_dir import RunMakeWaspSnpDir
+from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 
 
