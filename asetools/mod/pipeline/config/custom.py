@@ -276,6 +276,7 @@ class GATKVariantFiltrationCustomConfig:
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
+                                          "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
                                           GATK_EXECUTION_PATH,
                                           "-T VariantFiltration"])

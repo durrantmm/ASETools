@@ -14,7 +14,7 @@ class Log:
         format_str = "%(levelname)s %(asctime)s:\t%(message)s"
         logformat = logging.Formatter(format_str)
 
-        logging.basicConfig(level=logging.INFO, format=format_str)
+        logging.basicConfig(level=logging.DEBUG, format=format_str)
         self.rootLogger = logging.getLogger()
 
         fileHandler = logging.FileHandler("{0}/{1}.log".format(outdir, os.path.basename(outdir)))
@@ -59,7 +59,7 @@ class SimpleLog:
         format_str = "%(levelname)s %(asctime)s:\t%(message)s"
         logformat = logging.Formatter(format_str)
 
-        logging.basicConfig(level=logging.INFO, format=format_str)
+        logging.basicConfig(level=logging.DEBUG, format=format_str)
         self.rootLogger = logging.getLogger()
 
     def info(self, s):
