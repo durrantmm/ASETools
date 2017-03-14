@@ -64,7 +64,7 @@ class RunProcessStepSuper:
         self.ran = True
 
 
-    def execute_command(self, stderr=subprocess.PIPE, shell=False):
+    def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False):
         command = self.format_command()
         Log.info_chk(self.logger, msg_executing_command.format(DELIM=NL, COMMAND=command))
         Log.debug_chk(self.logger, msg_execute_command_signature.format(STDERR=stderr, SHELL=shell))
@@ -73,7 +73,7 @@ class RunProcessStepSuper:
             if not shell:
                 command = command.split()
 
-            popen = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=stderr, shell=shell, universal_newlines=True)
+            popen = subprocess.Popen(command, stdout=stdout, stderr=stderr, shell=shell, universal_newlines=True)
 
             for stdout_line in iter(popen.stdout.readline, ""):
                 Log.info_chk(self.logger, stdout_line.strip())
