@@ -23,7 +23,7 @@ class WASPBiasRemoval(RunProcessPipedSuper):
         self.input_vcf = input_vcf
 
     def execute_steps(self):
-        # STAR ALIGN
+        # MAKE SNP DIR
         make_snp_dir_output = join(self.output_dir, 'STEP1_MAKE_SNP_DIR')
         make_snp_dir = RunMakeWaspSnpDir(output_dir=make_snp_dir_output,
                                      input_sorted_vcf=self.input_vcf,
@@ -32,6 +32,7 @@ class WASPBiasRemoval(RunProcessPipedSuper):
         make_snp_dir.run()
         snp_directory = make_snp_dir.retrieve_output_path()
 
+        # FIND INTERSECTING SNPS
         find_intersecting_snps_output_dir = join(self.output_dir, "STEP2_FIND_INTERSECTING_SNPS")
         find_intersecting_snps = RunWaspFindIntersectingSnps(output_dir=find_intersecting_snps_output_dir,
                                                             input_bam=self.input_bam,
@@ -40,9 +41,14 @@ class WASPBiasRemoval(RunProcessPipedSuper):
         find_intersecting_snps.run()
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
 
-
-        run_star_output_dir = join(self.output_dir, 'STEP3_REMAP_WITH_STAR')
-        run_star = RunStarAlign(run)
+        # STAR ALIGN
+        star_output_dir = join(self.output_dir, 'STEP3_STAR_REALIGN')
+        run_star = RunStarAlign(output_dir=star_output_dir,
+                                fastq1=fastq1_remap,
+                                fastq2=fastq2_remap,
+                                logger=self.logger)
+        run_star.run()
+        star_output_sam = run_star.retrieve_output_path()
 
 
 
