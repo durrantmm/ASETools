@@ -57,8 +57,6 @@ class RunWaspFindIntersectingSnps(RunProcessStepSuper):
         return SPACE.join(command)
 
     def retrieve_output_path(self, default_output=True):
-        print(glob(self.output_dir+os.sep+AST+'keep.bam'))
-        print(self.output_dir+os.sep+AST+'to.keep.bam')
         bam_keep = glob(self.output_dir+os.sep+AST+'keep.bam').pop()
         bam_remap = glob(self.output_dir+os.sep+AST+'to.remap.bam').pop()
         fastq1_remap = glob(self.output_dir+os.sep+AST+'fq1.gz').pop()

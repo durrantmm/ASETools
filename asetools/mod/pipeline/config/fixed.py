@@ -148,7 +148,7 @@ class WASPFindIntersectingSnpsFixedConfig:
 
         self.input = FlagArg(flag='', arg=None)
 
-        self.output = FlagArg(flag='', arg=None)
+        self.output = FlagArg(flag='--output_dir', arg=None)
 
         self.version_parser = parse_gatk_version
 
@@ -163,7 +163,7 @@ class WASPFilterRemappedReadsFixedConfig:
 
         self.input = FlagTwoArgs(flag='', arg1=None, arg2=None)
 
-        self.output = FlagArg(flag='--output_dir', arg=None)
+        self.output = FlagArg(flag='', arg=None)
 
         self.version_parser = parse_gatk_version
 
