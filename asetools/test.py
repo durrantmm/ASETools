@@ -17,6 +17,7 @@ from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFil
 from mod.pipeline.run_process.steps.samtools import RunSamtools
 from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
 from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
+from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
 
 
 def test_star_align():
@@ -208,6 +209,11 @@ def test_samtools_sort():
     samtools_merge.run()
     print('Your output file of interest is at {PATH}'.format(PATH=samtools_merge.retrieve_output_path()))
 
+def test_samtools_index():
+    log = SimpleLog()
+    samtools_index = RunSamtoolsIndex(input_bam='examples/smallAligned.sorted.bam',
+                                     logger=log)
+    samtools_index.run()
 
 
 if __name__ == '__main__':
