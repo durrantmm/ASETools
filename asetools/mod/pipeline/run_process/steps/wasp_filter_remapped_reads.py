@@ -11,7 +11,7 @@ from mod.pipeline.config.fixed import WASPFilterRemappedReadsFixedConfig
 from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 
 
-class RunWaspFilterRemappedReads    (RunProcessStepSuper):
+class RunWaspFilterRemappedReads(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_bam_to_remap, input_bam_remapped, output_bam=None, logger=None):
 

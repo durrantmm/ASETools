@@ -13,6 +13,7 @@ from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVaria
 from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
 from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
 
 
 def test_star_align():
@@ -171,6 +172,16 @@ def test_prep_star_remap():
     mark_duplicates.run()
     print('Your output file of interest is at {PATH}'.format(PATH=mark_duplicates.retrieve_output_path()))
 
+def test_filter_remapped():
+    log = SimpleLog()
+    filter_remapped = RunWaspFilterRemappedReads(output_dir='tests/prep_star_remap',
+                                                  input_bam_to_remap='examples/smallAligned.RG.MG.to.remap.bam',
+                                                  input_bam_remapped='examples/smallAligned.remapped.sam',
+                                                  logger=log)
+    filter_remapped.run()
+    out_bam = filter_remapped.retrieve_output_path()
+    print('Your output file of interest is at {PATH}'.format(PATH=filter_remapped.retrieve_output_path()))
+
 
 
 
@@ -218,4 +229,7 @@ if __name__ == '__main__':
         test_star_remap()
 
     if which == 'prep_star_remap' or which == 'all':
+        test_prep_star_remap()
+
+    if which == 'filter_remapped' or which == 'all':
         test_prep_star_remap()
