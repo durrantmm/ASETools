@@ -63,6 +63,7 @@ class RunSamtoolsMerge(RunProcessStepSuper):
     def format_command(self):
 
         command = [self.execution_path]
+        command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
         command.append(join(self.output_dir, self.output.arg))
         command.append(self.input.arg1)
         command.append(self.input.arg2)
