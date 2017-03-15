@@ -84,7 +84,8 @@ def main(args):
         if args.analysis_name == RNASEQ_VARIANT_CALLER_STR:
 
             filter_vcf = RunFilterVCF(output_dir=args.output_dir,
-                                      input_vcf=args.vcf)
+                                      input_vcf=args.vcf,
+                                      logger=Log(args.output_dir))
             filter_vcf.run()
 
 
