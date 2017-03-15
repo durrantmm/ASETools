@@ -70,7 +70,7 @@ class RunFilterVCF(RunPythonStepSuper):
 
 
     def contains_both_homs(self, record):
-        if len(record.get_hom_refs) >= 1 and len(record.get_hom_alts) >= 1:
+        if len(record.get_hom_refs()) >= 1 and len(record.get_hom_alts()) >= 1:
             return True
         else:
             return False
