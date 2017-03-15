@@ -1,6 +1,21 @@
 from os.path import basename
 
-def get_shared_prefix(string1, string2, strip_chars=[], base=False):
+# Miscellaneous path methods to help run functions
+#
+#
+
+
+def get_shared_prefix(string1, string2, strip_chars=None, base=False):
+    """
+    Returns the shared prefix of two strings, useful for getting the shared prefix of two paths.
+    :param string1: The first string of interest
+    :param string2: The second string of interest
+    :param strip_chars: A list of characters to strip from the resulting shared prefix
+    :param base: If a path, take the basename(path) of the shared prefix and return it.
+    :return: The shared prefix of the two strings
+    """
+    if strip_chars is None:
+        strip_chars = []
     if base:
         string1 = basename(string1)
         string2 = basename(string2)

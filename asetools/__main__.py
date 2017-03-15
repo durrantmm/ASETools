@@ -6,6 +6,7 @@ from mod.misc.log import Log
 from mod.qsub import QSubmit
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
+from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
 
 
 # Important strings used to parse the input
@@ -13,9 +14,12 @@ PIPELINE_SUBPARSER_STR = 'pipeline'
 ANALYSIS_SUBPARSER_STR = 'analysis'
 
 PIPELINE_NAME_STR = 'pipeline_name'
+ANALYSIS_NAME_STR = 'analysis_name'
 
 RNASEQ_VARIANT_CALLER_STR = 'RNAseqVariantCaller'
 WASP_ASE_READ_COUNTER_STR = 'WASP-ASEReadCounter'
+
+VCF_FILTER_ASE_STR = 'VCFFilterASE'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
@@ -39,13 +43,17 @@ def main(args):
     if args.pipeline_or_analysis==PIPELINE_SUBPARSER_STR:
 
         # If pipeline, then checks for the type of pipeline being run.
+        # This checks to see if the user chose the RNAseq Variant Calling Pipeline
         if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
 
+            # This code turns a command line request into a sungrid engine submission
+            # script so that it can quickly be submitted to a computing cluster.
             if args.qsub:
 
                 qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
                 qsub.submit()
 
+            # Otherwise, it performs the analysis without submitting it to the cluster.
             else:
 
                 rnaseq_var_caller = RunRNASeqVariantCalling(output_dir=args.output_dir,
@@ -54,12 +62,15 @@ def main(args):
                                                             logger=Log(args.output_dir))
                 rnaseq_var_caller.run()
 
+        # This executes the WASP ASE read coutning pipeline if selected
         elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
 
+            # Submit the job to the cluster
             if args.qsub:
                 qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
                 qsub.submit()
 
+            # Or run it locally without submitting it to the cluster.
             else:
 
                 wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
@@ -68,11 +79,19 @@ def main(args):
                                                                      logger=Log(args.output_dir))
                 wasp_pipeline.run()
 
+    elif args.pipeline_or_analysis==ANALYSIS_SUBPARSER_STR:
+
+        if args.pipeline_name == RNASEQ_VARIANT_CALLER_STR:
+
+            filter_vcf = RunFilterVCF(output_dir=args.output_dir,
+                                      input_vcf=args.vcf)
+            filter_vcf.run()
 
 
 
 
-if __name__ == '__main__':
+
+def parse_arguments():
 
     parser = argparse.ArgumentParser()
 
@@ -81,12 +100,15 @@ if __name__ == '__main__':
     subparsers.required = True
     pipeline_parser = subparsers.add_parser(PIPELINE_SUBPARSER_STR)
     analysis_parser = subparsers.add_parser(ANALYSIS_SUBPARSER_STR)
+    analysis_subparsers = analysis_parser.add_subparsers(help="Specify the analysis you'd like to perform.",
+                                                         dest=ANALYSIS_NAME_STR)
+    analysis_subparsers.required = True
 
-    pipeline_subparsers = pipeline_parser.add_subparsers(help="Specify which pipeline you'd like to run_process.'",
+    pipeline_subparsers = pipeline_parser.add_subparsers(help="Specify which pipeline you'd like to run.'",
                                                          dest=PIPELINE_NAME_STR)
     pipeline_subparsers.required = True
 
-    ### RNASEQ VARIANT CALLER PIPELINE
+    ### ARGUMENTS FOR THE RNASEQ VARIANT CALLER PIPELINE
     rnaseq_var_call_pipeline = pipeline_subparsers.add_parser(RNASEQ_VARIANT_CALLER_STR)
 
     rnaseq_var_call_pipeline.add_argument(OUTPUT_DIR_STR)
@@ -101,5 +123,15 @@ if __name__ == '__main__':
     wasp_pipeline.add_argument(VCF_FLAG, required=True)
     wasp_pipeline.add_argument(QSUB_FLAG)
 
+    # VCF ase filtration
+    vcf_ase_filter = pipeline_subparsers.add_parser(VCF_FILTER_ASE_STR)
+    vcf_ase_filter.add_argument(OUTPUT_DIR_STR)
+    vcf_ase_filter.add_argument(VCF_FLAG, required=True)
+
     args = parser.parse_args()
+    return args
+
+if __name__ == '__main__':
+    args = parse_arguments()
+
     main(args)

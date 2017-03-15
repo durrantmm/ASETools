@@ -58,8 +58,7 @@ class RunSamtoolsIndex(RunProcessStepSuper):
 
     def format_command(self):
 
-        command = [self.execution_path]
-        command.append(self.input.arg)
+        command = [self.execution_path, self.input.arg]
 
         return SPACE.join(command)
 

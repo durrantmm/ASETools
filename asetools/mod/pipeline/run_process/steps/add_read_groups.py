@@ -53,10 +53,9 @@ class RunPicardAddReadGroups(RunProcessStepSuper):
 
     def format_command(self):
 
-        command = [self.execution_path]
-        command.append(EQ.join([self.input.flag, self.input.arg]))
+        command = [self.execution_path, EQ.join([self.input.flag, self.input.arg]),
+                   EQ.join([self.output.flag, join(self.output_dir, self.output.arg)])]
         command.extend([EQ.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.append(EQ.join([self.output.flag, join(self.output_dir, self.output.arg)]))
 
         return SPACE.join(command)
 

@@ -4,8 +4,8 @@ from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 
 class RunFilterVCF(RunPythonStepSuper):
 
-    def __init__(self, output_dir, input_vcf, output_vcf, min_one_het=True, autosomal_only=True, biallelic_only=True,
-                 no_indels=True, logger=None):
+    def __init__(self, output_dir, input_vcf, output_vcf, min_one_het=True, hom_ref_hom_alt_is_het=True,
+                 autosomal_only=True, biallelic_only=True, no_indels=True, logger=None):
 
         name = 'FilterVCF'
         output_dir = output_dir
@@ -19,6 +19,7 @@ class RunFilterVCF(RunPythonStepSuper):
         super().__init__(name, output_dir, input, output, log_name, logger)
 
         self.min_one_het = min_one_het
+        self.hom_ref_hom_alt_is_het = hom_ref_hom_alt_is_het
         self.autosomal_only = autosomal_only
         self.biallelic_only = biallelic_only
         self.no_indels = no_indels
@@ -47,6 +48,10 @@ class RunFilterVCF(RunPythonStepSuper):
 
             elif self.min_one_het and not self.contains_min_one_het(rec):
                 continue
+
+            elif self.hom_ref_hom_alt_is_het and not self.contains_both_homs(rec):
+                continue
+
             else:
                 writer.write_record(rec)
 
@@ -63,6 +68,14 @@ class RunFilterVCF(RunPythonStepSuper):
             return True
         else:
             return False
+
+
+    def contains_both_homs(self, record):
+        if len(record.get_hom_refs) >= 1 and len(record.get_hom_alts) >= 1:
+            return True
+        else:
+            return False
+
 
 
 

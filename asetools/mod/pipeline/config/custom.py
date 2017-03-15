@@ -1,33 +1,54 @@
 import sys
 from mod.misc.string_constants import *
 
+########################################################################################################################
+#   This is the custom config file, providing the necessary information to correctly run the various applications
+#   used by asetools on your system.
+#   Feel free to edit the paths available here to suit your system.
+#
+#
+#
+#
+########################################################################################################################
 
+# Picard execution path and picard version
 PICARD_EXECUTION_PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
 PICARD_VERSION = "2.8.0-SNAPSHOT"
 
+# GATK execution path and GATK version
 GATK_EXECUTION_PATH = "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar"
 GATK_VERSION = "3.6-0-g89b7209"
 
+# The reference genome fasta to use for all analyses and pipelines.
 REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
 
+# A dbsnp vcf (you can retrieve this from the GATK bundle)
 DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/dbsnp_138.hg19.vcf.gz"
-EXAC_VCF = "/home/mdurrant/montgomery/mdurrant/data/ExAC.r1.sites.vep.vcf.gz"
-THOUSAND_GENOMES_VCF = "/home/mdurrant/montgomery/mdurrant/data/1000G_20130502/" \
-                       "ALL.wgs.phase3_shapeit2_mvncall_integrated_v5b.20130502.sites.vcf.gz"
+# A bed file of all of the exons found in the genome, for RNAseq variant calling.
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
+# The maximum memory available to java for the analysis. 50g = 50 gigabytes.
 MAX_JAVA_MEMORY = "50g"
 
+WASP_PYTHON_PATH = "/home/mdurrant/miniconda3/envs/venv2.7/bin/python"
 
 
 class StarAlignCustomConfig:
+    """
+    The custom arguments for running STAR RNAseq alignment
+    """
 
     def __init__(self):
-
+        # STAR execution path
         self.execution_path = "/home/mdurrant/miniconda3/bin/STAR"
+
+        # STAR version, recommended is STAR_2.5.2b
         self.version = "STAR_2.5.2b"
         self.version_flag = "--version"
 
+        # Arguments to be passed to star.
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19"),
@@ -56,6 +77,8 @@ class JavaCustomConfig:
     def __init__(self):
 
         self.execution_path = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
+
+        # Recommended java version ois 1.8.0_66
         self.version = "1.8.0_66"
         self.version_flag = "-version"
 
@@ -75,6 +98,8 @@ class PicardAddReadGroupsCustomConfig:
         self.version = PICARD_VERSION
         self.version_flag = "--help"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("SO", "coordinate"),
@@ -100,6 +125,8 @@ class PicardMarkDuplicatesCustomConfig:
         self.version = PICARD_VERSION
         self.version_flag = "--help"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("CREATE_INDEX", "true"),
@@ -120,6 +147,8 @@ class GATKSplitNCigarReadsCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),
@@ -143,6 +172,8 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),
@@ -163,6 +194,8 @@ class GATKPrintReadsCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA)
@@ -181,6 +214,8 @@ class GATKHaplotypeCallerCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),
@@ -194,12 +229,17 @@ class WASPFindIntersectingSnpsCustomConfig:
 
     def __init__(self):
 
-        self.execution_path = "/home/mdurrant/miniconda3/envs/venv2.7/bin/python" \
-                              " /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"
+        # You must set up a WASP python environment as described by their docs
+        # You then need to call the python interpreter corresponding to that python environment.
+        self.execution_path = SPACE.join([WASP_PYTHON_PATH,
+                                         "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"])
 
+        # No version of wasp is necessary.
         self.version = None
         self.version_flag = None
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("--is_paired_end", ""),
@@ -211,12 +251,14 @@ class WASPFilterRemappedReadsCustomConfig:
 
     def __init__(self):
 
-        self.execution_path = "/home/mdurrant/miniconda3/envs/venv2.7/bin/python" \
-                              " /home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/filter_remapped_reads.py"
+        self.execution_path = SPACE.join([WASP_PYTHON_PATH,
+                                          "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/filter_remapped_reads.py"])
 
         self.version = None
         self.version_flag = None
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = []
 
 
@@ -225,9 +267,13 @@ class SamtoolsCustomConfig:
     def __init__(self):
 
         self.execution_path = "/home/mdurrant/miniconda3/envs/venv3.5/bin/samtools"
+
+        # Samtools version 1.3.1 recommended
         self.version = "1.3.1"
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = None
 
 
@@ -241,6 +287,8 @@ class SamtoolsMergeCustomConfig:
         self.version = None
         self.version_flag = None
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
             ('-f', '')
         ]
@@ -255,6 +303,8 @@ class SamtoolsSortCustomConfig:
         self.version = None
         self.version_flag = None
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = []
 
 class SamtoolsIndexCustomConfig:
@@ -267,6 +317,8 @@ class SamtoolsIndexCustomConfig:
         self.version = None
         self.version_flag = None
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = []
 
 
@@ -282,6 +334,8 @@ class GATKVariantFiltrationCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),
@@ -307,6 +361,8 @@ class GATKASEReadCounterCustomConfig:
         self.version = GATK_VERSION
         self.version_flag = "--version"
 
+        # You can add or remove arguments, but be sure to keep them as tuples.
+        # If only single argument, write it as ("--arg","")
         self.args = [
 
             ("-R", REFERENCE_GENOME_FASTA),

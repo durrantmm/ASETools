@@ -53,10 +53,9 @@ class RunGATKSplitNCigarReads(RunProcessStepSuper):
 
     def format_command(self):
 
-        command = [self.execution_path]
-        command.append(SPACE.join([self.input.flag, self.input.arg]))
+        command = [self.execution_path, SPACE.join([self.input.flag, self.input.arg]),
+                   SPACE.join([self.output.flag, join(self.output_dir, self.output.arg)])]
         command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.append(SPACE.join([self.output.flag, join(self.output_dir, self.output.arg)]))
 
         return SPACE.join(command)
 

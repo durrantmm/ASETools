@@ -21,6 +21,11 @@ from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
 from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
 
 
+#
+#   These are test cases that I've written to quickly check individual parts of the code.
+#
+
+
 def test_star_align():
     log = SimpleLog()
     star_align = RunStarAlign(output_dir='tests/star_align_test1',

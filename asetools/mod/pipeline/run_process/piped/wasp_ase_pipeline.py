@@ -1,5 +1,5 @@
 import sys
-from os.path import join, basename
+from os.path import join
 from mod.pipeline.run_process.run_process_piped_super import RunProcessPipedSuper
 from mod.pipeline.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
 from mod.pipeline.run_process.steps.star_align import RunStarAlign

@@ -53,8 +53,7 @@ class RunPicardMarkDuplicates(RunProcessStepSuper):
 
     def format_command(self):
 
-        command = [self.execution_path]
-        command.append(EQ.join([self.input.flag, self.input.arg]))
+        command = [self.execution_path, EQ.join([self.input.flag, self.input.arg])]
         for flag, arg in self.args:
             if flag == 'M':
                 arg = join(self.output_dir, arg)

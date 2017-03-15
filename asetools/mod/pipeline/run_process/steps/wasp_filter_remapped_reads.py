@@ -53,10 +53,7 @@ class RunWaspFilterRemappedReads(RunProcessStepSuper):
 
     def format_command(self):
 
-        command = [self.execution_path]
-        command.append(self.input.arg1)
-        command.append(self.input.arg2)
-        command.append(join(self.output_dir, self.output.arg))
+        command = [self.execution_path, self.input.arg1, self.input.arg2, join(self.output_dir, self.output.arg)]
 
         return SPACE.join(command)
 
