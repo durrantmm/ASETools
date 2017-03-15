@@ -45,14 +45,15 @@ class RunVCFFilterASE(RunPythonStepSuper):
             elif self.no_indels and rec.is_indel:
                 continue
 
-            elif self.min_one_het and not self.contains_min_one_het(rec):
-                continue
+            elif self.min_one_het and self.contains_min_one_het(rec):
+                writer.write_record(rec)
 
-            elif self.hom_ref_hom_alt_is_het and not self.contains_both_homs(rec):
-                continue
+            elif self.hom_ref_hom_alt_is_het and self.contains_both_homs(rec):
+                writer.write_record(rec)
 
             else:
-                writer.write_record(rec)
+                continue
+
 
     def handle_output(self, output_dir, output, input):
         if not output:
