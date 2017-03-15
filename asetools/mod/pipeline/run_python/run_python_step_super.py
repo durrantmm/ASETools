@@ -70,7 +70,7 @@ class RunPythonStepSuper:
 
 
     def handle_output(self, output_dir, output, input):
-        if os.path.realpath(output) == os.path.realpath(input) or not output:
-            output = DOT.join(output.split()[:-1])+DOT+self.name+DOT+output.split()[-1]
+        if not output or os.path.realpath(output) == os.path.realpath(input):
+            output = DOT.join(input.split()[:-1])+DOT+self.name+DOT+input.split()[-1]
 
         return os.path.basename(output)
