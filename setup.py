@@ -14,7 +14,7 @@ setup(name='asetools',
       author_email='mdurrant@stanford.edu',
       license = "BSD",
       keywords = "genomics allele specific expression pipeline",
-      url='"http://packages.python.org/asetools"',
+      url="http://packages.python.org/asetools",
       packages=['sys', 'pysam', 'vcf', 'argparse', 'recordclass', 'numpy', 'util', 'tables'],
       long_description=read('README.md')
      )
