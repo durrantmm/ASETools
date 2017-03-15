@@ -81,7 +81,7 @@ def main(args):
 
     elif args.pipeline_or_analysis==ANALYSIS_SUBPARSER_STR:
 
-        if args.pipeline_name == RNASEQ_VARIANT_CALLER_STR:
+        if args.analysis_name == RNASEQ_VARIANT_CALLER_STR:
 
             filter_vcf = RunFilterVCF(output_dir=args.output_dir,
                                       input_vcf=args.vcf)
