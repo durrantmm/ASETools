@@ -23,7 +23,7 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
 
     def process(self):
-        reader = vcf.Reader(open(self.input))
+        reader = vcf.Reader(filename=self.input)
 
         snp_files = {}
         for rec in reader:

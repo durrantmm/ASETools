@@ -6,7 +6,7 @@ from mod.misc.log import Log
 from mod.qsub import QSubmit
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
-from mod.pipeline.run_python.steps.filter_vcf import RunVCFFilterASE
+from mod.pipeline.run_python.steps.vcf_filter_ase import RunVCFFilterASE
 
 
 # Important strings used to parse the input
