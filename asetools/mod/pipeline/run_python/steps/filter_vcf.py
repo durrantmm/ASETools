@@ -11,7 +11,7 @@ class RunFilterVCF(RunPythonStepSuper):
         output_dir = output_dir
 
         input = input_vcf
-        output = output_vcf
+        output = self.hand
 
         log_name = 'filter_vcf.json'
         logger = logger
@@ -27,7 +27,6 @@ class RunFilterVCF(RunPythonStepSuper):
         self.autosomal_chroms = ['chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9'
                                  'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17',
                                  'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
-
 
     def process(self):
         reader = vcf.Reader(open(self.input))
