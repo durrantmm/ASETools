@@ -4,7 +4,7 @@ from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 
 class RunFilterVCF(RunPythonStepSuper):
 
-    def __init__(self, output_dir, input_vcf, output_vcf, min_one_het=True, hom_ref_hom_alt_is_het=True,
+    def __init__(self, output_dir, input_vcf, output_vcf=None, min_one_het=True, hom_ref_hom_alt_is_het=True,
                  autosomal_only=True, biallelic_only=True, no_indels=True, logger=None):
 
         name = 'FilterVCF'
