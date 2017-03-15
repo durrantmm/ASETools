@@ -10,7 +10,7 @@ from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
 from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
 from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
+from mod.pipeline.run_python.steps.filter_vcf import RunVCFFilterASE
 from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
@@ -133,10 +133,10 @@ def test_rnaseq_variant_calling_pipe():
 def test_filter_vcf():
     log = SimpleLog()
 
-    vcf_filter =  RunFilterVCF(output_dir="tests/filter_vcf",
-                               input_vcf="examples/smallAligned.FILTERED.vcf",
-                               output_vcf="smallAligned.FILTERED.HET.vcf",
-                               logger=log)
+    vcf_filter =  RunVCFFilterASE(output_dir="tests/filter_vcf",
+                                  input_vcf="examples/smallAligned.FILTERED.vcf",
+                                  output_vcf="smallAligned.FILTERED.HET.vcf",
+                                  logger=log)
     vcf_filter.run()
 
 def test_make_wasp_snp_dir():

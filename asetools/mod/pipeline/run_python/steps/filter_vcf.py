@@ -1,13 +1,14 @@
 import vcf
 from os.path import basename, join
+from mod.misc.string_constants import *
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 
-class RunFilterVCF(RunPythonStepSuper):
+class RunVCFFilterASE(RunPythonStepSuper):
 
     def __init__(self, output_dir, input_vcf, output_vcf=None, min_one_het=True, hom_ref_hom_alt_is_het=True,
                  autosomal_only=True, biallelic_only=True, no_indels=True, logger=None):
 
-        name = 'FilterVCF'
+        name = 'VCFFilterASE'
         output_dir = output_dir
 
         input = input_vcf
@@ -31,7 +32,6 @@ class RunFilterVCF(RunPythonStepSuper):
     def process(self):
         reader = vcf.Reader(filename=self.input)
         writer = vcf.Writer(open(join(self.output_dir, self.output), 'w'), reader)
-        print(join(self.output_dir, self.output))
 
         for rec in reader:
 
@@ -56,7 +56,7 @@ class RunFilterVCF(RunPythonStepSuper):
 
     def handle_output(self, output_dir, output, input):
         if not output:
-            output = input.split('.')[0]+self.name+'.vcf'
+            output = input.split(DOT)[0]+DOT+self.name+DOT+'vcf'
         return basename(output)
 
     def is_biallelic(self, record):

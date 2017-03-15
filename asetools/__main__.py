@@ -6,7 +6,7 @@ from mod.misc.log import Log
 from mod.qsub import QSubmit
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
-from mod.pipeline.run_python.steps.filter_vcf import RunFilterVCF
+from mod.pipeline.run_python.steps.filter_vcf import RunVCFFilterASE
 
 
 # Important strings used to parse the input
@@ -83,9 +83,9 @@ def main(args):
 
         if args.analysis_name == VCF_FILTER_ASE_STR:
 
-            filter_vcf = RunFilterVCF(output_dir=args.output_dir,
-                                      input_vcf=args.vcf,
-                                      logger=Log(args.output_dir))
+            filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
+                                         input_vcf=args.vcf,
+                                         logger=Log(args.output_dir))
             filter_vcf.run()
 
 
