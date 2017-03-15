@@ -29,7 +29,7 @@ class RunFilterVCF(RunPythonStepSuper):
                                  'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
 
     def process(self):
-        reader = vcf.Reader(open(self.input))
+        reader = vcf.Reader(filename=self.input)
         writer = vcf.Writer(open(join(self.output_dir, self.output), 'w'), reader)
         print(join(self.output_dir, self.output))
 
