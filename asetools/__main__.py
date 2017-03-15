@@ -124,7 +124,7 @@ def parse_arguments():
     wasp_pipeline.add_argument(QSUB_FLAG)
 
     # VCF ase filtration
-    vcf_ase_filter = pipeline_subparsers.add_parser(VCF_FILTER_ASE_STR)
+    vcf_ase_filter = analysis_subparsers.add_parser(VCF_FILTER_ASE_STR)
     vcf_ase_filter.add_argument(OUTPUT_DIR_STR)
     vcf_ase_filter.add_argument(VCF_FLAG, required=True)
 
