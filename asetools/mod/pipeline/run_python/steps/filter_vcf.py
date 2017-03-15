@@ -54,6 +54,10 @@ class RunFilterVCF(RunPythonStepSuper):
             else:
                 writer.write_record(rec)
 
+    def handle_output(self, output_dir, output, input):
+        if not output:
+            output = input.split('.')[0]+self.name+'.vcf'
+        return basename(output)
 
     def is_biallelic(self, record):
         if len(record.ALT) == 1:
