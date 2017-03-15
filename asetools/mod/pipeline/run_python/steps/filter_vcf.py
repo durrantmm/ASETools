@@ -11,7 +11,7 @@ class RunFilterVCF(RunPythonStepSuper):
         output_dir = output_dir
 
         input = input_vcf
-        output = self.hand
+        output = output_vcf
 
         log_name = 'filter_vcf.json'
         logger = logger
