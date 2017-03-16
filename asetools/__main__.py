@@ -3,14 +3,14 @@ import argparse
 import os
 import sys
 
-from mod.process.run_python.vcf_filter_ase import RunVCFFilterASE
+from mod.process.vcf_filter_ase import RunVCFFilterASE
 
 from mod.misc.log import Log
 from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.qsub import QSubmit
-from mod.subprocess.run_process import RunRNASeqVariantCalling
-from mod.subprocess.run_process import WASPAlleleSpecificExpressionPipeline
+from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.subprocess.pipelines.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
 
 # Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'subprocess'
