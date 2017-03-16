@@ -146,7 +146,7 @@ def parse_arguments():
 
 
     # Get Reference Bases
-    get_reference_bases = analysis_subparsers.add_parser(VCF_FILTER_ASE_STR)
+    get_reference_bases = analysis_subparsers.add_parser(GET_REF_BASES_STR)
     get_reference_bases.add_argument(OUTPUT_DIR_STR)
     get_reference_bases.add_argument(TSV_FLAG, required=True)
     get_reference_bases.add_argument(CHROM_COL_FLAG, type=int, default=1)
