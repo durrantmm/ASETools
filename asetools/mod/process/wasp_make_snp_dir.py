@@ -24,7 +24,6 @@ class RunMakeWaspSnpDir(RunPythonStepSuper):
 
         self.file_suffix = '.snps.txt.gz'
 
-
     def process(self):
         reader = vcf.Reader(filename=self.input)
 
