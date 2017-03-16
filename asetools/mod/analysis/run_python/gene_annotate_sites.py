@@ -5,6 +5,7 @@ from mod.misc.string_constants import *
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 from Bio import SeqIO
 from glob import glob
+import gzip
 
 
 
@@ -38,10 +39,12 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
         current_chrom = None
         for chrom, pos in self.read_tsv_file():
             if chrom != current_chrom:
-                genbank_reader = SeqIO.parse(glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop(), "genbank")
+                genbank_file = glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop()
+                genbank_reader = self.read_genbank_file(genbank_file)
 
             for rec in genbank_reader:
                 print(rec.id)
+
             current_chrom = chrom
 
         #for record in :
@@ -55,6 +58,11 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                 line = line.split()
                 chrom, pos = line[self.chrom_column+self.index_adjust], line[self.pos_column+self.index_adjust]
                 yield chrom, pos
+
+    def read_genbank_file(self, genbank_file):
+        with gzip.open(genbank_file) as infile:
+            for record in SeqIO.parse(infile, 'genbank'):
+                yield record
 
     def handle_output(self, output_dir, output, input):
         if not output:
