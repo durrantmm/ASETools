@@ -30,7 +30,8 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                                  'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
 
     def process(self):
-
+        for chrom, pos in self.read_tsv_file():
+            print(chrom, pos)
         #for record in SeqIO.parse("example.fasta", "fasta"):
 
         #    print(record.id)
@@ -41,7 +42,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
             for line in sites_in:
                 line = line.split()
                 chrom, pos = line[self.chrom_column], line[self.pos_column]
-                print(chrom, pos)
+                yield chrom, pos
 
 
 
