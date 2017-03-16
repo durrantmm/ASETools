@@ -235,10 +235,10 @@ def test_ase_read_counter():
     print('Your output file of interest is at {PATH}'.format(PATH=ase_read_counter.retrieve_output_path()))
 
 
-def test_gene_annotate_sites():
+def test_get_reference_bases():
     log = SimpleLog()
 
-    annotate = RunGetReferenceBases(output_dir='tests/gene_annotate',
+    annotate = RunGetReferenceBases(output_dir='tests/reference_bases',
                                     input_tsv='examples/smallAligned.FILTERED.HET.tsv',
                                     input_reference_fasta='/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta',
                                     logger=log)
@@ -308,5 +308,5 @@ if __name__ == '__main__':
     if which == 'ase_read_counter' or which == 'all':
         test_ase_read_counter()
 
-    if which == 'gene_annotate_sites' or which == 'all':
-        test_gene_annotate_sites()
+    if which == 'reference_bases' or which == 'all':
+        test_get_reference_bases()
