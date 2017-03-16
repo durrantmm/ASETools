@@ -24,6 +24,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
         self.input_genbank = input_genbank_folder
         self.chrom_column = chrom_column
         self.pos_column = pos_column
+        self.index_adjust = -1
 
         self.autosomal_chroms = ['chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9'
                                  'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17',
@@ -41,7 +42,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
         with open(self.input) as sites_in:
             for line in sites_in:
                 line = line.split()
-                chrom, pos = line[self.chrom_column], line[self.pos_column]
+                chrom, pos = line[self.chrom_column+self.index_adjust], line[self.pos_column+self.index_adjust]
                 yield chrom, pos
 
 
