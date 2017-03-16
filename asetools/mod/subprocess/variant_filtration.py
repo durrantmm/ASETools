@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKVariantFiltrationCustomConfig
+from mod.config.custom import GATKVariantFiltrationCustomConfig
 
 from mod.config.fixed import GATKVariantFiltrationFixedConfig
 from mod.misc.string_constants import *

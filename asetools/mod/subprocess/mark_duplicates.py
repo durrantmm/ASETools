@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import PicardMarkDuplicatesCustomConfig
+from mod.config.custom import PicardMarkDuplicatesCustomConfig
 
 from mod.config.fixed import PicardMarkDuplicatesFixedConfig
 from mod.misc.string_constants import *

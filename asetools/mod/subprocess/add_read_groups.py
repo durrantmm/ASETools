@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import PicardAddReadGroupsCustomConfig
+from mod.config.custom import PicardAddReadGroupsCustomConfig
 
 from mod.config.fixed import PicardAddReadGroupsFixedConfig
 from mod.misc.string_constants import *

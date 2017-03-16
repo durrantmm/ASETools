@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKSplitNCigarReadsCustomConfig
+from mod.config.custom import GATKSplitNCigarReadsCustomConfig
 
 from mod.config.fixed import GATKSplitNCigarReadsFixedConfig
 from mod.misc.string_constants import *

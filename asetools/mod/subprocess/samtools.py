@@ -1,6 +1,6 @@
 import subprocess
 
-from mod.subprocess.config.custom import SamtoolsCustomConfig
+from mod.config.custom import SamtoolsCustomConfig
 
 from mod.config.fixed import SamtoolsFixedConfig
 from mod.run_process_step_super import RunProcessStepSuper

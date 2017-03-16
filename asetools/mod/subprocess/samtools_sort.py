@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import SamtoolsSortCustomConfig
+from mod.config.custom import SamtoolsSortCustomConfig
 
 from mod.config.fixed import SamtoolsSortFixedConfig
 from mod.misc.string_constants import *

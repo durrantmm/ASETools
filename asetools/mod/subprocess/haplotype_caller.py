@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKHaplotypeCallerCustomConfig
+from mod.config.custom import GATKHaplotypeCallerCustomConfig
 
 from mod.config.fixed import GATKHaplotypeCallerFixedConfig
 from mod.misc.string_constants import *

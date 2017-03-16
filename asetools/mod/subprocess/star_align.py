@@ -1,7 +1,7 @@
 from glob import glob
 from os.path import basename, join
 
-from mod.subprocess.config.custom import StarAlignCustomConfig
+from mod.config.custom import StarAlignCustomConfig
 
 from mod.config.fixed import StarAlignFixedConfig
 from mod.misc.path_methods import get_shared_prefix

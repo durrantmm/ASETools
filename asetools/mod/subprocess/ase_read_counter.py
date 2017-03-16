@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKASEReadCounterCustomConfig
+from mod.config.custom import GATKASEReadCounterCustomConfig
 
 from mod.config.fixed import GATKASEReadCounterFixedConfig
 from mod.misc.string_constants import *

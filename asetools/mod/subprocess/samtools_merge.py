@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import SamtoolsMergeCustomConfig
+from mod.config.custom import SamtoolsMergeCustomConfig
 
 from mod.config.fixed import SamtoolsMergeFixedConfig
 from mod.misc.record_classes import *

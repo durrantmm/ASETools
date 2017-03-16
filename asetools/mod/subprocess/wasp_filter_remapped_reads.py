@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import WASPFilterRemappedReadsCustomConfig
+from mod.config.custom import WASPFilterRemappedReadsCustomConfig
 
 from mod.config.fixed import WASPFilterRemappedReadsFixedConfig
 from mod.misc.log import *

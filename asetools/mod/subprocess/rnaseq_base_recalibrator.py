@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
+from mod.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
 
 from mod.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
 from mod.misc.string_constants import *

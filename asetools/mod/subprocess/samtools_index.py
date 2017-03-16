@@ -1,6 +1,6 @@
 import subprocess
 
-from mod.subprocess.config.custom import SamtoolsIndexCustomConfig
+from mod.config.custom import SamtoolsIndexCustomConfig
 
 from mod.config.fixed import SamtoolsIndexFixedConfig
 from mod.misc.string_constants import *

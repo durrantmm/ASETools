@@ -1,6 +1,6 @@
 import subprocess
 
-from mod.subprocess.config.custom import JavaCustomConfig
+from mod.config.custom import JavaCustomConfig
 
 from mod.config.fixed import JavaFixedConfig
 from mod.misc.record_classes import *

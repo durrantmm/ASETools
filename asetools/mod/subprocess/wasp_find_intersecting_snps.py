@@ -1,7 +1,7 @@
 import subprocess
 from glob import glob
 
-from mod.subprocess.config.custom import WASPFindIntersectingSnpsCustomConfig
+from mod.config.custom import WASPFindIntersectingSnpsCustomConfig
 
 from mod.config.fixed import WASPFindIntersectingSnpsFixedConfig
 from mod.misc.log import *

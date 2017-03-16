@@ -1,7 +1,7 @@
 import subprocess
 from os.path import basename, join
 
-from mod.subprocess.config.custom import GATKPrintReadsCustomConfig
+from mod.config.custom import GATKPrintReadsCustomConfig
 
 from mod.config.fixed import GATKPrintReadsFixedConfig
 from mod.misc.string_constants import *
