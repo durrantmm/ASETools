@@ -1,4 +1,5 @@
 import subprocess
+from os.path import dirname
 
 from mod.config.custom import SamtoolsIndexCustomConfig
 
@@ -16,7 +17,7 @@ class RunSamtoolsIndex(RunProcessStepSuper):
         fixed_config = SamtoolsIndexFixedConfig()
 
         name = fixed_config.name
-        output_dir = None
+        output_dir = dirname(input_bam)
         execution_path = custom_config.execution_path
 
         version = custom_config.version

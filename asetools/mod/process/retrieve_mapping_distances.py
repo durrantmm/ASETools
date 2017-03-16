@@ -1,13 +1,6 @@
 import sys
 import pysam, vcf
 
-
-import os
-from os.path import basename
-
-from Bio import SeqIO
-
-from mod.misc.string_constants import *
 from mod.run_python_step_super import RunPythonStepSuper
 
 
