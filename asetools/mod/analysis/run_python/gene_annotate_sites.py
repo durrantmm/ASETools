@@ -37,6 +37,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
     def process(self):
         genbank_reader = None
         current_chrom = None
+
         for chrom, pos in self.read_tsv_file():
             if chrom != current_chrom:
                 genbank_file = glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop()
@@ -59,15 +60,18 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                 chrom, pos = line[self.chrom_column+self.index_adjust], line[self.pos_column+self.index_adjust]
                 yield chrom, pos
 
+
     def read_genbank_file(self, genbank_file):
-        with gzip.open(genbank_file) as infile:
+        with gzip.open(genbank_file, 'rb') as infile:
             for record in SeqIO.parse(infile, 'genbank'):
                 yield record
+
 
     def handle_output(self, output_dir, output, input):
         if not output:
             output = input.split(DOT)[0]+DOT+self.name+DOT+'tsv'
         return basename(output)
+
 
     def is_biallelic(self, record):
         if len(record.ALT) == 1:
