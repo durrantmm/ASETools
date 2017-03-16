@@ -36,14 +36,13 @@ class RunGetReferenceBases(RunPythonStepSuper):
 
     def process(self):
         fasta_reader = self.read_fasta_file()
-        current_chrom = None
         chrom_seq = None
 
         for chrom, pos in self.read_tsv_file():
-            if chrom != current_chrom:
+            while not chrom_seq or chrom_seq.id != chrom:
                 chrom_seq = next(fasta_reader)
 
-            print(chrom_seq.id)
+            print(chrom, pos, chrom_seq.id)
 
 
     def read_tsv_file(self):
