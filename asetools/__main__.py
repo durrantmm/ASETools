@@ -6,15 +6,15 @@ import sys
 
 from mod.misc.log import Log
 from mod.misc.string_constants import *
-from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
+from mod.subprocess.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.subprocess.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
 from mod.qsub import QSubmit
 from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
 from mod.analysis.run_python.get_reference_bases import RunGetReferenceBases
 
 
 # Important strings used to parse the input
-PIPELINE_SUBPARSER_STR = 'pipeline'
+PIPELINE_SUBPARSER_STR = 'subprocess'
 ANALYSIS_SUBPARSER_STR = 'analysis'
 
 PIPELINE_NAME_STR = 'pipeline_name'
@@ -49,7 +49,7 @@ def main(args):
     os.makedirs(args.output_dir, exist_ok=True)
 
     # This checks to see if the user chose the RNAseq Variant Calling Pipeline
-    if args.script_name==RNASEQ_VARIANT_CALLER_STR:
+    if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
 
         # This code turns a command line request into a sungrid engine submission
         # script so that it can quickly be submitted to a computing cluster.
@@ -67,7 +67,7 @@ def main(args):
                                                         logger=Log(args.output_dir))
             rnaseq_var_caller.run()
 
-    # This executes the WASP ASE read coutning pipeline if selected
+    # This executes the WASP ASE read coutning subprocess if selected
     elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
 
         # Submit the job to the cluster
@@ -85,13 +85,13 @@ def main(args):
             wasp_pipeline.run()
 
 
-    elif args.analysis_name == VCF_FILTER_ASE_STR:
+
+    if args.analysis_name == VCF_FILTER_ASE_STR:
 
         filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
                                      input_vcf=args.vcf,
                                      logger=Log(args.output_dir))
         filter_vcf.run()
-
 
     elif args.analysis_name == GET_REF_BASES_STR:
 
@@ -107,7 +107,7 @@ def parse_arguments():
 
     parser = argparse.ArgumentParser()
 
-    subparsers = parser.add_subparsers(help='Specify the name of the script that you would like to execute.',
+    subparsers = parser.add_subparsers(help='subprocess',
                                        dest='script_name')
     subparsers.required = True
 

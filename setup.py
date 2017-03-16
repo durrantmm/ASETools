@@ -9,11 +9,11 @@ def read(fname):
 
 setup(name='asetools',
       version='1.0',
-      description='Python pipeline and analysis tools to perform ASE and differential ASE analysis.',
+      description='Python subprocess and analysis tools to perform ASE and differential ASE analysis.',
       author='Matt Durrant',
       author_email='mdurrant@stanford.edu',
       license = "BSD",
-      keywords = "genomics allele specific expression pipeline",
+      keywords = "genomics allele specific expression subprocess",
       url="http://packages.python.org/asetools",
       packages=['asetools']
      )

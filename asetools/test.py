@@ -2,23 +2,23 @@ import sys
 
 from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
 from mod.misc.log import SimpleLog
-from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
-from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
-from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
-from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.pipeline.run_process.steps.samtools import RunSamtools
-from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
-from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
-from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
-from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.pipeline.run_process.steps.star_align import RunStarAlign
-from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
-from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
-from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
-from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
+from mod.subprocess.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.subprocess.run_process.steps.add_read_groups import RunPicardAddReadGroups
+from mod.subprocess.run_process.steps.ase_read_counter import RunGATKASEReadCounter
+from mod.subprocess.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.subprocess.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
+from mod.subprocess.run_process.steps.print_reads import RunGATKPrintReads
+from mod.subprocess.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.subprocess.run_process.steps.samtools import RunSamtools
+from mod.subprocess.run_process.steps.samtools_index import RunSamtoolsIndex
+from mod.subprocess.run_process.steps.samtools_merge import RunSamtoolsMerge
+from mod.subprocess.run_process.steps.samtools_sort import RunSamtoolsSort
+from mod.subprocess.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.subprocess.run_process.steps.star_align import RunStarAlign
+from mod.subprocess.run_process.steps.variant_filtration import RunGATKVariantFiltration
+from mod.subprocess.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.subprocess.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.subprocess.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
 from mod.analysis.run_python.get_reference_bases import RunGetReferenceBases
 
 
