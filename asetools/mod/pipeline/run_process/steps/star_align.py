@@ -1,12 +1,12 @@
 from glob import glob
 from os.path import basename, join
-import subprocess
+
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import StarAlignCustomConfig
 from mod.pipeline.config.fixed import StarAlignFixedConfig
-from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
 class RunStarAlign(RunProcessStepSuper):

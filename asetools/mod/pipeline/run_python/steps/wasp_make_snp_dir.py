@@ -1,8 +1,11 @@
-import vcf, os
-from mod.misc.string_constants import *
-from os.path import basename, join
-from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 import gzip
+from os.path import join
+
+import vcf
+
+from mod.misc.string_constants import *
+from mod.run_python_step_super import RunPythonStepSuper
+
 
 class RunMakeWaspSnpDir(RunPythonStepSuper):
 

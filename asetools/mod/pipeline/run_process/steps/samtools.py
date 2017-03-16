@@ -1,8 +1,8 @@
 import subprocess
 
-from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import SamtoolsCustomConfig
 from mod.pipeline.config.fixed import SamtoolsFixedConfig
+from mod.run_process_step_super import RunProcessStepSuper
 
 class RunSamtools(RunProcessStepSuper):
 

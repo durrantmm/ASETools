@@ -65,6 +65,7 @@ class RunProcessStepSuper:
         self.execute_command()
         self.save_log()
         self.ran = True
+        return self.retrieve_output_path()
 
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):

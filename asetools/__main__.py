@@ -3,12 +3,14 @@ import argparse
 import os
 import sys
 
-from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
+
 from mod.misc.log import Log
 from mod.misc.string_constants import *
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
 from mod.qsub import QSubmit
+from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
+from mod.analysis.run_python.get_reference_bases import RunGetReferenceBases
 
 
 # Important strings used to parse the input
@@ -22,12 +24,17 @@ RNASEQ_VARIANT_CALLER_STR = 'RNAseqVariantCaller'
 WASP_ASE_READ_COUNTER_STR = 'WASP-ASEReadCounter'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
+GET_REF_BASES_STR = 'GetReferenceBases'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
 FASTQ2_FLAG = '--fastq2'
 BAM_FLAG = '--bam'
 VCF_FLAG = '--vcf'
+TSV_FLAG = '--vcf'
+
+CHROM_COL_FLAG = '--chrom-col'
+POS_COL_FLAG = '--position-col'
 
 QSUB_FLAG = '--qsub'
 
@@ -90,6 +97,12 @@ def main(args):
                                          logger=Log(args.output_dir))
             filter_vcf.run()
 
+        elif args.analysis_name == GET_REF_BASES_STR:
+
+            get_ref_bases = RunGetReferenceBases(output_dir=args.output_dir,
+                                                 input_tsv=args.tsv,
+                                                 logger=Log(args.output_dir))
+
 
 
 
@@ -130,6 +143,15 @@ def parse_arguments():
     vcf_ase_filter = analysis_subparsers.add_parser(VCF_FILTER_ASE_STR)
     vcf_ase_filter.add_argument(OUTPUT_DIR_STR)
     vcf_ase_filter.add_argument(VCF_FLAG, required=True)
+
+
+    # Get Reference Bases
+    get_reference_bases = analysis_subparsers.add_parser(VCF_FILTER_ASE_STR)
+    get_reference_bases.add_argument(OUTPUT_DIR_STR)
+    get_reference_bases.add_argument(TSV_FLAG, required=True)
+    get_reference_bases.add_argument(CHROM_COL_FLAG, type=int, default=1)
+    get_reference_bases.add_argument(POS_COL_FLAG, type=int, default=1)
+
 
     args = parser.parse_args()
     return args

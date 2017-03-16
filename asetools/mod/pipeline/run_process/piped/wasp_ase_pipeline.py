@@ -1,18 +1,17 @@
-import sys
 from os.path import join
-from mod.pipeline.run_process.run_process_piped_super import RunProcessPipedSuper
+
 from mod.pipeline.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
-from mod.pipeline.run_process.steps.star_align import RunStarAlign
 from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
+from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
 from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
-from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
 from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
 from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
-from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
-from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
-
+from mod.pipeline.run_process.steps.star_align import RunStarAlign
+from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
+from mod.run_process_piped_super import RunProcessPipedSuper
 
 
 class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):

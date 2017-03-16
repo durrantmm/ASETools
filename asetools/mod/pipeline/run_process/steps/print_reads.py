@@ -1,12 +1,12 @@
-import os
 import subprocess
 from os.path import basename, join
 
 from mod.misc.string_constants import *
-from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import GATKPrintReadsCustomConfig
 from mod.pipeline.config.fixed import GATKPrintReadsFixedConfig
 from mod.pipeline.run_process.steps.java import RunJava
+from mod.run_process_step_super import RunProcessStepSuper
+
 
 class RunGATKPrintReads(RunProcessStepSuper):
 

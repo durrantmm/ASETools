@@ -1,14 +1,12 @@
-from glob import glob
-from os.path import basename, join
-import os
 import subprocess
+from glob import glob
 
 from mod.misc.log import *
 from mod.misc.record_classes import FlagArg
 from mod.misc.string_constants import *
 from mod.pipeline.config.custom import WASPFindIntersectingSnpsCustomConfig
 from mod.pipeline.config.fixed import WASPFindIntersectingSnpsFixedConfig
-from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
 class RunWaspFindIntersectingSnps(RunProcessStepSuper):

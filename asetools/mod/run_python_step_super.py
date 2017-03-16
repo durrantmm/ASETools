@@ -28,6 +28,7 @@ class RunPythonStepSuper:
         self.process()
         self.save_log()
         self.ran = True
+        return self.retrieve_output_path()
 
 
     def process(self):

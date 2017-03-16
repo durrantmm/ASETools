@@ -1,12 +1,10 @@
-import vcf
 import os
-from os.path import basename, join
-from mod.misc.string_constants import *
-from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
-from Bio import SeqIO
-from glob import glob
-import gzip
+from os.path import basename
 
+from Bio import SeqIO
+
+from mod.misc.string_constants import *
+from mod.run_python_step_super import RunPythonStepSuper
 
 
 class RunGetReferenceBases(RunPythonStepSuper):
@@ -30,21 +28,18 @@ class RunGetReferenceBases(RunPythonStepSuper):
         self.pos_column = pos_column
         self.index_adjust = -1
 
-        self.autosomal_chroms = ['chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9'
-                                 'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17',
-                                 'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
 
     def process(self):
         fasta_reader = self.read_fasta_file()
         chrom_seq = None
 
-        with open(os.path.join(self.output_dir, self.output), 'w') as outfile:
+        with open(os.path.join(self.output_dir, self.output), w) as outfile:
             for chrom, pos in self.read_tsv_file():
                 while not chrom_seq or chrom_seq.id != chrom:
                     chrom_seq = next(fasta_reader)
 
                 reference_base = chrom_seq.seq[pos+self.index_adjust]
-                outfile.write(TAB.join([chrom, str(pos), reference_base]))
+                outfile.write(TAB.join([chrom, str(pos), reference_base])+NL)
 
 
     def read_tsv_file(self):
@@ -56,36 +51,15 @@ class RunGetReferenceBases(RunPythonStepSuper):
 
 
     def read_fasta_file(self):
-        with open(self.input_reference_fasta, 'r') as infile:
-            for record in SeqIO.parse(infile, 'fasta'):
+        with open(self.input_reference_fasta, r) as infile:
+            for record in SeqIO.parse(infile, fasta_str):
                 yield record
 
 
     def handle_output(self, output_dir, output, input):
         if not output:
-            output = input.split(DOT)[0]+DOT+self.name+DOT+'tsv'
+            output = input.split(DOT)[0]+DOT+self.name+DOT+tsv_str
         return basename(output)
-
-
-    def is_biallelic(self, record):
-        if len(record.ALT) == 1:
-            return True
-        else:
-            return False
-
-
-    def contains_min_one_het(self, record):
-        if len(record.get_hets()) >= 1:
-            return True
-        else:
-            return False
-
-
-    def contains_both_homs(self, record):
-        if len(record.get_hom_refs()) >= 1 and len(record.get_hom_alts()) >= 1:
-            return True
-        else:
-            return False
 
 
 

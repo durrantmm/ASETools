@@ -33,7 +33,7 @@ class Log:
         logging.basicConfig(level=logging.DEBUG, format=format_str)
         self.rootLogger = logging.getLogger()
 
-        fileHandler = logging.FileHandler("{0}/{1}.log".format(outdir, os.path.basename(outdir)))
+        fileHandler = logging.FileHandler("{0}/asetools.{1}.log".format(outdir, os.path.basename(outdir)))
         fileHandler.setFormatter(logformat)
         self.rootLogger.addHandler(fileHandler)
 

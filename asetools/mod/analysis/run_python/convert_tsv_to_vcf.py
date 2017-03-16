@@ -1,7 +1,10 @@
-import vcf
 from os.path import basename, join
+
+import vcf
+
 from mod.misc.string_constants import *
-from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
+from mod.run_python_step_super import RunPythonStepSuper
+
 
 class RunConvertTSVtoVCF(RunPythonStepSuper):
 

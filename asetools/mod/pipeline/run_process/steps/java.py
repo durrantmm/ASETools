@@ -1,9 +1,10 @@
 import subprocess
+
 from mod.misc.record_classes import *
-from mod.pipeline.version_parsers import parse_java_version
-from mod.pipeline.run_process.run_process_step_super import RunProcessStepSuper
 from mod.pipeline.config.custom import JavaCustomConfig
 from mod.pipeline.config.fixed import JavaFixedConfig
+from mod.run_process_step_super import RunProcessStepSuper
+
 
 class RunJava(RunProcessStepSuper):
 
