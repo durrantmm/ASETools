@@ -16,11 +16,8 @@ from mod.subprocess.pipelines.wasp_ase_pipeline import WASPAlleleSpecificExpress
 PIPELINE_SUBPARSER_STR = 'subprocess'
 ANALYSIS_SUBPARSER_STR = 'process'
 
-PIPELINE_NAME_STR = 'pipeline_name'
-ANALYSIS_NAME_STR = 'analysis_name'
-
-RNASEQ_VARIANT_CALLER_STR = 'RNAseqVariantCaller'
-WASP_ASE_READ_COUNTER_STR = 'WASP-ASEReadCounter'
+RNASEQ_VARIANT_CALLER_STR = 'Pipeline-RNAseqVariantCaller'
+WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWasp'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
