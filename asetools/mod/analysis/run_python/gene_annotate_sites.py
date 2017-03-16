@@ -35,13 +35,14 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
 
     def process(self):
         genbank_reader = None
-        chrom = None
+        current_chrom = None
         for chrom, pos in self.read_tsv_file():
-            if chrom != chrom:
+            if chrom != current_chrom:
                 genbank_reader = SeqIO.parse(glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop(), "genbank")
 
             for rec in genbank_reader:
                 print(rec.id)
+            current_chrom = chrom
 
         #for record in :
 
