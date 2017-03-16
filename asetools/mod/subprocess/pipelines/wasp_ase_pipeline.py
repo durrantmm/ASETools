@@ -1,13 +1,13 @@
 from os.path import join
 
-from mod.subprocess.run_process.steps.add_read_groups import RunPicardAddReadGroups
-from mod.subprocess.run_process.steps.ase_read_counter import RunGATKASEReadCounter
-from mod.subprocess.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.subprocess.run_process.steps.samtools_merge import RunSamtoolsMerge
-from mod.subprocess.run_process.steps.samtools_sort import RunSamtoolsSort
-from mod.subprocess.run_process.steps.star_align import RunStarAlign
-from mod.subprocess.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
-from mod.subprocess.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.subprocess.add_read_groups import RunPicardAddReadGroups
+from mod.subprocess.ase_read_counter import RunGATKASEReadCounter
+from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
+from mod.subprocess.samtools_merge import RunSamtoolsMerge
+from mod.subprocess.samtools_sort import RunSamtoolsSort
+from mod.subprocess.star_align import RunStarAlign
+from mod.subprocess.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.subprocess.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 
 from mod.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
 from mod.process.wasp_make_snp_dir import RunMakeWaspSnpDir

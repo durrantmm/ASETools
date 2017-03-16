@@ -1,12 +1,12 @@
 from os.path import join
 
-from mod.subprocess.run_process.steps.add_read_groups import RunPicardAddReadGroups
-from mod.subprocess.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.subprocess.run_process.steps.print_reads import RunGATKPrintReads
-from mod.subprocess.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.subprocess.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.subprocess.run_process.steps.star_align import RunStarAlign
-from mod.subprocess.run_process.steps.variant_filtration import RunGATKVariantFiltration
+from mod.subprocess.add_read_groups import RunPicardAddReadGroups
+from mod.subprocess.haplotype_caller import RunGATKHaplotypeCaller
+from mod.subprocess.print_reads import RunGATKPrintReads
+from mod.subprocess.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.subprocess.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.subprocess.star_align import RunStarAlign
+from mod.subprocess.variant_filtration import RunGATKVariantFiltration
 
 from mod.config.fixed import RNASeqVariantCallingFixedConfig
 from mod.run_process_piped_super import RunProcessPipedSuper

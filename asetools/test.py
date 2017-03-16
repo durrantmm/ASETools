@@ -1,26 +1,26 @@
 import sys
 
-from mod.process.run_python.vcf_filter_ase import RunVCFFilterASE
+from mod.process.vcf_filter_ase import RunVCFFilterASE
 
 from mod.misc.log import SimpleLog
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.process.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.subprocess.run_process import RunGATKASEReadCounter
-from mod.subprocess.run_process import RunGATKHaplotypeCaller
-from mod.subprocess.run_process import RunGATKPrintReads
-from mod.subprocess.run_process import RunGATKRNAseqBaseRecalibrator
-from mod.subprocess.run_process import RunGATKSplitNCigarReads
-from mod.subprocess.run_process import RunGATKVariantFiltration
-from mod.subprocess.run_process import RunPicardAddReadGroups
-from mod.subprocess.run_process import RunPicardMarkDuplicates
-from mod.subprocess.run_process import RunRNASeqVariantCalling
-from mod.subprocess.run_process import RunSamtools
-from mod.subprocess.run_process import RunSamtoolsIndex
-from mod.subprocess.run_process import RunSamtoolsMerge
-from mod.subprocess.run_process import RunSamtoolsSort
-from mod.subprocess.run_process import RunStarAlign
-from mod.subprocess.run_process import RunWaspFilterRemappedReads
-from mod.subprocess.run_process import RunWaspFindIntersectingSnps
+from mod.subprocess.ase_read_counter import RunGATKASEReadCounter
+from mod.subprocess.haplotype_caller import RunGATKHaplotypeCaller
+from mod.subprocess.print_reads import RunGATKPrintReads
+from mod.subprocess.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
+from mod.subprocess.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.subprocess.variant_filtration import RunGATKVariantFiltration
+from mod.subprocess.add_read_groups import RunPicardAddReadGroups
+from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
+from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.subprocess.samtools import RunSamtools
+from mod.subprocess.samtools_index import RunSamtoolsIndex
+from mod.subprocess.samtools_merge import RunSamtoolsMerge
+from mod.subprocess.samtools_sort import RunSamtoolsSort
+from mod.subprocess.star_align import RunStarAlign
+from mod.subprocess.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.subprocess.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 
 
 #
