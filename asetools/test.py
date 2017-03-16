@@ -240,7 +240,7 @@ def test_gene_annotate_sites():
 
     annotate = RunGetReferenceBases(output_dir='tests/gene_annotate',
                                     input_tsv='examples/smallAligned.FILTERED.HET.tsv',
-                                    input_reference_genome='/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta',
+                                    input_reference_fasta='/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta',
                                     logger=log)
     annotate.run()
 
