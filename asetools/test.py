@@ -19,7 +19,7 @@ from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFilt
 from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
 from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
 from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.analysis.run_python.gene_annotate_sites import RunGeneAnnotateSites
+from mod.analysis.run_python.get_reference_bases import RunGetReferenceBases
 
 
 #
@@ -238,7 +238,7 @@ def test_ase_read_counter():
 def test_gene_annotate_sites():
     log = SimpleLog()
 
-    annotate = RunGeneAnnotateSites(output_dir='tests/gene_annotate',
+    annotate = RunGetReferenceBases(output_dir='tests/gene_annotate',
                                     input_tsv='examples/smallAligned.FILTERED.HET.tsv',
                                     input_reference_genome='/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta',
                                     logger=log)
