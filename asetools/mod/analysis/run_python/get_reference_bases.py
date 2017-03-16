@@ -20,7 +20,7 @@ class RunGetReferenceBases(RunPythonStepSuper):
         input = input_tsv
         output = output_file
 
-        log_name = 'gene_annotate_sites.json'
+        log_name = 'get_reference_bases.json'
         logger = logger
 
         super().__init__(name, output_dir, input, output, log_name, logger)
@@ -38,18 +38,20 @@ class RunGetReferenceBases(RunPythonStepSuper):
         fasta_reader = self.read_fasta_file()
         chrom_seq = None
 
-        for chrom, pos in self.read_tsv_file():
-            while not chrom_seq or chrom_seq.id != chrom:
-                chrom_seq = next(fasta_reader)
+        with open(os.path.join(self.output_dir, self.output)) as outfile:
+            for chrom, pos in self.read_tsv_file():
+                while not chrom_seq or chrom_seq.id != chrom:
+                    chrom_seq = next(fasta_reader)
 
-            print(chrom, pos, chrom_seq.id)
+                reference_base = chrom_seq.seq[pos+self.index_adjust]
+                outfile.write(TAB.join([chrom, pos, reference_base]))
 
 
     def read_tsv_file(self):
         with open(self.input) as sites_in:
             for line in sites_in:
                 line = line.split()
-                chrom, pos = line[self.chrom_column+self.index_adjust], line[self.pos_column+self.index_adjust]
+                chrom, pos = line[self.chrom_column+self.index_adjust], int(line[self.pos_column+self.index_adjust])
                 yield chrom, pos
 
 
