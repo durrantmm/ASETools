@@ -45,7 +45,7 @@ def main(args):
     os.makedirs(args.output_dir, exist_ok=True)
 
     # This checks to see if the user chose the RNAseq Variant Calling Pipeline
-    if args.pipeline_name==RNASEQ_VARIANT_CALLER_STR:
+    if args.script_name==RNASEQ_VARIANT_CALLER_STR:
 
         # This code turns a command line request into a sungrid engine submission
         # script so that it can quickly be submitted to a computing cluster.
@@ -64,7 +64,7 @@ def main(args):
             rnaseq_var_caller.run()
 
     # This executes the WASP ASE read coutning subprocess if selected
-    elif args.pipeline_name==WASP_ASE_READ_COUNTER_STR:
+    elif args.script_name==WASP_ASE_READ_COUNTER_STR:
 
         # Submit the job to the cluster
         if args.qsub:
@@ -82,14 +82,14 @@ def main(args):
 
 
 
-    if args.analysis_name == VCF_FILTER_ASE_STR:
+    if args.script_name == VCF_FILTER_ASE_STR:
 
         filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
                                      input_vcf=args.vcf,
                                      logger=Log(args.output_dir))
         filter_vcf.run()
 
-    elif args.analysis_name == GET_REF_BASES_STR:
+    elif args.script_name == GET_REF_BASES_STR:
 
         get_ref_bases = RunGetReferenceBases(output_dir=args.output_dir,
                                              input_tsv=args.tsv,
