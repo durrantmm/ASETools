@@ -56,13 +56,6 @@ class RunGetReferenceBases(RunPythonStepSuper):
                 yield record
 
 
-    def handle_output(self, output_dir, output, input):
-        if not output:
-            output = input.split(DOT)[0]+DOT+self.name+DOT+tsv_str
-        return basename(output)
-
-
-
 
 
 
