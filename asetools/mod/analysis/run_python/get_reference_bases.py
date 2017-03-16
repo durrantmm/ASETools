@@ -44,7 +44,7 @@ class RunGetReferenceBases(RunPythonStepSuper):
                     chrom_seq = next(fasta_reader)
 
                 reference_base = chrom_seq.seq[pos+self.index_adjust]
-                outfile.write(TAB.join([chrom, pos, reference_base]))
+                outfile.write(TAB.join([chrom, str(pos), reference_base]))
 
 
     def read_tsv_file(self):
