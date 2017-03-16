@@ -1,24 +1,25 @@
 import sys
 
+from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
 from mod.misc.log import SimpleLog
-from mod.pipeline.run_process.steps.star_align import RunStarAlign
-from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
-from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
-from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
-from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
-from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
-from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
-from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.pipeline.run_python.steps.vcf_filter_ase import RunVCFFilterASE
-from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
-from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.pipeline.run_process.steps.add_read_groups import RunPicardAddReadGroups
+from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
+from mod.pipeline.run_process.steps.haplotype_caller import RunGATKHaplotypeCaller
+from mod.pipeline.run_process.steps.mark_duplicates import RunPicardMarkDuplicates
+from mod.pipeline.run_process.steps.print_reads import RunGATKPrintReads
+from mod.pipeline.run_process.steps.rnaseq_base_recalibrator import RunGATKRNAseqBaseRecalibrator
 from mod.pipeline.run_process.steps.samtools import RunSamtools
+from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
 from mod.pipeline.run_process.steps.samtools_merge import RunSamtoolsMerge
 from mod.pipeline.run_process.steps.samtools_sort import RunSamtoolsSort
-from mod.pipeline.run_process.steps.samtools_index import RunSamtoolsIndex
-from mod.pipeline.run_process.steps.ase_read_counter import RunGATKASEReadCounter
+from mod.pipeline.run_process.steps.split_n_cigar_reads import RunGATKSplitNCigarReads
+from mod.pipeline.run_process.steps.star_align import RunStarAlign
+from mod.pipeline.run_process.steps.variant_filtration import RunGATKVariantFiltration
+from mod.pipeline.run_process.steps.wasp_filter_remapped_reads import RunWaspFilterRemappedReads
+from mod.pipeline.run_process.steps.wasp_find_intersecting_snps import RunWaspFindIntersectingSnps
+from mod.pipeline.run_python.steps.wasp_make_snp_dir import RunMakeWaspSnpDir
+from mod.analysis.run_python.gene_annotate_sites import RunGeneAnnotateSites
 
 
 #
@@ -233,6 +234,16 @@ def test_ase_read_counter():
     ase_read_counter.run()
     print('Your output file of interest is at {PATH}'.format(PATH=ase_read_counter.retrieve_output_path()))
 
+
+def test_gene_annotate_sites():
+    log = SimpleLog()
+
+    annotate = RunGeneAnnotateSites(output_dir='tests/gene_annotate',
+                                    input_tsv='examples/smallAligned.FILTERED.HET.tsv',
+                                    input_genbank_folder='/home/mdurrant/montgomery/mdurrant/data/genbank',
+                                    logger=log)
+    annotate.run()
+
 if __name__ == '__main__':
 
     which = sys.argv[1]
@@ -296,3 +307,6 @@ if __name__ == '__main__':
 
     if which == 'ase_read_counter' or which == 'all':
         test_ase_read_counter()
+
+    if which == 'gene_annotate_sites' or which == 'all':
+        test_gene_annotate_sites()

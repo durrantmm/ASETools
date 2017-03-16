@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-import argparse, os, sys
+import argparse
+import os
+import sys
 
-from mod.misc.string_constants import *
+from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
 from mod.misc.log import Log
-from mod.qsub import QSubmit
+from mod.misc.string_constants import *
 from mod.pipeline.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipeline.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
-from mod.pipeline.run_python.steps.vcf_filter_ase import RunVCFFilterASE
+from mod.qsub import QSubmit
 
 
 # Important strings used to parse the input
