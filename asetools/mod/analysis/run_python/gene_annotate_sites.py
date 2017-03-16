@@ -1,8 +1,11 @@
 import vcf
+import os
 from os.path import basename, join
 from mod.misc.string_constants import *
 from mod.pipeline.run_python.run_python_step_super import RunPythonStepSuper
 from Bio import SeqIO
+from glob import glob
+
 
 
 class RunGeneAnnotateSites(RunPythonStepSuper):
@@ -31,9 +34,16 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                                  'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
 
     def process(self):
+        genbank_reader = None
+        chrom = None
         for chrom, pos in self.read_tsv_file():
-            print(chrom, pos)
-        #for record in SeqIO.parse("example.fasta", "fasta"):
+            if chrom != chrom:
+                genbank_reader = SeqIO.parse(glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop(), "genbank")
+
+            for rec in genbank_reader:
+                print(rec.id)
+
+        #for record in :
 
         #    print(record.id)
 
@@ -44,9 +54,6 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                 line = line.split()
                 chrom, pos = line[self.chrom_column+self.index_adjust], line[self.pos_column+self.index_adjust]
                 yield chrom, pos
-
-
-
 
     def handle_output(self, output_dir, output, input):
         if not output:
