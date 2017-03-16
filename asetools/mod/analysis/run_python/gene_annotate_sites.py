@@ -9,12 +9,12 @@ import gzip
 
 
 
-class RunGeneAnnotateSites(RunPythonStepSuper):
+class RunGetReferenceBases(RunPythonStepSuper):
 
-    def __init__(self, output_dir, input_tsv, input_genbank_folder, chrom_column=1,
+    def __init__(self, output_dir, input_tsv, input_reference_fasta, chrom_column=1,
                  pos_column=2, output_file=None, logger=None):
 
-        name = 'GeneAnnotateSites'
+        name = 'GetReferenceBases'
         output_dir = output_dir
 
         input = input_tsv
@@ -25,7 +25,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
 
         super().__init__(name, output_dir, input, output, log_name, logger)
 
-        self.input_genbank = input_genbank_folder
+        self.input_reference_fasta = input_reference_fasta
         self.chrom_column = chrom_column
         self.pos_column = pos_column
         self.index_adjust = -1
@@ -35,22 +35,15 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                                  'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
 
     def process(self):
-        genbank_reader = None
+        fasta_reader = self.read_fasta_file()
         current_chrom = None
+        chrom_seq = None
 
         for chrom, pos in self.read_tsv_file():
             if chrom != current_chrom:
-                genbank_file = glob(os.path.join(self.input_genbank, AST+chrom+DOT+AST)).pop()
-                genbank_reader = self.read_genbank_file(genbank_file)
+                chrom_seq = next(fasta_reader)
 
-            for rec in genbank_reader:
-                print(rec.id)
-
-            current_chrom = chrom
-
-        #for record in :
-
-        #    print(record.id)
+            print(chrom_seq.id)
 
 
     def read_tsv_file(self):
@@ -61,9 +54,9 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
                 yield chrom, pos
 
 
-    def read_genbank_file(self, genbank_file):
-        with open(genbank_file, 'r') as infile:
-            for record in SeqIO.parse(infile, 'genbank'):
+    def read_fasta_file(self):
+        with open(self.input_reference_fasta, 'r') as infile:
+            for record in SeqIO.parse(infile, 'fasta'):
                 yield record
 
 
