@@ -17,7 +17,7 @@ PIPELINE_SUBPARSER_STR = 'subprocess'
 ANALYSIS_SUBPARSER_STR = 'process'
 
 RNASEQ_VARIANT_CALLER_STR = 'Pipeline-RNAseqVariantCaller'
-WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWasp'
+WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWASP'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
