@@ -3,19 +3,18 @@ import argparse
 import os
 import sys
 
+from mod.process.run_python.vcf_filter_ase import RunVCFFilterASE
 
 from mod.misc.log import Log
 from mod.misc.string_constants import *
-from mod.subprocess.run_process.piped.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.subprocess.run_process.piped.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
+from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.qsub import QSubmit
-from mod.analysis.run_python.vcf_filter_ase import RunVCFFilterASE
-from mod.analysis.run_python.get_reference_bases import RunGetReferenceBases
-
+from mod.subprocess.run_process import RunRNASeqVariantCalling
+from mod.subprocess.run_process import WASPAlleleSpecificExpressionPipeline
 
 # Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'subprocess'
-ANALYSIS_SUBPARSER_STR = 'analysis'
+ANALYSIS_SUBPARSER_STR = 'process'
 
 PIPELINE_NAME_STR = 'pipeline_name'
 ANALYSIS_NAME_STR = 'analysis_name'
@@ -58,7 +57,7 @@ def main(args):
             qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
             qsub.submit()
 
-        # Otherwise, it performs the analysis without submitting it to the cluster.
+        # Otherwise, it performs the process without submitting it to the cluster.
         else:
 
             rnaseq_var_caller = RunRNASeqVariantCalling(output_dir=args.output_dir,

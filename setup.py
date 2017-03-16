@@ -9,7 +9,7 @@ def read(fname):
 
 setup(name='asetools',
       version='1.0',
-      description='Python subprocess and analysis tools to perform ASE and differential ASE analysis.',
+      description='Python subprocess and process tools to perform ASE and differential ASE process.',
       author='Matt Durrant',
       author_email='mdurrant@stanford.edu',
       license = "BSD",
