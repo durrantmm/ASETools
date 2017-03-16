@@ -62,7 +62,7 @@ class RunGeneAnnotateSites(RunPythonStepSuper):
 
 
     def read_genbank_file(self, genbank_file):
-        with open(genbank_file, 'r' as infile:
+        with open(genbank_file, 'r') as infile:
             for record in SeqIO.parse(infile, 'genbank'):
                 yield record
 
