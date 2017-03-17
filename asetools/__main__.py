@@ -31,7 +31,7 @@ FASTQ1_FLAG = '--fastq1'
 FASTQ2_FLAG = '--fastq2'
 BAM_FLAG = '--bam'
 VCF_FLAG = '--vcf'
-TSV_FLAG = '--vcf'
+TSV_FLAG = '--tsv'
 
 CHROM_COL_FLAG = '--chrom-col'
 POS_COL_FLAG = '--position-col'
