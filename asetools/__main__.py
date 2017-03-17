@@ -32,6 +32,8 @@ FASTQ2_FLAG = '--fastq2'
 BAM_FLAG = '--bam'
 VCF_FLAG = '--vcf'
 TSV_FLAG = '--tsv'
+REFERENCE_GENOME_FASTA_FLAG_LONG = '--reference'
+REFERENCE_GENOME_FASTA_FLAG_SHORT = '-r'
 
 CHROM_COL_FLAG = '--chrom-col'
 POS_COL_FLAG = '--position-col'
@@ -131,6 +133,7 @@ def main(args):
 
         get_ref_bases = RunGetReferenceBases(output_dir=args.output_dir,
                                              input_tsv=args.tsv,
+                                             input_reference_fasta=args.reference,
                                              logger=Log(args.output_dir))
         get_ref_bases.run()
 
@@ -186,8 +189,9 @@ def parse_arguments():
     get_reference_bases = subparsers.add_parser(GET_REF_BASES_STR)
     get_reference_bases.add_argument(OUTPUT_DIR_STR)
     get_reference_bases.add_argument(TSV_FLAG, required=True)
+    get_reference_bases.add_argument(REFERENCE_GENOME_FASTA_FLAG_SHORT, REFERENCE_GENOME_FASTA_FLAG_LONG, required=True)
     get_reference_bases.add_argument(CHROM_COL_FLAG, type=int, default=1)
-    get_reference_bases.add_argument(POS_COL_FLAG, type=int, default=1)
+    get_reference_bases.add_argument(POS_COL_FLAG, type=int, default=2)
 
 
     args = parser.parse_args()
