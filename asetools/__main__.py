@@ -6,6 +6,7 @@ import sys
 from mod.process.vcf_filter_ase import RunVCFFilterASE
 
 from mod.misc.log import Log
+from mod.misc.argparse_types import *
 from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.qsub import QSubmit
@@ -25,6 +26,7 @@ ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
+PREPARE_READ_COUNT_STR = 'PrepareReadCountData'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
@@ -34,6 +36,8 @@ VCF_FLAG = '--vcf'
 TSV_FLAG = '--tsv'
 REFERENCE_GENOME_FASTA_FLAG_LONG = '--reference'
 REFERENCE_GENOME_FASTA_FLAG_SHORT = '-r'
+CASES_FLAG = '--cases'
+CONTROLS_FLAG = '--controls'
 
 CHROM_COL_FLAG = '--chrom-col'
 POS_COL_FLAG = '--position-col'
@@ -137,6 +141,9 @@ def main(args):
                                              logger=Log(args.output_dir))
         get_ref_bases.run()
 
+    elif args.script_name == PREPARE_READ_COUNT_STR:
+        pass
+
 
 
 
@@ -194,10 +201,19 @@ def parse_arguments():
     get_reference_bases.add_argument(POS_COL_FLAG, type=int, default=2)
 
 
+    # Prepare Read Count Data
+    prepare_read_count_data = subparsers.add_parser(PREPARE_READ_COUNT_STR)
+    prepare_read_count_data.add_argument(OUTPUT_DIR_STR)
+    prepare_read_count_data.add_argument(CASES_FLAG, type=cases_controls, nargs='+', required=True)
+    prepare_read_count_data.add_argument(CONTROLS_FLAG, type=cases_controls, nargs='+', required=True)
+
+
     args = parser.parse_args()
     return args
 
 if __name__ == '__main__':
+
     args = parse_arguments()
+    print(args.cases, args.controls)
 
     main(args)

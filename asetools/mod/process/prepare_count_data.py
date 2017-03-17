@@ -7,26 +7,20 @@ from mod.misc.string_constants import *
 from mod.run_python_step_super import RunPythonStepSuper
 
 
-class RunGetReferenceBases(RunPythonStepSuper):
+class RunPrepareReadCountData(RunPythonStepSuper):
 
-    def __init__(self, output_dir, input_tsv, input_reference_fasta, chrom_column=1,
-                 pos_column=2, output_file=None, logger=None):
+    def __init__(self, output_dir, file_paths, output_file=None, logger=None):
 
-        name = 'GetReferenceBases'
+        name = 'PrepareReadCountData'
         output_dir = output_dir
 
-        input = input_tsv
+        input = file_paths
         output = output_file
 
-        log_name = 'get_reference_bases.json'
+        log_name = 'prepare_read_count_data.json'
         logger = logger
 
         super().__init__(name, output_dir, input, output, log_name, logger)
-
-        self.input_reference_fasta = input_reference_fasta
-        self.chrom_column = chrom_column
-        self.pos_column = pos_column
-        self.index_adjust = -1
 
 
     def process(self):
