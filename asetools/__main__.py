@@ -11,6 +11,7 @@ from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.subprocess.pipelines.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
+from mod.subprocess.pipelines.align_rg_mdup import RunAlignAddGroupsMarkDups
 
 # Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'subprocess'
@@ -18,6 +19,7 @@ ANALYSIS_SUBPARSER_STR = 'process'
 
 RNASEQ_VARIANT_CALLER_STR = 'Pipeline-RNAseqVariantCaller'
 WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWASP'
+ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
@@ -81,8 +83,26 @@ def main(args):
             wasp_pipeline.run()
 
 
+    elif args.script_name==ALIGN_ADDG_MARK_DUPS_STR:
 
-    if args.script_name == VCF_FILTER_ASE_STR:
+        # This code turns a command line request into a sungrid engine submission
+        # script so that it can quickly be submitted to a computing cluster.
+        if args.qsub:
+
+            qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
+            qsub.submit()
+
+        # Otherwise, it performs the process without submitting it to the cluster.
+        else:
+
+            align_add_groups_mark_dups = RunAlignAddGroupsMarkDups(output_dir=args.output_dir,
+                                                                   fastq1=args.fastq1,
+                                                                   fastq2=args.fastq2,
+                                                                   logger=Log(args.output_dir))
+            align_add_groups_mark_dups.run()
+
+
+    elif args.script_name == VCF_FILTER_ASE_STR:
 
         filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
                                      input_vcf=args.vcf,
@@ -121,6 +141,14 @@ def parse_arguments():
     wasp_pipeline.add_argument(BAM_FLAG, required=True)
     wasp_pipeline.add_argument(VCF_FLAG, required=True)
     wasp_pipeline.add_argument(QSUB_FLAG)
+
+    # Align, Add read groups, mark duplicates pipeline
+    align_add_groups_mark_dups = subparsers.add_parser(ALIGN_ADDG_MARK_DUPS_STR)
+
+    align_add_groups_mark_dups.add_argument(OUTPUT_DIR_STR)
+    align_add_groups_mark_dups.add_argument(FASTQ1_FLAG, required=True)
+    align_add_groups_mark_dups.add_argument(FASTQ2_FLAG, required=True)
+    align_add_groups_mark_dups.add_argument(QSUB_FLAG)
 
     # VCF ase filtration
     vcf_ase_filter = subparsers.add_parser(VCF_FILTER_ASE_STR)
