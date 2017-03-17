@@ -1,4 +1,4 @@
-from os.path import join
+from os.path import join, isfile, isdir
 
 from mod.subprocess.add_read_groups import RunPicardAddReadGroups
 from mod.subprocess.ase_read_counter import RunGATKASEReadCounter
@@ -74,7 +74,8 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
         make_snp_dir = RunMakeWaspSnpDir(output_dir=snp_dir,
                                          input_sorted_vcf=self.input_vcf,
                                          logger=self.logger)
-        make_snp_dir.run()
+        if not isdir(snp_dir):
+            make_snp_dir.run()
         step_num += 1
 
         # WASP - FIND INTERSECTING SNPS
@@ -83,7 +84,8 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                                              input_bam=self.input_bam,
                                                              input_snp_dir=snp_dir,
                                                              logger=self.logger)
-        find_intersecting_snps.run()
+        if not isfile(find_intersecting_snps.retrieve_output_path()):
+            find_intersecting_snps.run()
         step_num += 1
 
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
@@ -94,7 +96,8 @@ class WASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
                                   fastq1=fastq1_remap,
                                   fastq2=fastq2_remap,
                                   logger=self.logger)
-        star_remap.run()
+        if not isfile(star_remap.retrieve_output_path()):
+            star_remap.run()
         step_num += 1
 
         remap_sam = star_remap.retrieve_output_path()

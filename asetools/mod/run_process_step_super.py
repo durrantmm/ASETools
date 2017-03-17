@@ -129,7 +129,5 @@ class RunProcessStepSuper:
         else:
             output = default_output
 
-        if self.ran:
-            return os.path.join(self.output_dir, os.path.basename(output))
-        else:
-            raise ExecutionNotRanNoOutput(self.name)
+
+        return os.path.join(self.output_dir, os.path.basename(output))
