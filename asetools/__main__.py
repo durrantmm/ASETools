@@ -10,8 +10,9 @@ from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
-from mod.subprocess.pipelines.wasp_ase_pipeline import WASPAlleleSpecificExpressionPipeline
+from mod.subprocess.pipelines.wasp_ase_pipeline import RunWASPAlleleSpecificExpressionPipeline
 from mod.subprocess.pipelines.align_rg_mdup import RunAlignAddGroupsMarkDups
+from mod.subprocess.pipelines.ase_pipeline import RunAlleleSpecificExpressionPipeline
 
 # Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'subprocess'
@@ -19,6 +20,7 @@ ANALYSIS_SUBPARSER_STR = 'process'
 
 RNASEQ_VARIANT_CALLER_STR = 'Pipeline-RNAseqVariantCaller'
 WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWASP'
+ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounter'
 ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
@@ -65,6 +67,22 @@ def main(args):
                                                         logger=Log(args.output_dir))
             rnaseq_var_caller.run()
 
+    elif args.script_name==ASE_READ_COUNTER_STR:
+
+        # Submit the job to the cluster
+        if args.qsub:
+            qsub = QSubmit(args.output_dir, args.qsub, SPACE.join(sys.argv))
+            qsub.submit()
+
+        # Or run it locally without submitting it to the cluster.
+        else:
+
+            wasp_pipeline = RunAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
+                                                                input_bam=args.bam,
+                                                                input_vcf=args.vcf,
+                                                                logger=Log(args.output_dir))
+            wasp_pipeline.run()
+
     # This executes the WASP ASE read coutning subprocess if selected
     elif args.script_name==WASP_ASE_READ_COUNTER_STR:
 
@@ -76,10 +94,10 @@ def main(args):
         # Or run it locally without submitting it to the cluster.
         else:
 
-            wasp_pipeline = WASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
-                                                                 input_bam=args.bam,
-                                                                 input_vcf=args.vcf,
-                                                                 logger=Log(args.output_dir))
+            wasp_pipeline = RunWASPAlleleSpecificExpressionPipeline(output_dir=args.output_dir,
+                                                                    input_bam=args.bam,
+                                                                    input_vcf=args.vcf,
+                                                                    logger=Log(args.output_dir))
             wasp_pipeline.run()
 
 
@@ -114,6 +132,7 @@ def main(args):
         get_ref_bases = RunGetReferenceBases(output_dir=args.output_dir,
                                              input_tsv=args.tsv,
                                              logger=Log(args.output_dir))
+        get_ref_bases.run()
 
 
 
@@ -135,12 +154,19 @@ def parse_arguments():
     rnaseq_var_call_pipeline.add_argument(FASTQ2_FLAG, required=True)
     rnaseq_var_call_pipeline.add_argument(QSUB_FLAG)
 
-    # WASP PIPELINE
+    # WASP ASE READ COUNTING PIPELINE
     wasp_pipeline = subparsers.add_parser(WASP_ASE_READ_COUNTER_STR)
     wasp_pipeline.add_argument(OUTPUT_DIR_STR)
     wasp_pipeline.add_argument(BAM_FLAG, required=True)
     wasp_pipeline.add_argument(VCF_FLAG, required=True)
     wasp_pipeline.add_argument(QSUB_FLAG)
+
+    # ASE READ COUNTING PIPELINE
+    ase_pipeline = subparsers.add_parser(ASE_READ_COUNTER_STR)
+    ase_pipeline.add_argument(OUTPUT_DIR_STR)
+    ase_pipeline.add_argument(BAM_FLAG, required=True)
+    ase_pipeline.add_argument(VCF_FLAG, required=True)
+    ase_pipeline.add_argument(QSUB_FLAG)
 
     # Align, Add read groups, mark duplicates pipeline
     align_add_groups_mark_dups = subparsers.add_parser(ALIGN_ADDG_MARK_DUPS_STR)
