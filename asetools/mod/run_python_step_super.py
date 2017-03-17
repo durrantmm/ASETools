@@ -5,13 +5,13 @@ from mod.misc.string_constants import *
 
 class RunPythonStepSuper:
 
-    def __init__(self, name, output_dir, input, output, log_name, logger=None):
+    def __init__(self, name, output_dir, input_file, output, log_name, logger=None):
 
         self.name = name
         self.output_dir = output_dir
 
-        self.input = input
-        self.output = self.handle_output(output_dir, output, input)
+        self.input = input_file
+        self.output = self.handle_output(output_dir, output, input_file)
 
         self.log_name = log_name
         self.logger = logger
@@ -67,8 +67,8 @@ class RunPythonStepSuper:
             raise ExecutionNotRanNoOutput(self.name)
 
 
-    def handle_output(self, output_dir, output, input, suffix='tsv'):
-        if not output or os.path.realpath(output) == os.path.realpath(input):
-            output = input.split(DOT)[0]+DOT+self.name+DOT+suffix
+    def handle_output(self, output_dir, output, input_file, suffix='tsv'):
+        if not output or os.path.realpath(output) == os.path.realpath(input_file):
+            output = os.path.basename(input_file).split(DOT)[0]+DOT+self.name+DOT+suffix
 
         return os.path.basename(output)
