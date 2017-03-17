@@ -4,10 +4,10 @@ from os.path import basename
 from Bio import SeqIO
 
 from mod.misc.string_constants import *
-from mod.run_python_step_super import RunPythonStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
-class RunGetReferenceBases(RunPythonStepSuper):
+class RunGetReferenceBases(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_tsv, input_reference_fasta, chrom_column=1,
                  pos_column=2, output_file=None, logger=None):

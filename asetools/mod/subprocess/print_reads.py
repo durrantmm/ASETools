@@ -5,11 +5,11 @@ from mod.config.custom import GATKPrintReadsCustomConfig
 
 from mod.config.fixed import GATKPrintReadsFixedConfig
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 
-class RunGATKPrintReads(RunProcessStepSuper):
+class RunGATKPrintReads(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, input_bam, input_recal_table, output_bam=None, logger=None):
 

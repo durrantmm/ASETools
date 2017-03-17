@@ -9,6 +9,8 @@ from mod.misc.log import Log
 from mod.misc.argparse_types import *
 from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
+from mod.process.prepare_count_data import RunPrepareReadCountData
+from mod.process.fishers_exact_test import RunFishersExactTest
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.subprocess.pipelines.wasp_ase_pipeline import RunWASPAlleleSpecificExpressionPipeline
@@ -27,6 +29,7 @@ ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
 PREPARE_READ_COUNT_STR = 'PrepareReadCountData'
+FISHERS_EXACT_TEST_STR = 'FishersExactTest'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
@@ -38,6 +41,7 @@ REFERENCE_GENOME_FASTA_FLAG_LONG = '--reference'
 REFERENCE_GENOME_FASTA_FLAG_SHORT = '-r'
 CASES_FLAG = '--cases'
 CONTROLS_FLAG = '--controls'
+READ_COUNTS_FLAG = '--read-counts'
 
 CHROM_COL_FLAG = '--chrom-col'
 POS_COL_FLAG = '--position-col'
@@ -142,8 +146,19 @@ def main(args):
         get_ref_bases.run()
 
     elif args.script_name == PREPARE_READ_COUNT_STR:
-        pass
 
+        prepare_read_counts = RunPrepareReadCountData(output_dir=args.output_dir,
+                                                      cases_paths=args.cases,
+                                                      controls_paths=args.controls,
+                                                      logger=Log(args.output_dir))
+        prepare_read_counts.run()
+
+    elif args.script_name == FISHERS_EXACT_TEST_STR:
+
+        fishers_exact_test = RunFishersExactTest(output_dir=args.output_dir,
+                                                 read_count_data=args.read_counts,
+                                                 logger=Log(args.output_dir))
+        fishers_exact_test.run()
 
 
 
@@ -204,16 +219,26 @@ def parse_arguments():
     # Prepare Read Count Data
     prepare_read_count_data = subparsers.add_parser(PREPARE_READ_COUNT_STR)
     prepare_read_count_data.add_argument(OUTPUT_DIR_STR)
-    prepare_read_count_data.add_argument(CASES_FLAG, type=cases_controls, nargs='+', required=True)
-    prepare_read_count_data.add_argument(CONTROLS_FLAG, type=cases_controls, nargs='+', required=True)
+    prepare_read_count_data.add_argument(CASES_FLAG, type=str, nargs='+', required=True, action='append')
+    prepare_read_count_data.add_argument(CONTROLS_FLAG, type=str, nargs='+', required=True, action='append')
 
+
+    # Fishers exact test on read count data
+    fishers_exact_test = subparsers.add_parser(FISHERS_EXACT_TEST_STR)
+    fishers_exact_test.add_argument(OUTPUT_DIR_STR)
+    fishers_exact_test.add_argument(READ_COUNTS_FLAG, required=True)
 
     args = parser.parse_args()
+
+    try:
+        cases_controls(args.cases, args.controls)
+    except AttributeError:
+        pass
+
     return args
 
 if __name__ == '__main__':
 
     args = parse_arguments()
-    print(args.cases, args.controls)
 
     main(args)

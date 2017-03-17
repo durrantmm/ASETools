@@ -11,11 +11,11 @@ from mod.subprocess.wasp_find_intersecting_snps import RunWaspFindIntersectingSn
 
 from mod.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
 from mod.process.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.run_process_piped_super import RunProcessPipedSuper
+from mod.run_subprocess_piped_super import RunSubprocessPipedSuper
 from mod.subprocess.samtools_index import RunSamtoolsIndex
 
 
-class RunWASPAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
+class RunWASPAlleleSpecificExpressionPipeline(RunSubprocessPipedSuper):
 
     def __init__(self, output_dir, input_vcf, input_bam=None, fastq1=None, fastq2=None, logger=None):
         fixed_config = WASPAlleleSpecificExpressionPipelineFixedConfig()

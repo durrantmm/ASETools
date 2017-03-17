@@ -5,11 +5,11 @@ from mod.config.custom import GATKASEReadCounterCustomConfig
 
 from mod.config.fixed import GATKASEReadCounterFixedConfig
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 
-class RunGATKASEReadCounter(RunProcessStepSuper):
+class RunGATKASEReadCounter(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, input_bam, input_sites_vcf, output_counts=None, logger=None):
 

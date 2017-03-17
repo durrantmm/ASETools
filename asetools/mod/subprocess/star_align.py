@@ -7,10 +7,10 @@ from mod.config.fixed import StarAlignFixedConfig
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 
 
-class RunStarAlign(RunProcessStepSuper):
+class RunStarAlign(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, fastq1, fastq2, logger=None, out_prefix=None):
 

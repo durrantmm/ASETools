@@ -1,10 +1,10 @@
 import sys
 import pysam, vcf
 
-from mod.run_python_step_super import RunPythonStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
-class RetrieveMappingDistances(RunPythonStepSuper):
+class RetrieveMappingDistances(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_bam, input_vcf, output_file=None, logger=None):
 

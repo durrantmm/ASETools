@@ -5,11 +5,11 @@ from mod.config.custom import SamtoolsIndexCustomConfig
 
 from mod.config.fixed import SamtoolsIndexFixedConfig
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 from mod.subprocess.samtools import RunSamtools
 
 
-class RunSamtoolsIndex(RunProcessStepSuper):
+class RunSamtoolsIndex(RunSubprocessStepSuper):
 
     def __init__(self, input_bam, logger=None):
 

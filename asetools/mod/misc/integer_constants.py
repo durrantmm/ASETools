@@ -1,0 +1,3 @@
+
+
+BONF_MAX_PVAL = 1.0

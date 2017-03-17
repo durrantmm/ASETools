@@ -4,10 +4,10 @@ from os.path import join
 import vcf
 
 from mod.misc.string_constants import *
-from mod.run_python_step_super import RunPythonStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
-class RunMakeWaspSnpDir(RunPythonStepSuper):
+class RunMakeWaspSnpDir(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_sorted_vcf, logger=None):
 

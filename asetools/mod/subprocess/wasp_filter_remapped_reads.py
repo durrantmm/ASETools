@@ -7,10 +7,10 @@ from mod.config.fixed import WASPFilterRemappedReadsFixedConfig
 from mod.misc.log import *
 from mod.misc.record_classes import *
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 
 
-class RunWaspFilterRemappedReads(RunProcessStepSuper):
+class RunWaspFilterRemappedReads(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, input_bam_to_remap, input_bam_remapped, output_bam=None, logger=None):
 

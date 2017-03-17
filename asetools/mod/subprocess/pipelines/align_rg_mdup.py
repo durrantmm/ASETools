@@ -9,11 +9,11 @@ from mod.subprocess.star_align import RunStarAlign
 from mod.subprocess.variant_filtration import RunGATKVariantFiltration
 
 from mod.config.fixed import RNASeqVariantCallingFixedConfig
-from mod.run_process_piped_super import RunProcessPipedSuper
+from mod.run_subprocess_piped_super import RunSubprocessPipedSuper
 from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
 
 
-class RunAlignAddGroupsMarkDups(RunProcessPipedSuper):
+class RunAlignAddGroupsMarkDups(RunSubprocessPipedSuper):
 
     def __init__(self, output_dir, fastq1, fastq2, logger):
         fixed_config = RNASeqVariantCallingFixedConfig()

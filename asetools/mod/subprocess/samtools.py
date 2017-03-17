@@ -3,9 +3,9 @@ import subprocess
 from mod.config.custom import SamtoolsCustomConfig
 
 from mod.config.fixed import SamtoolsFixedConfig
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 
-class RunSamtools(RunProcessStepSuper):
+class RunSamtools(RunSubprocessStepSuper):
 
     def __init__(self, logger=None):
         custom_config = SamtoolsCustomConfig()

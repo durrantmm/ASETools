@@ -4,10 +4,10 @@ from mod.config.custom import JavaCustomConfig
 
 from mod.config.fixed import JavaFixedConfig
 from mod.misc.record_classes import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 
 
-class RunJava(RunProcessStepSuper):
+class RunJava(RunSubprocessStepSuper):
 
     def __init__(self, logger=None):
         custom_config = JavaCustomConfig()

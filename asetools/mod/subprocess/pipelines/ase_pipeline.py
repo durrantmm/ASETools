@@ -6,10 +6,10 @@ from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
 from mod.subprocess.star_align import RunStarAlign
 
 from mod.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
-from mod.run_process_piped_super import RunProcessPipedSuper
+from mod.run_subprocess_piped_super import RunSubprocessPipedSuper
 
 
-class RunAlleleSpecificExpressionPipeline(RunProcessPipedSuper):
+class RunAlleleSpecificExpressionPipeline(RunSubprocessPipedSuper):
 
     def __init__(self, output_dir, input_vcf, input_bam=None, fastq1=None, fastq2=None, logger=None):
         fixed_config = WASPAlleleSpecificExpressionPipelineFixedConfig()

@@ -5,11 +5,11 @@ from mod.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
 
 from mod.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 
-class RunGATKRNAseqBaseRecalibrator(RunProcessStepSuper):
+class RunGATKRNAseqBaseRecalibrator(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, input_bam, logger=None):
 

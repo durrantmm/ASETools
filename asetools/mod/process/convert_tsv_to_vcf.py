@@ -3,10 +3,10 @@ from os.path import basename, join
 import vcf
 
 from mod.misc.string_constants import *
-from mod.run_python_step_super import RunPythonStepSuper
+from mod.run_process_step_super import RunProcessStepSuper
 
 
-class RunConvertTSVtoVCF(RunPythonStepSuper):
+class RunConvertTSVtoVCF(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_tsv, chrom_column=1, pos_column=2, ref_column=3, alt_column=4,
                  gt_column=5, output_vcf=None, logger=None):

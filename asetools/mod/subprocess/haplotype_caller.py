@@ -5,11 +5,11 @@ from mod.config.custom import GATKHaplotypeCallerCustomConfig
 
 from mod.config.fixed import GATKHaplotypeCallerFixedConfig
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_subprocess_step_super import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 
-class RunGATKHaplotypeCaller(RunProcessStepSuper):
+class RunGATKHaplotypeCaller(RunSubprocessStepSuper):
 
     def __init__(self, output_dir, input_bam, output_vcf=None, logger=None):
 
