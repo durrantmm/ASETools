@@ -53,7 +53,7 @@ class StarAlignCustomConfig:
 
             ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19"),
             ("--readFilesCommand", "zcat"),
-            ("--runThreadN", 2),
+            ("--runThreadN", 6),
             ("--genomeLoad", "NoSharedMemory"),
             ("--outFilterMultimapNmax", 20),
             ("--alignSJoverhangMin", 8),
