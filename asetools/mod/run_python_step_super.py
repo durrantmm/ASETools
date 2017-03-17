@@ -69,6 +69,6 @@ class RunPythonStepSuper:
 
     def handle_output(self, output_dir, output, input, suffix='tsv'):
         if not output or os.path.realpath(output) == os.path.realpath(input):
-            output = DOT.join(input.split()[:-1])+DOT+self.name+DOT+input.split()[-1]+suffix
+            output = input.split()[0]+DOT+self.name+DOT+suffix
 
         return os.path.basename(output)
