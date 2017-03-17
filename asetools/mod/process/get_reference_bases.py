@@ -32,7 +32,7 @@ class RunGetReferenceBases(RunPythonStepSuper):
     def process(self):
         fasta_reader = self.read_fasta_file()
         chrom_seq = None
-
+        print(os.path.join(self.output_dir, self.output))
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
             for chrom, pos in self.read_tsv_file():
                 while not chrom_seq or chrom_seq.id != chrom:
