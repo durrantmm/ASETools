@@ -1,12 +1,10 @@
 import os, sys
-
+import numpy as np
 from mod.misc.string_constants import *
 from mod.misc.integer_constants import *
 from mod.run_process_step_super import RunProcessStepSuper
-from collections import defaultdict
-from operator import itemgetter
 from scipy.stats import fisher_exact
-
+from qvalue import qvalue
 
 class RunFishersExactTest(RunProcessStepSuper):
 
@@ -30,9 +28,9 @@ class RunFishersExactTest(RunProcessStepSuper):
 
         self.treatment_s, self.chrom_s, self.pos_s, self.ref_s, self.alt_s, self.case_alt_count_s, \
         self.case_ref_count_s, self.case_total_count_s, self.control_alt_count_s, self.control_ref_count_s, \
-        self.control_total_count_s, self.oddsratio_s, self.pval_s, self.bonf_p_s, = \
+        self.control_total_count_s, self.oddsratio_s, self.pval_s, self.bonf_p_s, self.qval_s = \
             ['TREATMENT', 'CHROM', 'POS', 'REF', 'ALT', 'CASE_ALT_COUNT', 'CASE_REF_COUNT', 'CASE_TOTAL_COUNT',
-             'CONTROL_ALT_COUNT', 'CONTROL_REF_COUNT', 'CONTROL_TOTAL_COUNT', 'OR', 'PVAL', 'BONF_PVAL']
+             'CONTROL_ALT_COUNT', 'CONTROL_REF_COUNT', 'CONTROL_TOTAL_COUNT', 'OR', 'PVAL', 'BONF_PVAL', 'QVAL']
 
         self.input_header = [self.treatment_s, self.chrom_s, self.pos_s, self.ref_s, self.alt_s, self.case_alt_count_s,
                              self.case_ref_count_s, self.case_total_count_s, self.control_alt_count_s,
@@ -41,7 +39,7 @@ class RunFishersExactTest(RunProcessStepSuper):
         self.output_header = [self.treatment_s, self.chrom_s, self.pos_s, self.ref_s, self.alt_s, self.case_alt_count_s,
                               self.case_ref_count_s, self.case_total_count_s, self.control_alt_count_s,
                               self.control_ref_count_s, self.control_total_count_s, self.oddsratio_s, self.pval_s,
-                              self.bonf_p_s]
+                              self.bonf_p_s, self.qval_s]
 
     def process(self):
         tested_snps = []
@@ -62,6 +60,7 @@ class RunFishersExactTest(RunProcessStepSuper):
 
 
         results = self.bonferroni_correct(tested_snps)
+        results = self.qvalue_correct(results)
 
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
             outfile.write(TAB.join(self.output_header)+NL)
@@ -88,10 +87,24 @@ class RunFishersExactTest(RunProcessStepSuper):
             bonf_p = (lambda x: BONF_MAX_PVAL if x > BONF_MAX_PVAL else x)(result[self.pval_s] * bonferroni_multiplier)
 
             # Adds the new bonferroni corrected p-value
-            result.update({self.bonf_p_s: bonf_p})
+            result[self.bonf_p_s] = bonf_p
 
         return results
 
+    def qvalue_correct(self, results):
+        """
+        Calcualtes the qvalue of the results of the fisher exact test according to the FDR.
+        :param results: The results that have yet to be corrected by the FDR qvalue
+        :return: The same results, with an additional key: value pair for each test that includes the FDR qvalue.
+        """
+
+        pvals = np.asarray([result[self.pval_s] for result in results])
+        qvals = qvalue.estimate(pvals)
+
+        for index in range(len(results)):
+            results[index][self.qval_s] = qvals[index]
+
+        return results
 
     def passes_ratio_filter(self, snp):
         case_ratio = snp[self.case_alt_count_s] / float(snp[self.case_total_count_s])

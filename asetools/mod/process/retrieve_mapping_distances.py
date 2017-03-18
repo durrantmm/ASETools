@@ -22,7 +22,7 @@ class RetrieveMappingDistances(RunProcessStepSuper):
         self.input_vcf = input_vcf
 
     def process(self):
-        bam_reader = pysam.AlignmentFile(self.input_bam, "rb")
+        bam_reader = pysam.AlignmentFile(self.input, "rb")
         vcf_reader = vcf.Reader(filename=self.input_vcf)
         for snp in vcf_reader:
             print(snp)
