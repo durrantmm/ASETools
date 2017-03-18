@@ -12,7 +12,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         output_dir = output_dir
 
         input = input_bam
-        output = self.handle_output(output_dir, output_file, input_bam)
+        output = output_file
 
         log_name = 'retrieve_mapping_distances.json'
         logger = logger
@@ -20,6 +20,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         super().__init__(name, output_dir, input, output, log_name, logger)
 
         self.input_vcf = input_vcf
+
 
     def process(self):
         bam_reader = pysam.AlignmentFile(self.input, "rb")
