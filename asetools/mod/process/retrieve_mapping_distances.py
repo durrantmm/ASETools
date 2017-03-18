@@ -31,7 +31,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         bam_reader = pysam.AlignmentFile(self.input, "rb")
         vcf_reader = vcf.Reader(filename=self.input_vcf)
 
-        with open(os.path.join(self.output_dir, self.output)) as outfile:
+        with open(os.path.join(self.output_dir, self.output), w) as outfile:
 
             for snp in vcf_reader:
                 chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
