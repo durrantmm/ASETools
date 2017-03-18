@@ -39,11 +39,11 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
 
                 for dist in ref_distances:
                     outline = TAB.join(map(str, [chrom, pos, ref, alt, self.ref_s, dist]))
-                    outfile.write(outline+NL)
+                    print(outline)
 
                 for dist in alt_distances:
                     outline = TAB.join(map(str, [chrom, pos, ref, alt, self.alt_s, dist]))
-                    outfile.write(outline+NL)
+                    print(outline)
 
     def retrieve_mapping_distances(self, chrom, position, ref, alt, bamfile):
         position = position + self.bam_index_correction
