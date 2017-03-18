@@ -20,6 +20,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         super().__init__(name, output_dir, input, output, log_name, logger)
 
         self.input_vcf = input_vcf
+        self.bam_index_correction = -1
 
 
     def process(self):
@@ -31,7 +32,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
             print(chrom, pos, ref, alt, len(ref_distances), len(alt_distances))
 
     def retrieve_mapping_distances(self, chrom, position, ref, alt, bamfile):
-
+        position = position + self.bam_index_correction
         ref_read_distances = []
         alt_read_distances = []
 
