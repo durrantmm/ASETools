@@ -26,7 +26,9 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         bam_reader = pysam.AlignmentFile(self.input, "rb")
         vcf_reader = vcf.Reader(filename=self.input_vcf)
         for snp in vcf_reader:
-            print(snp)
+            chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
+            ref_distances, alt_distances = self.retrieve_mapping_distances(chrom, pos, ref, alt, bam_reader)
+            print(ref_distances, alt_distances)
 
 
     def calc_mapping_distance(self, read1, read2):
