@@ -4,7 +4,7 @@ import pysam, vcf
 from mod.run_process_step_super import RunProcessStepSuper
 
 
-class RetrieveMappingDistances(RunProcessStepSuper):
+class RunRetrieveMappingDistances(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_bam, input_vcf, output_file=None, logger=None):
 
@@ -44,14 +44,14 @@ class RetrieveMappingDistances(RunProcessStepSuper):
         ref_read_distances = []
         alt_read_distances = []
 
-        for pileupcolumn in samfile.pileup(chrom, position, position+1, truncate=True):
+        for pileupcolumn in bamfile.pileup(chrom, position, position+1, truncate=True):
 
             for pileupread in pileupcolumn.pileups:
                 if not pileupread.is_del and not pileupread.is_refskip:
                     read1 = pileupread.alignment
                     allele = read1.query_sequence[pileupread.query_position]
                     try:
-                        read2 = samfile.mate(read1)
+                        read2 = bamfile.mate(read1)
                     except ValueError:
                         continue
 
@@ -62,8 +62,6 @@ class RetrieveMappingDistances(RunProcessStepSuper):
                             ref_read_distances.append(distance)
                         elif allele == alt:
                             alt_read_distances.append(distance)
-
-
 
         return sorted(ref_read_distances), sorted(alt_read_distances)
 

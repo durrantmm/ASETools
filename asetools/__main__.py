@@ -11,6 +11,7 @@ from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.process.prepare_count_data import RunPrepareReadCountData
 from mod.process.fishers_exact_test import RunFishersExactTest
+from mod.process.retrieve_mapping_distances import RunRetrieveMappingDistances
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.subprocess.pipelines.wasp_ase_pipeline import RunWASPAlleleSpecificExpressionPipeline
@@ -30,6 +31,7 @@ VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
 PREPARE_READ_COUNT_STR = 'PrepareReadCountData'
 FISHERS_EXACT_TEST_STR = 'FishersExactTest'
+RETRIEVE_MAPPING_DIST_STR = 'RetrieveMappingDistances'
 
 OUTPUT_DIR_STR = 'output_dir'
 FASTQ1_FLAG = '--fastq1'
@@ -160,7 +162,13 @@ def main(args):
                                                  logger=Log(args.output_dir))
         fishers_exact_test.run()
 
+    elif args.script_name == RETRIEVE_MAPPING_DIST_STR:
 
+        retrieve_mapping_distances = RunRetrieveMappingDistances(output_dir=args.output_dir,
+                                                                 input_bam=args.bam,
+                                                                 input_vcf=args.vcf,
+                                                                 logger=Log(args.output_dir))
+        retrieve_mapping_distances.run()
 
 
 def parse_arguments():
@@ -227,6 +235,12 @@ def parse_arguments():
     fishers_exact_test = subparsers.add_parser(FISHERS_EXACT_TEST_STR)
     fishers_exact_test.add_argument(OUTPUT_DIR_STR)
     fishers_exact_test.add_argument(READ_COUNTS_FLAG, required=True)
+
+    # Retrieve mapping distances arguments
+    retrieve_mapping_dist = subparsers.add_parser(RETRIEVE_MAPPING_DIST_STR)
+    retrieve_mapping_dist.add_argument(OUTPUT_DIR_STR)
+    retrieve_mapping_dist.add_argument(BAM_FLAG)
+    retrieve_mapping_dist.add_argument(VCF_FLAG)
 
     args = parser.parse_args()
 
