@@ -1,5 +1,7 @@
 import sys
 import pysam, vcf
+import os
+from mod.misc.string_constants import *
 
 from mod.run_process_step_super import RunProcessStepSuper
 
@@ -21,15 +23,27 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
 
         self.input_vcf = input_vcf
         self.bam_index_correction = -1
+        self.ref_s = 'REF'
+        self.alt_s = 'ALT'
 
 
     def process(self):
         bam_reader = pysam.AlignmentFile(self.input, "rb")
         vcf_reader = vcf.Reader(filename=self.input_vcf)
-        for snp in vcf_reader:
-            chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
-            ref_distances, alt_distances = self.retrieve_mapping_distances(chrom, pos, ref, alt, bam_reader)
-            print(chrom, pos, ref, alt, len(ref_distances), len(alt_distances))
+
+        with open(os.path.join(self.output_dir, self.output)) as outfile:
+
+            for snp in vcf_reader:
+                chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
+                ref_distances, alt_distances = self.retrieve_mapping_distances(chrom, pos, ref, alt, bam_reader)
+
+                for dist in ref_distances:
+                    outline = TAB.join(map(str, [chrom, pos, ref, alt, self.ref_s, dist]))
+                    outfile.write(outline+NL)
+
+                for dist in alt_distances:
+                    outline = TAB.join(map(str, [chrom, pos, ref, alt, self.alt_s, dist]))
+                    outfile.write(outline+NL)
 
     def retrieve_mapping_distances(self, chrom, position, ref, alt, bamfile):
         position = position + self.bam_index_correction
