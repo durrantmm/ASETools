@@ -28,7 +28,7 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         for snp in vcf_reader:
             chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
             ref_distances, alt_distances = self.retrieve_mapping_distances(chrom, pos, ref, alt, bam_reader)
-            print(ref_distances, alt_distances)
+            print(chrom, pos, ref, alt, len(ref_distances), len(alt_distances))
 
     def retrieve_mapping_distances(self, chrom, position, ref, alt, bamfile):
 
@@ -38,7 +38,6 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         for pileupcolumn in bamfile.pileup(chrom, position, position+1, truncate=True):
 
             for pileupread in pileupcolumn.pileups:
-                print(pileupread)
 
                 if not pileupread.is_del and not pileupread.is_refskip:
 
