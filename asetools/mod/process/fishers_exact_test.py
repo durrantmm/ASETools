@@ -4,7 +4,7 @@ from mod.misc.string_constants import *
 from mod.misc.integer_constants import *
 from mod.run_process_step_super import RunProcessStepSuper
 from scipy.stats import fisher_exact
-from qvalue import qvalue
+from mod.misc import qvalue
 
 class RunFishersExactTest(RunProcessStepSuper):
 
