@@ -20,7 +20,7 @@ class RunVCFFilterASE(RunProcessStepSuper):
         log_name = 'filter_vcf.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
+        super().__init__(name, output_dir, input, output, log_name, logger, output_suffix='vcf')
 
         self.min_one_het = min_one_het
         self.hom_ref_hom_alt_is_het = hom_ref_hom_alt_is_het
@@ -28,9 +28,10 @@ class RunVCFFilterASE(RunProcessStepSuper):
         self.biallelic_only = biallelic_only
         self.no_indels = no_indels
 
-        self.autosomal_chroms = ['chr1', 'chr2', 'chr3', 'chr4', 'chr5', 'chr6', 'chr7', 'chr8', 'chr9'
-                                 'chr10', 'chr11', 'chr12', 'chr13', 'chr14', 'chr15', 'chr16', 'chr17',
-                                 'chr18', 'chr19', 'chr20', 'chr21', 'chr22']
+        self.autosomal_chroms = [chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13,
+                                 chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22]
+
+        self.output_suffix = 'vcf'
 
     def process(self):
         reader = vcf.Reader(filename=self.input)
@@ -56,10 +57,6 @@ class RunVCFFilterASE(RunProcessStepSuper):
 
             else:
                 continue
-
-
-    def handle_output(self, output_dir, output, input_file, suffix='tsv'):
-        super().handle_output(suffix='vcf')
 
     def is_biallelic(self, record):
         if len(record.ALT) == 1:

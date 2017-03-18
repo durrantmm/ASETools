@@ -8,6 +8,7 @@ DOT = '.'
 UND = '_'
 EQ = "="
 AST = '*'
+SEMI = ':'
 
 
 chr1 = 'chr1'

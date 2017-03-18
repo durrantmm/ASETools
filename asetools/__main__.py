@@ -12,6 +12,7 @@ from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.process.prepare_count_data import RunPrepareReadCountData
 from mod.process.fishers_exact_test import RunFishersExactTest
 from mod.process.change_vcf_chrom import RunChangeVcfChrom
+from mod.process.vcf_summary_statistics import RunVcfSummaryStatistics
 from mod.process.retrieve_mapping_distances import RunRetrieveMappingDistances
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
@@ -29,7 +30,8 @@ ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounter'
 ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 
 CHANGE_VCF_CHROM = 'ChangeVcfChrom'
-VCF_FILTER_ASE_STR = 'VCFFilterASE'
+VCF_SUMMARY_STATISTICS = 'VcfSummaryStatistics'
+VCF_FILTER_ASE_STR = 'VcfFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
 PREPARE_READ_COUNT_STR = 'PrepareReadCountData'
 FISHERS_EXACT_TEST_STR = 'FishersExactTest'
@@ -154,6 +156,12 @@ def main(args):
 
         change_vcf_chrom.run()
 
+    elif args.script_name == VCF_SUMMARY_STATISTICS:
+        vcf_sum_stats = RunVcfSummaryStatistics(output_dir=args.output_dir,
+                                                input_vcf=args.vcf,
+                                                logger=Log(args.output_dir))
+        vcf_sum_stats.run()
+
     elif args.script_name == VCF_FILTER_ASE_STR:
 
         filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
@@ -239,12 +247,16 @@ def parse_arguments():
     add_remove_chr.add_argument(ADD_CHR_FLAG, action='store_true')
     add_remove_chr.add_argument(REMOVE_CHR_FLAG, action='store_true')
 
+    # VCF summary statistics
+    vcf_summary_stats = subparsers.add_parser(VCF_SUMMARY_STATISTICS)
+    vcf_summary_stats.add_argument(OUTPUT_DIR_STR)
+    vcf_summary_stats.add_argument(VCF_FLAG, required=True)
+
 
     # VCF ase filtration
     vcf_ase_filter = subparsers.add_parser(VCF_FILTER_ASE_STR)
     vcf_ase_filter.add_argument(OUTPUT_DIR_STR)
     vcf_ase_filter.add_argument(VCF_FLAG, required=True)
-
 
 
     # Get Reference Bases
