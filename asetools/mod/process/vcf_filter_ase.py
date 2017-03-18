@@ -58,10 +58,8 @@ class RunVCFFilterASE(RunProcessStepSuper):
                 continue
 
 
-    def handle_output(self, output_dir, output, input):
-        if not output:
-            output = input.split(DOT)[0]+DOT+self.name+DOT+'vcf'
-        return basename(output)
+    def handle_output(self, output_dir, output, input_file, suffix='tsv'):
+        super().handle_output(suffix='vcf')
 
     def is_biallelic(self, record):
         if len(record.ALT) == 1:

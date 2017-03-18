@@ -11,6 +11,7 @@ from mod.misc.string_constants import *
 from mod.process.get_reference_bases import RunGetReferenceBases
 from mod.process.prepare_count_data import RunPrepareReadCountData
 from mod.process.fishers_exact_test import RunFishersExactTest
+from mod.process.change_vcf_chrom import RunChangeVcfChrom
 from mod.process.retrieve_mapping_distances import RunRetrieveMappingDistances
 from mod.qsub import QSubmit
 from mod.subprocess.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
@@ -27,6 +28,7 @@ WASP_ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounterWASP'
 ASE_READ_COUNTER_STR = 'Pipeline-ASEReadCounter'
 ALIGN_ADDG_MARK_DUPS_STR = 'Pipeline-AlignAddGroupsMarkDups'
 
+CHANGE_VCF_CHROM = 'ChangeVcfChrom'
 VCF_FILTER_ASE_STR = 'VCFFilterASE'
 GET_REF_BASES_STR = 'GetReferenceBases'
 PREPARE_READ_COUNT_STR = 'PrepareReadCountData'
@@ -45,6 +47,9 @@ CASES_FLAG = '--cases'
 CONTROLS_FLAG = '--controls'
 READ_COUNTS_FLAG = '--read-counts'
 
+
+ADD_CHR_FLAG = '--add-chr'
+REMOVE_CHR_FLAG = '--remove-chr'
 CHROM_COL_FLAG = '--chrom-col'
 POS_COL_FLAG = '--position-col'
 
@@ -132,6 +137,23 @@ def main(args):
             align_add_groups_mark_dups.run()
 
 
+    elif args.script_name == CHANGE_VCF_CHROM:
+
+        if args.add_chr:
+            change_vcf_chrom = RunChangeVcfChrom(output_dir=args.output_dir,
+                                                 input_vcf=args.vcf,
+                                                 add_chr=True,
+                                                 logger=Log(args.output_dir))
+        elif args.remove_chr:
+            change_vcf_chrom = RunChangeVcfChrom(output_dir=args.output_dir,
+                                                 input_vcf=args.vcf,
+                                                 add_chr=False,
+                                                 logger=Log(args.output_dir))
+        else:
+            raise argparse.ArgumentTypeError('You must specify either --add-chr or --remove-chr')
+
+        change_vcf_chrom.run()
+
     elif args.script_name == VCF_FILTER_ASE_STR:
 
         filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
@@ -209,10 +231,20 @@ def parse_arguments():
     align_add_groups_mark_dups.add_argument(FASTQ2_FLAG, required=True)
     align_add_groups_mark_dups.add_argument(QSUB_FLAG)
 
+    # Change VCF chromosome tag
+    change_vcf_chrom = subparsers.add_parser(CHANGE_VCF_CHROM)
+    change_vcf_chrom.add_argument(OUTPUT_DIR_STR)
+    change_vcf_chrom.add_argument(VCF_FLAG, required=True)
+    add_remove_chr = change_vcf_chrom.add_mutually_exclusive_group(required=True)
+    add_remove_chr.add_argument(ADD_CHR_FLAG, action='store_true')
+    add_remove_chr.add_argument(REMOVE_CHR_FLAG, action='store_true')
+
+
     # VCF ase filtration
     vcf_ase_filter = subparsers.add_parser(VCF_FILTER_ASE_STR)
     vcf_ase_filter.add_argument(OUTPUT_DIR_STR)
     vcf_ase_filter.add_argument(VCF_FLAG, required=True)
+
 
 
     # Get Reference Bases
