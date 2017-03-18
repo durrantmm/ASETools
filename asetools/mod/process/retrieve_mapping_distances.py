@@ -36,8 +36,9 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         alt_read_distances = []
 
         for pileupcolumn in bamfile.pileup(chrom, position, position+1, truncate=True):
-            print(pileupcolumn)
+
             for pileupread in pileupcolumn.pileups:
+                print(pileupread)
 
                 if not pileupread.is_del and not pileupread.is_refskip:
 
