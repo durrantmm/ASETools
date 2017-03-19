@@ -1,3 +1,9 @@
+"""
+This module contains the RunWASPAlleleSpecificExpressionPipeline class, which is a subclass of RunPipelineSuper.
+
+This executes the full WASP mapping bias and ASE read counting pipeline.
+"""
+
 from os.path import join
 
 from mod.subprocess.add_read_groups import RunPicardAddReadGroups
@@ -16,16 +22,23 @@ from mod.subprocess.samtools_index import RunSamtoolsIndex
 
 
 class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
-
-    def __init__(self, output_dir, input_vcf, input_bam=None, fastq1=None, fastq2=None, logger=None):
+    """
+    This class executes the full WASP mapping bias and ASE read counting pipeline.
+    """
+    def __init__(self, output_dir, input_vcf, input_bam, logger=None):
+        """
+        Constructor for a new RunWASPAlleleSpecificExpressionPipeline object.
+        :param output_dir: The output directory to store all output files
+        :param input_vcf: The input VCF file that contains all of the heterozygous sites for ASE read counting.
+        :param input_bam: The input BAM file with added read groups, marked duplicates, and coordinate-sorted
+        :param logger: The logger to keep track of the pipeline's progress.
+        """
         fixed_config = WASPAlleleSpecificExpressionPipelineFixedConfig()
 
         name = fixed_config.name
         output_dir = output_dir
 
         input = fixed_config.input
-        input.arg1 = fastq1
-        input.arg2 = fastq2
 
         logger = logger
 
@@ -37,38 +50,6 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
     def execute_steps(self):
         step_num = 1
 
-        if not self.input_bam:
-            # STAR ALIGN
-            star_output_dir = join(self.output_dir, 'STEP%d_STAR_ALIGN' % step_num)
-            run_star = RunStarAlign(output_dir=star_output_dir,
-                                    fastq1=self.input.arg1,
-                                    fastq2=self.input.arg2,
-                                    logger=self.logger)
-            run_star.run()
-            step_num += 1
-            star_output_sam = run_star.retrieve_output_path()
-
-
-            # ADD READ GROUPS
-            add_read_groups_output_dir = join(self.output_dir, "STEP%d_ADD_READ_GROUPS" % step_num)
-            run_add_read_groups = RunPicardAddReadGroups(output_dir=add_read_groups_output_dir,
-                                                         input_sam=star_output_sam,
-                                                         logger=self.logger)
-            run_add_read_groups.run()
-            step_num += 1
-            arg_output_bam = run_add_read_groups.retrieve_output_path()
-
-
-            # MARK DUPLICATES
-            mark_dups_output_dir = join(self.output_dir, "STEP%d_MARK_DUPLICATES" % step_num)
-            mark_dups = RunPicardMarkDuplicates(output_dir = mark_dups_output_dir,
-                                                input_bam=arg_output_bam,
-                                                logger=self.logger)
-            mark_dups.run()
-            step_num += 1
-            self.input_bam = mark_dups.retrieve_output_path()
-
-
         # MAKE WASP SNP DIR
         snp_dir = join(self.output_dir, 'STEP%d_MAKE_SNP_DIR' % step_num)
         make_snp_dir = RunMakeWaspSnpDir(output_dir=snp_dir,
@@ -77,6 +58,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
 
         make_snp_dir.run()
         step_num += 1
+
 
         # WASP - FIND INTERSECTING SNPS
         find_intersecting_snps_output_dir = join(self.output_dir, 'STEP%d_FIND_INTERSECTING_SNPS' % step_num)
@@ -90,6 +72,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
 
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
 
+
         # WASP - STAR REMAP
         star_remap_output_dir = join(self.output_dir, 'STEP%d_REMAP_OUTPUT_DIR' % step_num)
         star_remap = RunStarAlign(output_dir=star_remap_output_dir,
@@ -100,6 +83,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         step_num += 1
 
         remap_sam = star_remap.retrieve_output_path()
+
 
         # STAR REMAP ADD READ GROUPS
         add_read_groups_output_dir = join(self.output_dir, "STEP%d_STAR_REMAP_ADD_READ_GROUPS" % step_num)
@@ -122,6 +106,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
 
         self.input_bam = star_remap_mark_dups.retrieve_output_path()
 
+
         # WASP - FILTER REMAP
         filter_remapped_output_dir = join(self.output_dir, "STEP%d_WASP_FILTER_REMAPPED" % step_num)
         filter_remapped = RunWaspFilterRemappedReads(output_dir=filter_remapped_output_dir,
@@ -133,6 +118,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
 
         remapped_output_bam = filter_remapped.retrieve_output_path()
 
+
         # SAMTOOLS MERGE
         samtools_merge_output_dir = join(self.output_dir, "STEP%d_MERGE_WASP_BAMS" % step_num)
         samtools_merge = RunSamtoolsMerge(output_dir=samtools_merge_output_dir,
@@ -143,6 +129,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         step_num += 1
         merged_bam = samtools_merge.retrieve_output_path()
 
+
         # SAMTOOLS SORT
         samtools_sort_output_dir = join(self.output_dir, "STEP%d_SORT_BAM" % step_num)
         samtools_sort = RunSamtoolsSort(output_dir=samtools_sort_output_dir,
@@ -152,10 +139,12 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         step_num += 1
         sorted_bam = samtools_sort.retrieve_output_path()
 
+
         # SAMTOOLS INDEX
         samtools_index = RunSamtoolsIndex(input_bam=sorted_bam,
                                           logger=self.logger)
         samtools_index.run()
+
 
         # ASE READ COUNTER
         ase_read_counter_output_dir = join(self.output_dir, "STEP%d_ASE_READ_COUNTER" % step_num)

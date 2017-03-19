@@ -1,3 +1,9 @@
+"""
+This module contains the RunRNASeqVariantCalling class, which is a subclass of RunPipelineSuper.
+
+This executes the full RNAseq Variant Calling pipeline as detailed by the GATK best practices.
+"""
+
 from os.path import join
 
 from mod.subprocess.add_read_groups import RunPicardAddReadGroups
@@ -15,8 +21,18 @@ from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
 
 
 class RunRNASeqVariantCalling(RunPipelineSuper):
+    """
+    This class executes the full RNAseq Variant Calling pipeline as detailed by the GATK best practices.
+    """
 
     def __init__(self, output_dir, fastq1, fastq2, logger):
+        """
+        Constructor for a RunRNASeqVariantCalling object.
+        :param output_dir: The output directory to save all of the output.
+        :param fastq1: The first FASTQ file for the paired-end reads.
+        :param fastq2: The second FASTQ files for the paired-end reads.
+        :param logger: The logger to use when executing the pipeline.
+        """
         fixed_config = RNASeqVariantCallingFixedConfig()
 
         name = fixed_config.name
@@ -32,6 +48,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
 
 
     def execute_steps(self):
+
         # STAR ALIGN
         star_output_dir = join(self.output_dir, 'STEP1_STAR_ALIGN')
         run_star = RunStarAlign(output_dir=star_output_dir,
@@ -41,6 +58,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         run_star.run()
         star_output_sam = run_star.retrieve_output_path()
 
+
         # ADD READ GROUPS
         add_read_groups_output_dir = join(self.output_dir, "STEP2_ADD_READ_GROUPS")
         run_add_read_groups = RunPicardAddReadGroups(output_dir=add_read_groups_output_dir,
@@ -48,6 +66,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
                                                      logger=self.logger)
         run_add_read_groups.run()
         arg_output_bam = run_add_read_groups.retrieve_output_path()
+
 
         # MARK DUPLICATES
         mark_dups_output_dir = join(self.output_dir, "STEP3_MARK_DUPLICATES")
@@ -57,6 +76,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         mark_dups.run()
         mark_dups_bam = mark_dups.retrieve_output_path()
 
+
         # SPLIT READS
         split_reads_output_dir = join(self.output_dir, "STEP4_SPLIT_READS")
         split_reads = RunGATKSplitNCigarReads(output_dir = split_reads_output_dir,
@@ -65,6 +85,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         split_reads.run()
         split_reads_bam = split_reads.retrieve_output_path()
 
+
         # RECALIBRATE BASES
         recal_bases_output_dir = join(self.output_dir, "STEP5_RECAL_BASES")
         recal_bases = RunGATKRNAseqBaseRecalibrator(output_dir=recal_bases_output_dir,
@@ -72,6 +93,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
                                                     logger=self.logger)
         recal_bases.run()
         recal_table = recal_bases.retrieve_output_path()
+
 
         # PRINT READS
         print_reads_output_dir = join(self.output_dir, "STEP6_PRINT_READS")
@@ -82,6 +104,7 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         print_reads.run()
         recal_bam = print_reads.retrieve_output_path()
 
+
         # HAPLOTYPE CALLER
         haplotype_caller_output_dir = join(self.output_dir, "STEP7_HAPLOTYPE_CALLER")
         haplotype_caller = RunGATKHaplotypeCaller(output_dir=haplotype_caller_output_dir,
@@ -90,13 +113,15 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         haplotype_caller.run()
         raw_vcf = haplotype_caller.retrieve_output_path()
 
-        # variant_filtration
+
+        # VARIANT FILTRATION
         variant_filtration_output_dir = join(self.output_dir, "STEP8_VARIANT_FILTRATION")
         variant_filter = RunGATKVariantFiltration(output_dir=variant_filtration_output_dir,
                                                   input_vcf=raw_vcf,
                                                   logger=self.logger)
         variant_filter.run()
         filtered_vcf = variant_filter.retrieve_output_path()
+
 
         # Produce summary statistics of final VCF
         # This uses my own script, vcf_summary_statistics.py, to process the final VCF produced by the pipeline,
