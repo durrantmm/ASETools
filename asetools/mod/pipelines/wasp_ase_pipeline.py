@@ -41,11 +41,11 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         name = fixed_config.name
         output_dir = output_dir
 
-        input = fixed_config.input
+        input_file = fixed_config.input_file
 
         logger = logger
 
-        super().__init__(name, output_dir, input, logger)
+        super().__init__(name, output_dir, input_file, logger)
 
         self.input_bam = input_bam
         self.input_vcf = input_vcf

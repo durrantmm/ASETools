@@ -18,6 +18,7 @@ class RunChangeVcfChrom(RunProcessStepSuper):
     """
     This class runs the ChangeVcfChrom protocol
     """
+
     def __init__(self, output_dir, input_vcf, add_chr=True, output_file=None, logger=None):
         """
         The constructor for a RunChangeVcfChrom object.
@@ -30,23 +31,23 @@ class RunChangeVcfChrom(RunProcessStepSuper):
         name = 'ChangeVcfChrom'
         output_dir = output_dir
 
-        input = input_vcf
-        output = output_file
+        input_file = input_vcf
+        output_file = output_file
 
         log_name = 'change_vcf_chrom.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger, output_suffix='vcf')
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger, output_suffix='vcf')
 
         self.add_chr = add_chr
         self.chr_s = 'chr'
 
-
     def process(self):
         """
-        Processes the input vcf, changes the chromosome identifiers using regular expressions, and then saves the output.
+        Processes the input vcf, changes the chromosome identifiers using regular expressions, and then saves
+        the output.
         """
-        with open(self.input) as vcf_in:
+        with open(self.input_file) as vcf_in:
 
             # Checks if it should add 'chr' from chromosomes
             if self.add_chr:
@@ -54,7 +55,6 @@ class RunChangeVcfChrom(RunProcessStepSuper):
             # Otherwise it removes 'chr' from the contigs.
             else:
                 self.remove_chr_parse_vcf(vcf_in)
-
 
     def add_chr_parse_vcf(self, vcf_stream):
         """
@@ -77,7 +77,6 @@ class RunChangeVcfChrom(RunProcessStepSuper):
                 line = re.sub(r'^(?!{CHR_STRING})(\w+)'.format(CHR_STRING=self.chr_s),
                               r'{CHR_STRING}\1'.format(CHR_STRING=self.chr_s), line)
                 outfile.write(line)
-
 
     def remove_chr_parse_vcf(self, vcf_stream):
         """

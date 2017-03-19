@@ -3,7 +3,8 @@ This module contains the QSubmit class, which is designed to take a python aseto
 script and to resubmit the command so that it can be executed on the cluster.
 """
 
-import os, subprocess
+import os
+import subprocess
 from os.path import join
 from mod.misc.string_constants import *
 
@@ -30,7 +31,6 @@ class QSubmit:
         self.command = command
         self.qsub_flag = qsub_flag
 
-
     def submit(self):
         """
         Creates the output direct, reformats the command, and executes the qsub SGE submission
@@ -41,7 +41,6 @@ class QSubmit:
         self.create_submission_script(command)
         self.execute_qsub()
 
-
     def remove_qsub_flag(self, command, qsub_flag):
         """
         Removes the qsub flag from the command to avoid an infinite loop.
@@ -51,9 +50,8 @@ class QSubmit:
         """
         command = command.split()
         qsub_index = command.index(qsub_flag)
-        command = command[:qsub_index] + command[qsub_index+2:]
-        return SPACE.join([self.python_execution_path]+command)
-
+        command = command[:qsub_index] + command[qsub_index + 2:]
+        return SPACE.join([self.python_execution_path] + command)
 
     def create_submission_script(self, command):
         """
@@ -62,18 +60,14 @@ class QSubmit:
         :return:
         """
         with open(self.qsub_script) as infile:
-
             with open(join(self.output_dir, self.output_file), 'w') as outfile:
-
                 for line in infile:
                     outfile.write(line)
                 outfile.write(command)
 
-
     def execute_qsub(self):
         """
         Uses subprocess module to execute the qsub command on the newly created script.
-        :param command: The
         :return:
         """
         subprocess.check_call(['qsub', join(self.output_dir, self.output_file)])

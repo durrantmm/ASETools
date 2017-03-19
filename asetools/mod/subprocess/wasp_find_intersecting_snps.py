@@ -15,9 +15,7 @@ from mod.subprocess_step_superclass import RunSubprocessStepSuper
 
 
 class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
-
     def __init__(self, output_dir, input_bam, input_snp_dir, output_bam=None, logger=None):
-
         custom_config = WASPFindIntersectingSnpsCustomConfig()
         fixed_config = WASPFindIntersectingSnpsFixedConfig()
 
@@ -29,8 +27,8 @@ class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
         version_flag = custom_config.version_flag
         version_parser = fixed_config.version_parser
 
-        input = fixed_config.input
-        output = fixed_config.output
+        input_file = fixed_config.input_file
+        output_file = fixed_config.output_file
 
         args = custom_config.args
 
@@ -38,37 +36,32 @@ class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
         logger = logger
 
         # Adjusting attributes based on relevant input variables
-        input.arg = input_bam
-        output.arg = output_dir
+        input_file.arg = input_bam
+        output_file.arg = output_dir
 
         super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
-                         version_flag=version_flag, version_parser=version_parser, input=input,
-                         output=output, args=args, log_name=log_name, logger=logger)
+                         version_flag=version_flag, version_parser=version_parser, input_file=input_file,
+                         output_file=output_file, args=args, log_name=log_name, logger=logger)
 
         self.input_snp_dir = FlagArg(flag='--snp_dir', arg=input_snp_dir)
 
-
-
     def format_command(self):
-
         command = [self.execution_path]
         command.extend([SPACE.join(map(str, [flag, arg])) for flag, arg in self.args])
-        command.extend([self.output.flag, self.output.arg])
+        command.extend([self.output_file.flag, self.output_file.arg])
         command.extend([self.input_snp_dir.flag, self.input_snp_dir.arg])
-        command.append(self.input.arg)
+        command.append(self.input_file.arg)
 
         return SPACE.join(command)
 
-
     def retrieve_output_path(self, default_output=True):
-        bam_keep = glob(self.output_dir+os.sep+AST+'keep.bam').pop()
-        bam_remap = glob(self.output_dir+os.sep+AST+'to.remap.bam').pop()
-        fastq1_remap = glob(self.output_dir+os.sep+AST+'fq1.gz').pop()
+        bam_keep = glob(self.output_dir + os.sep + AST + 'keep.bam').pop()
+        bam_remap = glob(self.output_dir + os.sep + AST + 'to.remap.bam').pop()
+        fastq1_remap = glob(self.output_dir + os.sep + AST + 'fq1.gz').pop()
         fastq2_remap = glob(self.output_dir + os.sep + AST + 'fq2.gz').pop()
         fastq_single_remap = glob(self.output_dir + os.sep + AST + 'single.fq.gz').pop()
 
         return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
-
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         command = self.format_command()
@@ -77,7 +70,5 @@ class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
 
         subprocess.check_call(command, shell=True, universal_newlines=True)
 
-
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass
-

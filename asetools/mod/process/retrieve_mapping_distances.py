@@ -16,7 +16,6 @@ from mod.process_step_superclass import RunProcessStepSuper
 
 
 class RunRetrieveMappingDistances(RunProcessStepSuper):
-
     def __init__(self, output_dir, input_bam, input_vcf, output_file=None, logger=None):
         """
         This is the constructor for a RunRetrieveMappingDistances object.
@@ -30,13 +29,13 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         name = 'RetrieveMappingDistances'
         output_dir = output_dir
 
-        input = input_bam
-        output = output_file
+        input_file = input_bam
+        output_file = output_file
 
         log_name = 'retrieve_mapping_distances.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger)
 
         self.input_vcf = input_vcf
         self.bam_index_correction = -1
@@ -45,18 +44,17 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
 
         self.out_header = TAB.join(['CHROM', 'POS', 'REF', 'ALT', 'ALLELE', 'MAPPING_DISTANCE'])
 
-
     def process(self):
         """
         This runs the main process script to retrieve all of the mapping distances for ll reads that overlap with
         variants in the VCF file
         """
-        bam_reader = pysam.AlignmentFile(self.input, "rb")
+        bam_reader = pysam.AlignmentFile(self.input_file, "rb")
         vcf_reader = vcf.Reader(filename=self.input_vcf)
 
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
 
-            outfile.write(self.out_header+NL)
+            outfile.write(self.out_header + NL)
 
             for snp in vcf_reader:
                 chrom, pos, ref, alt = snp.CHROM, snp.POS, snp.REF, snp.ALT[0]
@@ -64,12 +62,11 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
 
                 for dist in ref_distances:
                     outline = TAB.join(map(str, [chrom, pos, ref, alt, self.ref_s, dist]))
-                    outfile.write(outline+NL)
+                    outfile.write(outline + NL)
 
                 for dist in alt_distances:
                     outline = TAB.join(map(str, [chrom, pos, ref, alt, self.alt_s, dist]))
-                    outfile.write(outline+NL)
-
+                    outfile.write(outline + NL)
 
     def retrieve_mapping_distances(self, chrom, position, ref, alt, bamfile):
         """
@@ -82,12 +79,12 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         :param bamfile: The indexed bam file.
         :return:
         """
-        position = position + self.bam_index_correction
+        position += self.bam_index_correction
         ref_read_distances = []
         alt_read_distances = []
 
         # Gets the pileup columns covering the read.
-        for pileupcolumn in bamfile.pileup(chrom, position, position+1, truncate=True):
+        for pileupcolumn in bamfile.pileup(chrom, position, position + 1, truncate=True):
 
             # Gets each of the reads in each pileup column.
             for pileupread in pileupcolumn.pileups:
@@ -114,7 +111,6 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
 
         return sorted(ref_read_distances), sorted(alt_read_distances)
 
-
     def calc_mapping_distance(self, read1, read2):
         """
         Calculates the read distance between two paired reads
@@ -122,11 +118,10 @@ class RunRetrieveMappingDistances(RunProcessStepSuper):
         if read1.is_unmapped or read2.is_unmapped:
             return None
         else:
-            reference_positions = [read1.reference_start, read1.reference_end-1,
-                                   read2.reference_start, read2.reference_end-1]
+            reference_positions = [read1.reference_start, read1.reference_end - 1,
+                                   read2.reference_start, read2.reference_end - 1]
             distance = max(reference_positions) - min(reference_positions)
             return distance
-
 
     def complementary_base(self, base):
         """

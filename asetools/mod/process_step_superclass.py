@@ -18,13 +18,13 @@ class RunProcessStepSuper:
     input file with python, and then outputs a new file to a specified output directory.
     """
 
-    def __init__(self, name, output_dir, input_file, output, log_name, logger=None, output_suffix='tsv'):
+    def __init__(self, name, output_dir, input_file, output_file, log_name, logger=None, output_suffix='tsv'):
         """
         Constructor for the superclass.
         :param name: The name of the class
         :param output_dir: The output directory to save all output files.
         :param input_file: The path to the primary input file to be processed.
-        :param output: The name of the output path.
+        :param output_file: The name of the output path.
         :param log_name: The path to the output log which is saved in json format.
         :param logger: The logger object for outputting all of the relevant log information.
         :param output_suffix: The suffix of the output file to be written.
@@ -32,15 +32,13 @@ class RunProcessStepSuper:
         self.name = name
         self.output_dir = output_dir
 
-        self.input = input_file
+        self.input_file = input_file
         self.output_suffix = output_suffix
-        self.output = self.handle_output(output_dir, output, input_file)
+        self.output = self.handle_output_file(output_file, input_file)
         self.log_name = log_name
         self.logger = logger
 
-
         self.ran = False
-
 
     def run(self):
         """
@@ -61,7 +59,6 @@ class RunProcessStepSuper:
         # Returns the path to the output file.
         return self.retrieve_output_path()
 
-
     def process(self):
         """
         This is the process script, which is the primary script that needs to be executed by all of the classes
@@ -70,7 +67,6 @@ class RunProcessStepSuper:
         """
         raise NotImplementedError
 
-
     def save_log(self):
         """
         Saves a relevant log file in json format to the output directory
@@ -78,7 +74,6 @@ class RunProcessStepSuper:
         Log.info_chk(self.logger, msg_saving_run_info.format(PATH=self.log_name))
         log_json = self.get_log_json()
         json.dump(log_json, open(self.get_log_path(), 'w'), indent=4)
-
 
     def get_log_json(self):
         """
@@ -89,20 +84,18 @@ class RunProcessStepSuper:
 
             'name': self.name,
             'output_dir': self.output_dir,
-            'input': self.input,
+            'input': self.input_file,
             'output': self.output
 
         }
 
         return log_json
 
-
     def get_log_path(self):
         """
         :return: The path to the output log json file.
         """
         return os.path.join(self.output_dir, self.log_name)
-
 
     def retrieve_output_path(self, default_output=True):
         """
@@ -120,11 +113,9 @@ class RunProcessStepSuper:
         else:
             raise ExecutionNotRanNoOutput(self.name)
 
-
-    def handle_output(self, output_dir, output, input_file):
+    def handle_output_file(self, output, input_file):
         """
         This method handles the output path by ensuring that it only outputs to the output directory.
-        :param output_dir: The output directory.
         :param output: The output path
         :param input_file: the input file
         :return:

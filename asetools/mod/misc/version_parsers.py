@@ -6,7 +6,6 @@ When check_version() is called, it executes a command with subprocess. The outpu
 the application being run is the correct version.
 """
 
-
 from mod.misc.string_constants import *
 
 parse_star_version = lambda x: x.decode(UTF8).strip()
@@ -18,6 +17,5 @@ parse_add_read_groups_version = lambda x, y: x.decode(UTF8).split()[x.decode(UTF
 parse_mark_duplicates_version = lambda x, y: x.decode(UTF8).split()[x.decode(UTF8).split().index(y)]
 
 parse_gatk_version = lambda x: x.decode(UTF8).strip()
-
 
 parse_samtools_version = lambda x: x.decode(UTF8).strip().split()[1]

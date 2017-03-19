@@ -36,13 +36,13 @@ class RunVcfFilterASE(RunProcessStepSuper):
         name = 'VCFFilterASE'
         output_dir = output_dir
 
-        input = input_vcf
-        output = output_vcf
+        input_file = input_vcf
+        output_file = output_vcf
 
         log_name = 'filter_vcf.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger, output_suffix='vcf')
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger, output_suffix='vcf')
 
         self.min_one_het = min_one_het
         self.hom_ref_hom_alt_is_het = hom_ref_hom_alt_is_het
@@ -53,12 +53,11 @@ class RunVcfFilterASE(RunProcessStepSuper):
         self.autosomal_chroms = [chr1, chr2, chr3, chr4, chr5, chr6, chr7, chr8, chr9, chr10, chr11, chr12, chr13,
                                  chr14, chr15, chr16, chr17, chr18, chr19, chr20, chr21, chr22]
 
-
     def process(self):
         """
         Processes and filters the VCF
         """
-        reader = vcf.Reader(filename=self.input)
+        reader = vcf.Reader(filename=self.input_file)
         writer = vcf.Writer(open(join(self.output_dir, self.output), 'w'), reader)
 
         for rec in reader:
@@ -89,13 +88,11 @@ class RunVcfFilterASE(RunProcessStepSuper):
             else:
                 writer.write_record(rec)
 
-
     def is_biallelic(self, record):
         if len(record.ALT) == 1:
             return True
         else:
             return False
-
 
     def contains_min_one_het(self, record):
         if len(record.get_hets()) >= 1:
@@ -103,17 +100,8 @@ class RunVcfFilterASE(RunProcessStepSuper):
         else:
             return False
 
-
     def contains_both_homs(self, record):
         if len(record.get_hom_refs()) >= 1 and len(record.get_hom_alts()) >= 1:
             return True
         else:
             return False
-
-
-
-
-
-
-
-

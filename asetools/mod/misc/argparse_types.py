@@ -3,12 +3,11 @@ This script contains functions that ensure that certaio argparse arguments are f
 This will likely be added to later as the asetools package is expanded.
 """
 
-
 import argparse
 import os
 
-
 ref_basenames = set()
+
 
 def cases_controls(cases, controls):
     """

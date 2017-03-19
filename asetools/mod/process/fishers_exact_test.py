@@ -39,13 +39,13 @@ class RunFishersExactTest(RunProcessStepSuper):
         name = 'FishersExactTest'
         output_dir = output_dir
 
-        input = read_count_data
-        output = output_file
+        input_file = read_count_data
+        output_file = output_file
 
         log_name = 'fishers_exact_test.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger)
 
         self.filter_ratio_low = filter_ratio_low
         self.filter_ratio_high = filter_ratio_high
@@ -99,12 +99,11 @@ class RunFishersExactTest(RunProcessStepSuper):
         # Writes the results fot a file
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
 
-            outfile.write(TAB.join(self.output_header)+NL)
+            outfile.write(TAB.join(self.output_header) + NL)
 
             for line in results:
                 outline = TAB.join([str(line[key]) for key in self.output_header])
-                outfile.write(outline+NL)
-
+                outfile.write(outline + NL)
 
     def bonferroni_correct(self, results):
         """
@@ -144,7 +143,6 @@ class RunFishersExactTest(RunProcessStepSuper):
 
         return results
 
-
     def passes_ratio_filter(self, snp):
         """
         Makes sure at that either the cases or the controls fails the alternate allele ratio test.
@@ -161,7 +159,6 @@ class RunFishersExactTest(RunProcessStepSuper):
         else:
             return False
 
-
     def passes_count_filter(self, snp):
         """
         Checks to see if either cases or controls fails the minimum count filter. If either fails, the snp fails.
@@ -173,7 +170,6 @@ class RunFishersExactTest(RunProcessStepSuper):
         else:
             return True
 
-
     def parse_read_counts(self, header=True):
         """
         A method to parse the read counts.
@@ -181,20 +177,15 @@ class RunFishersExactTest(RunProcessStepSuper):
         :return: yields a snp for each line in the file.
         """
 
-        with open(self.input) as infile:
+        with open(self.input_file) as infile:
             if header:
                 infile.readline()
             for line in infile:
                 line = line.strip().split()
-                snp = {self.input_header[i]:line[i] for i in range(len(self.input_header))}
+                snp = {self.input_header[i]: line[i] for i in range(len(self.input_header))}
 
                 for key in snp.keys():
                     if snp[key].isdigit():
                         snp[key] = int(snp[key])
 
                 yield snp
-
-
-
-
-

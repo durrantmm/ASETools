@@ -16,7 +16,6 @@ from operator import itemgetter
 
 
 class RunPrepareReadCountData(RunProcessStepSuper):
-
     def __init__(self, output_dir, cases_paths, controls_paths, output_file=None, logger=None):
         """
         The constructor class for a RunPrepareReadCountData object.
@@ -29,14 +28,13 @@ class RunPrepareReadCountData(RunProcessStepSuper):
         name = 'PrepareReadCountData'
         output_dir = output_dir
 
-        input = cases_paths[0][0]
-        output = output_file
+        input_file = cases_paths[0][0]
+        output_file = output_file
 
         log_name = 'prepare_read_count_data.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
-
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger)
 
         self.cases = cases_paths
         self.controls = controls_paths
@@ -51,7 +49,6 @@ class RunPrepareReadCountData(RunProcessStepSuper):
 
         # The treatment string to label each new line by treatment.
         self.treatment_str = 'treatment{NUM}'
-
 
     def process(self):
         """
@@ -74,11 +71,10 @@ class RunPrepareReadCountData(RunProcessStepSuper):
         # Writes the results to the output file.
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
 
-            outfile.write(self.header+NL)
+            outfile.write(self.header + NL)
 
             for line in final_output:
-                outfile.write(TAB.join(map(str, line))+NL)
-
+                outfile.write(TAB.join(map(str, line)) + NL)
 
     def merge_read_counts(self, read_count_paths):
         """
@@ -104,7 +100,6 @@ class RunPrepareReadCountData(RunProcessStepSuper):
                     count_dict[chrom][dict_key] = [refCount, altCount, totalCount]
 
         return dict(count_dict)
-
 
     def format_final_output(self, merged_cases, merged_controls):
         """
@@ -143,12 +138,12 @@ class RunPrepareReadCountData(RunProcessStepSuper):
 
                         # Retrieves the allele counts
                         chrom, pos, ref, alt = key
-                        caseAltCount, caseRefCount, caseTotalCount = case_counts[chrom][key]
-                        controlAltCount, controlRefCount, controlTotalCount = control_counts[chrom][key]
+                        case_alt_count, case_ref_count, case_total_count = case_counts[chrom][key]
+                        control_alt_count, control_ref_count, control_total_count = control_counts[chrom][key]
 
                         new_line = [self.treatment_str.format(NUM=index), chrom, pos, ref, alt,
-                                    caseAltCount, caseRefCount, caseTotalCount,
-                                    controlAltCount, controlRefCount, controlTotalCount]
+                                    case_alt_count, case_ref_count, case_total_count,
+                                    control_alt_count, control_ref_count, control_total_count]
 
                         final_output.append(new_line)
 
@@ -161,7 +156,6 @@ class RunPrepareReadCountData(RunProcessStepSuper):
 
         return final_output
 
-
     def read_count_reader(self, path, header=True):
         """
         Produces a generator that parses the read count files.
@@ -173,9 +167,5 @@ class RunPrepareReadCountData(RunProcessStepSuper):
 
             for line in infile:
                 line = line.strip().split()
-                chrom, position, id, refAllele, altAllele, refCount, altCount, totalCount = line[:8]
+                chrom, position, ident, refAllele, altAllele, refCount, altCount, totalCount = line[:8]
                 yield chrom, int(position), refAllele, altAllele, int(refCount), int(altCount), int(totalCount)
-
-
-
-

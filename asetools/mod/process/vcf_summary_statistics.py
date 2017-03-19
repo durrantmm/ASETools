@@ -14,32 +14,31 @@ from collections import defaultdict
 
 
 class RunVcfSummaryStatistics(RunProcessStepSuper):
-
-    def __init__(self, output_dir, input_vcf, output=None, logger=None):
+    def __init__(self, output_dir, input_vcf, output_file=None, logger=None):
         """
         This is the constructor for a RunVcfSummaryStatistics object.
         :param output_dir: The output directory.
         :param input_vcf: The input VCF path.
-        :param output: The output path.
+        :param output_file: The output path.
         :param logger: The logger for tracking progress.
         """
         name = 'VcfSummaryStatistics'
         output_dir = output_dir
 
-        input = input_vcf
-        output = output
+        input_file = input_vcf
+        output_file = output_file
 
         log_name = 'vcf_summary_statistics.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger)
 
         self.RECORDS = 'record(s)'
         self.TOTAL = 'total'
         self.SNP = 'snp'
         self.INDEL = 'indel'
         self.MULTIALLELIC = 'multiallelic'
-        self.BIALLELIC= 'biallelic'
+        self.BIALLELIC = 'biallelic'
         self.NUCLEOTIDE_CHANGES = 'nucleotide_changes'
 
     def process(self):
@@ -47,7 +46,7 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
         Iterates through VCF file, keeps track of several useful summary statstics and writes them to file.
         """
 
-        reader = vcf.Reader(filename=self.input)
+        reader = vcf.Reader(filename=self.input_file)
 
         full_stats = defaultdict(int)
         full_stats_nuc_changes = defaultdict(int)
@@ -87,15 +86,16 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
                     full_stats_nuc_changes[nucleotide_change] += 1
                     per_chrom_nuc_changes[rec.CHROM][nucleotide_change] += 1
 
-
         # Begin writing results to file.
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
             outfile.write("TOTAL SUMMARY STATISTICS" + NL)
             outfile.write(TAB + self.TOTAL + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.TOTAL]) + NL)
             outfile.write(TAB + self.SNP + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.SNP]) + NL)
             outfile.write(TAB + self.INDEL + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.INDEL]) + NL)
-            outfile.write(TAB + self.BIALLELIC + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.BIALLELIC]) + NL)
-            outfile.write(TAB + self.MULTIALLELIC + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.MULTIALLELIC]) + NL)
+            outfile.write(
+                TAB + self.BIALLELIC + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.BIALLELIC]) + NL)
+            outfile.write(
+                TAB + self.MULTIALLELIC + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.MULTIALLELIC]) + NL)
 
             outfile.write(NL + "TOTAL SNV NUCLEOTIDE CHANGES" + NL)
             for change in full_stats_nuc_changes.keys():
@@ -119,20 +119,3 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
                 outfile.write(NL + TAB + "{CHROM} SNV NUCLEOTIDE CHANGES".format(CHROM=chrom) + NL)
                 for change in full_stats_nuc_changes.keys():
                     outfile.write(TAB + TAB + change + SEMI + SPACE + str(per_chrom_nuc_changes[chrom][change]) + NL)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -14,12 +14,12 @@ class RunPipelineSuper:
     This class acts as a superclass for all pipelines in this package.
     """
 
-    def __init__(self, name, output_dir, input, logger):
+    def __init__(self, name, output_dir, input_file, logger):
 
         self.name = name
         self.output_dir = output_dir
 
-        self.input = input
+        self.input_file = input_file
 
         self.logger = logger
 

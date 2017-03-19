@@ -2,8 +2,7 @@
 These are some useful string constants used throughout the asetools package.
 """
 
-
-###### Simple Characters
+# Simple characters and strings
 SPACE = ' '
 NL = '\n'
 TAB = '\t'
@@ -13,7 +12,6 @@ UND = '_'
 EQ = "="
 AST = '*'
 SEMI = ':'
-
 
 chr1 = 'chr1'
 chr2 = 'chr2'
@@ -40,7 +38,6 @@ chr22 = 'chr22'
 chrM = 'chrM'
 chrX = 'chrX'
 chrY = 'chrY'
-
 
 fasta_str = 'fasta'
 vcf_str = 'vcf'

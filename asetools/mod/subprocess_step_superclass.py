@@ -9,7 +9,7 @@ This superclass makes much of the analyses object-oriented, which greatly eases 
 import subprocess
 from mod.misc.exceptions import VersionError
 import json
-from mod.misc.record_classes import FlagArg_to_tuple
+from mod.misc.record_classes import flagarg_to_tuple
 from mod.misc.log import *
 from mod.misc.string_constants import *
 
@@ -19,8 +19,8 @@ class RunSubprocessStepSuper:
     This is super class that executes subprocess system analyses that take an input file from the environment,
     generates the appropriate command, executes that command with subprocess, and then retrieves the output files.
     """
-    def __init__(self, name, output_dir, execution_path, version, version_flag, version_parser, input, output, args,
-                 log_name, logger=None):
+    def __init__(self, name, output_dir, execution_path, version, version_flag, version_parser, input_file, output_file,
+                 args, log_name, logger=None):
 
         self.name = name
         self.output_dir = output_dir
@@ -31,8 +31,8 @@ class RunSubprocessStepSuper:
         self.version_flag = version_flag
         self.version_parser = version_parser
 
-        self.input = input
-        self.output = output
+        self.input_file = input_file
+        self.output_file = output_file
 
         self.args = args
 
@@ -128,7 +128,7 @@ class RunSubprocessStepSuper:
         json.dump(log_json, open(self.get_log_path(), 'w'), indent=4)
 
 
-    def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
+    def get_log_json(self, input_class_parse=flagarg_to_tuple, output_class_parse=flagarg_to_tuple):
         """
         This produces a log json object that is then saved to the json file.
         This can be overridden in a subclass to be more specific with logging information.
@@ -142,8 +142,8 @@ class RunSubprocessStepSuper:
             'output_dir': self.output_dir,
             'execution_path': self.execution_path,
             'version': 'version',
-            'input': input_class_parse(self.input),
-            'output': output_class_parse(self.output),
+            'input': input_class_parse(self.input_file),
+            'output': output_class_parse(self.output_file),
             'custom_args': self.args
 
         }
@@ -174,7 +174,7 @@ class RunSubprocessStepSuper:
         :return: The output file.
         """
         if default_output is True and isinstance(default_output, bool):
-            output = self.output.arg
+            output = self.output_file.arg
         else:
             output = default_output
 

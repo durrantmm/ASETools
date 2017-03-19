@@ -1,4 +1,3 @@
-
 """ All of the user-customizable options for ASEtools
 
 This is currently configured for the mdurrant account on Stanford's SCG4 cluster.
@@ -70,13 +69,13 @@ class StarAlignCustomConfig:
 
         ]
 
+
 class JavaCustomConfig:
     """
     Configure your java, does not actually execute anything other than self.check_version()
     """
 
     def __init__(self):
-
         self.execution_path = "/srv/gs1/software/java/jre1.8.0_66/bin/java"
 
         # Recommended java version ois 1.8.0_66
@@ -92,7 +91,6 @@ class PicardAddReadGroupsCustomConfig:
     """
 
     def __init__(self):
-
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
@@ -122,7 +120,6 @@ class PicardMarkDuplicatesCustomConfig:
     """
 
     def __init__(self):
-
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-Xmx%s" % MAX_JAVA_MEMORY,
                                           "-jar",
@@ -141,6 +138,7 @@ class PicardMarkDuplicatesCustomConfig:
             ("M", "output.metrics")
 
         ]
+
 
 class GATKSplitNCigarReadsCustomConfig:
     """
@@ -194,6 +192,7 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
             ("-L", GENCODE_EXONS_BED)
 
         ]
+
 
 class GATKPrintReadsCustomConfig:
     """
@@ -251,11 +250,11 @@ class WASPFindIntersectingSnpsCustomConfig:
     """
 
     def __init__(self):
-
         # You must set up a WASP python environment as described by their docs
         # You then need to call the python interpreter corresponding to that python environment.
         self.execution_path = SPACE.join([WASP_PYTHON_PATH,
-                                         "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/find_intersecting_snps.py"])
+                                          "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/"
+                                          "find_intersecting_snps.py"])
 
         # No version of wasp is necessary.
         self.version = None
@@ -277,9 +276,9 @@ class WASPFilterRemappedReadsCustomConfig:
     """
 
     def __init__(self):
-
         self.execution_path = SPACE.join([WASP_PYTHON_PATH,
-                                          "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/filter_remapped_reads.py"])
+                                          "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/"
+                                          "ilter_remapped_reads.py"])
 
         self.version = None
         self.version_flag = None
@@ -295,7 +294,6 @@ class SamtoolsCustomConfig:
     """
 
     def __init__(self):
-
         self.execution_path = "/home/mdurrant/miniconda3/envs/venv3.5/bin/samtools"
 
         # Samtools version 1.3.1 recommended
@@ -311,8 +309,8 @@ class SamtoolsMergeCustomConfig:
     """
     Configure samtools merge
     """
-    def __init__(self):
 
+    def __init__(self):
         self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
                                           "merge"])
 
@@ -332,7 +330,6 @@ class SamtoolsSortCustomConfig:
     """
 
     def __init__(self):
-
         self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
                                           "sort"])
 
@@ -343,13 +340,13 @@ class SamtoolsSortCustomConfig:
         # If only single argument, write it as ("--arg","")
         self.args = []
 
+
 class SamtoolsIndexCustomConfig:
     """
     Configure samtools index
     """
 
     def __init__(self):
-
         self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
                                           "index"])
 
@@ -365,6 +362,7 @@ class GATKVariantFiltrationCustomConfig:
     """
     Configure GATK VariantFiltration
     """
+
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-Xmx%s" % MAX_JAVA_MEMORY,
@@ -416,8 +414,3 @@ class GATKASEReadCounterCustomConfig:
             ("--minMappingQuality", -1)
 
         ]
-
-
-
-
-

@@ -40,13 +40,13 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         name = fixed_config.name
         output_dir = output_dir
 
-        input = fixed_config.input
-        input.arg1 = fastq1
-        input.arg2 = fastq2
+        input_file = fixed_config.input_file
+        input_file.arg1 = fastq1
+        input_file.arg2 = fastq2
 
         logger = logger
 
-        super().__init__(name, output_dir, input, logger)
+        super().__init__(name, output_dir, input_file, logger)
 
 
     def execute_steps(self):
@@ -54,8 +54,8 @@ class RunRNASeqVariantCalling(RunPipelineSuper):
         # STAR ALIGN
         star_output_dir = join(self.output_dir, 'STEP1_STAR_ALIGN')
         run_star = RunStarAlign(output_dir=star_output_dir,
-                                fastq1=self.input.arg1,
-                                fastq2=self.input.arg2,
+                                fastq1=self.input_file.arg1,
+                                fastq2=self.input_file.arg2,
                                 logger=self.logger)
         run_star.run()
         star_output_sam = run_star.retrieve_output_path()

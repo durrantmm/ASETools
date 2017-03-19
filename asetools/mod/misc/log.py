@@ -6,7 +6,8 @@ SimpleLog will only log to the user's terminal
 
 """
 
-import logging, os
+import logging
+import os
 
 # Here are some strings that are used to log recurring events
 msg_checking_version = "Ensuring that {NAME} is version {VERSION}..."
@@ -31,7 +32,7 @@ class Log:
         format_str = "%(levelname)s %(asctime)s:\t%(message)s"
         logformat = logging.Formatter(format_str)
 
-        logging.basicConfig(level=logging.DEBUG, format=format_str)
+        logging.basicConfig(level=logging.INFO, format=format_str)
         self.rootLogger = logging.getLogger()
 
         fileHandler = logging.FileHandler("{0}/asetools.{1}.log".format(outdir, os.path.basename(outdir)))
@@ -90,9 +91,8 @@ class SimpleLog:
         This is the constructor for the SimpleLog instance.
         """
         format_str = "%(levelname)s %(asctime)s:\t%(message)s"
-        logformat = logging.Formatter(format_str)
 
-        logging.basicConfig(level=logging.DEBUG, format=format_str)
+        logging.basicConfig(level=logging.INFO, format=format_str)
         self.rootLogger = logging.getLogger()
 
     def info(self, s):

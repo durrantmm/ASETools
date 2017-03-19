@@ -15,5 +15,5 @@ setup(name='asetools',
       license = "BSD",
       keywords = "genomics allele specific expression subprocess",
       url="http://packages.python.org/asetools",
-      packages=['asetools']
-     )
+      packages=['asetools'], requires=['numpy', 'scipy', 'pysam']
+      )

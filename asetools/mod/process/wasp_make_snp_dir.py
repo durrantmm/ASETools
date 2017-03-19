@@ -25,13 +25,13 @@ class RunMakeWaspSnpDir(RunProcessStepSuper):
         name = 'MakeWaspSnpDir'
         output_dir = output_dir
 
-        input = input_sorted_vcf
-        output = output_dir
+        input_file = input_sorted_vcf
+        output_file = output_dir
 
         log_name = 'make_wasp_snp_dir.json'
         logger = logger
 
-        super().__init__(name, output_dir, input, output, log_name, logger)
+        super().__init__(name, output_dir, input_file, output_file, log_name, logger)
 
         self.file_suffix = '.snps.txt.gz'
 
@@ -40,7 +40,7 @@ class RunMakeWaspSnpDir(RunProcessStepSuper):
         Converts the vcf file into a WASP snp directory.
         """
 
-        reader = vcf.Reader(filename=self.input)
+        reader = vcf.Reader(filename=self.input_file)
 
         snp_files = {}
         for rec in reader:

@@ -1,0 +1,84 @@
+ASEtools
+
+A python command line interface for preparing and analyzing allele-specific expression data ##
+
+The main entry point is through typing
+
+python asetools/
+
+or
+
+python asetools/__main__.py
+
+You can get detailed argument instructions with python asetools/ --help
+
+My code directories are structured as follows:
+
+    asetools/
+    ├── __main__.py
+    └── mod
+        |── subprocess_step_superclass.py
+        ├── pipeline_superclass.py
+        ├── process_step_superclass.py
+        ├── config
+        │   ├── custom.py
+        │   └── fixed.py
+        ├── misc
+        │   ├── argparse_types.py
+        │   ├── exceptions.py
+        │   ├── integer_constants.py
+        │   ├── log.py
+        │   ├── path_methods.py
+        │   ├── qsub.py
+        │   ├── qvalue.py
+        │   ├── record_classes.py
+        │   ├── string_constants.py
+        │   └── version_parsers.py
+        ├── pipelines
+        │   ├── rnaseq_variant_calling.py
+        │   └── wasp_ase_pipeline.py
+        ├── process
+        │   ├── change_vcf_chrom.py
+        │   ├── fishers_exact_test.py
+        │   ├── prepare_count_data.py
+        │   ├── retrieve_mapping_distances.py
+        │   ├── vcf_filter_ase.py
+        │   ├── vcf_summary_statistics.py
+        │   └── wasp_make_snp_dir.py
+        └── subprocess
+            ├── add_read_groups.py
+            ├── ase_read_counter.py
+            ├── haplotype_caller.py
+            ├── java.py
+            ├── mark_duplicates.py
+            ├── print_reads.py
+            ├── rnaseq_base_recalibrator.py
+            ├── samtools_index.py
+            ├── samtools_merge.py
+            ├── samtools.py
+            ├── samtools_sort.py
+            ├── split_n_cigar_reads.py
+            ├── star_align.py
+            ├── variant_filtration.py
+            ├── wasp_filter_remapped_reads.py
+            └── wasp_find_intersecting_snps.py
+
+You can run the asetools CLI with command such as the following:
+
+    python asetools Pipeline-RNAseqVariantCaller --fastq1 example_input/Pipeline-RNAseqVariantCaller.1.fq.gz --fastq2 example_input/Pipeline-RNAseqVariantCaller.2.fq.gz example_output/Pipeline-RNAseqVariantCaller
+
+    python asetools Pipeline-ASEReadCounterWASP --bam example_input/Pipeline-ASEReadCounterWASP.bam --vcf example_input/Pipeline-ASEReadCounterWASP.vcf.gz example_output/Pipeline-ASEReadCounterWASP
+
+    python asetools VcfFilterASE example_output/VcfFilterASE --vcf example_input/VcfFilterASE.vcf
+
+    python asetools FishersExactTest example_output/FishersExactTest --read-counts example_input/FishersExactTest.tsv
+
+    python asetools PrepareReadCountData example_output/PrepareReadCountData --cases example_input/PrepareReadCountData.1.tsv --controls example_input/PrepareReadCountData.2.tsv
+
+    python asetools ChangeVcfChrom --vcf example_input/ChangeVCFChrom_add_chr.vcf --add-chr example_output/ChangeVCFChrom_add_chr
+
+    python asetools ChangeVcfChrom --vcf example_input/ChangeVCFChrom_remove_chr.vcf --remove-chr example_output/ChangeVCFChrom_remove_chr
+
+    python asetools VcfSummaryStatistics --vcf example_input/VcfSummaryStatistics.vcf.gz example_output/VcfSummaryStatistics
+
+    python asetools/ RetrieveMappingDistances --bam example_input/RetrieveMappingDistances.bam --vcf example_input/RetrieveMappingDistances.vcf.gz example_output/RetrieveMappingDistances
