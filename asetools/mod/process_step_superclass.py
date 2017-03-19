@@ -131,8 +131,7 @@ class RunProcessStepSuper:
         """
 
         # If output does not exist or is in an incorrect path, it creates a proper output file.
-        if not output or os.path.realpath(output) == os.path.realpath(input_file):
-            print(output_dir, output, input_file)
+        if not output or os.path.realpath(output) == os.path.realpath(input_file):)
             output = os.path.basename(input_file).split(DOT)[0]+DOT+self.name+DOT+self.output_suffix
 
         return os.path.basename(output)
