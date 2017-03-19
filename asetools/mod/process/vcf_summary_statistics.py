@@ -1,14 +1,28 @@
+"""
+This module contains a RunProcessStepSuper subclass called RunVcfSummaryStatistics.
+
+This script produces useful VCF summary, including the total number of indels, SNVs, multiallelic sites, and biallelic
+sites. This is used at the end of the RNAseq variant calling pipeline to process the VCF files produced by calling
+system applications with the subprocess module.
+"""
+
 import vcf
 import os
-
 from mod.misc.string_constants import *
 from mod.process_step_superclass import RunProcessStepSuper
 from collections import defaultdict
 
+
 class RunVcfSummaryStatistics(RunProcessStepSuper):
 
     def __init__(self, output_dir, input_vcf, output=None, logger=None):
-
+        """
+        This is the constructor for a RunVcfSummaryStatistics object.
+        :param output_dir: The output directory.
+        :param input_vcf: The input VCF path.
+        :param output: The output path.
+        :param logger: The logger for tracking progress.
+        """
         name = 'VcfSummaryStatistics'
         output_dir = output_dir
 
@@ -29,6 +43,10 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
         self.NUCLEOTIDE_CHANGES = 'nucleotide_changes'
 
     def process(self):
+        """
+        Iterates through VCF file, keeps track of several useful summary statstics and writes them to file.
+        """
+
         reader = vcf.Reader(filename=self.input)
 
         full_stats = defaultdict(int)
@@ -70,6 +88,7 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
                     per_chrom_nuc_changes[rec.CHROM][nucleotide_change] += 1
 
 
+        # Begin writing results to file.
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
             outfile.write("TOTAL SUMMARY STATISTICS" + NL)
             outfile.write(TAB + self.TOTAL + SPACE + self.RECORDS + SEMI + SPACE + str(full_stats[self.TOTAL]) + NL)
