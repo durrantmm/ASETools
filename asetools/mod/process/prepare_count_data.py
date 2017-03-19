@@ -29,7 +29,7 @@ class RunPrepareReadCountData(RunProcessStepSuper):
         name = 'PrepareReadCountData'
         output_dir = output_dir
 
-        input = [cases_paths, controls_paths]
+        input = cases_paths[0][0]
         output = output_file
 
         log_name = 'prepare_read_count_data.json'
