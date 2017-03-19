@@ -15,8 +15,8 @@ This script executes many of the most important functions of this package.
 from mod.misc.argparse_types import *
 from mod.misc.log import Log
 from mod.misc.string_constants import *
-from mod.pipelines import RunRNASeqVariantCalling
-from mod.pipelines import RunWASPAlleleSpecificExpressionPipeline
+from mod.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
+from mod.pipelines.wasp_ase_pipeline import RunWASPAlleleSpecificExpressionPipeline
 from mod.process.change_vcf_chrom import RunChangeVcfChrom
 from mod.process.fishers_exact_test import RunFishersExactTest
 from mod.process.prepare_count_data import RunPrepareReadCountData
