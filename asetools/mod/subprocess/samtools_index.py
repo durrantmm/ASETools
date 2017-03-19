@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunSamtoolsIndex.
+
+It executes the samtools index command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import dirname
-
 from mod.config.custom import SamtoolsIndexCustomConfig
-
 from mod.config.fixed import SamtoolsIndexFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
@@ -47,8 +51,10 @@ class RunSamtoolsIndex(RunSubprocessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         self.samtools.run()
 
+
     def save_log(self):
         pass
+
 
     def run(self, make_output_dir=True):
         super().run(make_output_dir=False)
@@ -59,4 +65,3 @@ class RunSamtoolsIndex(RunSubprocessStepSuper):
         command = [self.execution_path, self.input.arg]
 
         return SPACE.join(command)
-

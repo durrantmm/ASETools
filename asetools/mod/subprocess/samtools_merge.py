@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunSamtoolsMerge.
+
+It executes the samtools merge command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import SamtoolsMergeCustomConfig
-
 from mod.config.fixed import SamtoolsMergeFixedConfig
 from mod.misc.record_classes import *
 from mod.misc.string_constants import *
@@ -51,11 +55,14 @@ class RunSamtoolsMerge(RunSubprocessStepSuper):
         else:
             return basename(input_bam).split('.')[0]+'.merged.bam'
 
+
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         self.samtools.run()
 
+
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
         super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
+
 
     def format_command(self):
 
@@ -64,7 +71,6 @@ class RunSamtoolsMerge(RunSubprocessStepSuper):
         command.append(join(self.output_dir, self.output.arg))
         command.append(self.input.arg1)
         command.append(self.input.arg2)
-
 
         return SPACE.join(command)
 

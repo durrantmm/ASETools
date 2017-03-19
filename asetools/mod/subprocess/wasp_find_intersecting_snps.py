@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunWaspFindIntersectingSnps.
+
+It executes the WASP find_intersecting_snps.py script using the subprocess standard library module.
+"""
+
 import subprocess
 from glob import glob
-
 from mod.config.custom import WASPFindIntersectingSnpsCustomConfig
-
 from mod.config.fixed import WASPFindIntersectingSnpsFixedConfig
 from mod.misc.log import *
 from mod.misc.record_classes import FlagArg
@@ -55,6 +59,7 @@ class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
 
         return SPACE.join(command)
 
+
     def retrieve_output_path(self, default_output=True):
         bam_keep = glob(self.output_dir+os.sep+AST+'keep.bam').pop()
         bam_remap = glob(self.output_dir+os.sep+AST+'to.remap.bam').pop()
@@ -63,6 +68,7 @@ class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):
         fastq_single_remap = glob(self.output_dir + os.sep + AST + 'single.fq.gz').pop()
 
         return bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap
+
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         command = self.format_command()

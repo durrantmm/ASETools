@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunStarAlign.
+
+It executes the STAR mapping application using the subprocess standard library module.
+"""
+
 from glob import glob
 from os.path import basename, join
-
 from mod.config.custom import StarAlignCustomConfig
-
 from mod.config.fixed import StarAlignFixedConfig
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
@@ -59,8 +63,10 @@ class RunStarAlign(RunSubprocessStepSuper):
 
         return SPACE.join(command)
 
+
     def get_log_json(self):
         return super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)
+
 
     def retrieve_output_path(self):
         output = glob(join(self.output_dir, self.output.arg)+'*.sam')[0]

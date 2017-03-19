@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunPicardMarkDuplicates.
+
+It executes the picard.jar MarkDuplicates command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import PicardMarkDuplicatesCustomConfig
-
 from mod.config.fixed import PicardMarkDuplicatesFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper

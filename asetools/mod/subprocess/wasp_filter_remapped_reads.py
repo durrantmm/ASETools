@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunWaspFilterRemappedReads.
+
+It executes the WASP filter_remapped_reads.py script using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import WASPFilterRemappedReadsCustomConfig
-
 from mod.config.fixed import WASPFilterRemappedReadsFixedConfig
 from mod.misc.log import *
 from mod.misc.record_classes import *
@@ -49,11 +53,13 @@ class RunWaspFilterRemappedReads(RunSubprocessStepSuper):
         else:
             return basename(input_bam).split('.')[0]+'.remap.keep.bam'
 
+
     def format_command(self):
 
         command = [self.execution_path, self.input.arg1, self.input.arg2, join(self.output_dir, self.output.arg)]
 
         return SPACE.join(command)
+
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         command = self.format_command()
@@ -65,6 +71,7 @@ class RunWaspFilterRemappedReads(RunSubprocessStepSuper):
 
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         pass
+
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
         super().get_log_json(input_class_parse=FlagTwoArgs_to_tuple)

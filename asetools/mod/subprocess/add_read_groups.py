@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunPicardAddReadGroups.
+
+It executes the picard.jar AddReadGroups command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import PicardAddReadGroupsCustomConfig
-
 from mod.config.fixed import PicardAddReadGroupsFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper

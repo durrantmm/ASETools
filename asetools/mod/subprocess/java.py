@@ -1,7 +1,11 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunJava.
+
+It simply verifies that Java is the right version.
+"""
+
 import subprocess
-
 from mod.config.custom import JavaCustomConfig
-
 from mod.config.fixed import JavaFixedConfig
 from mod.misc.record_classes import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
@@ -38,23 +42,30 @@ class RunJava(RunSubprocessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         super().check_version(stderr=subprocess.STDOUT, ignore_error=True)
 
+
     def run(self, make_output_dir=True):
         self.check_version()
+
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         raise NotImplementedError
 
+
     def save_log(self):
         raise NotImplementedError
+
 
     def get_log_json(self, input_class_parse=FlagArg_to_tuple, output_class_parse=FlagArg_to_tuple):
         raise NotImplementedError
 
+
     def get_log_path(self):
         raise NotImplementedError
 
+
     def format_command(self):
         raise NotImplementedError
+
 
     def retrieve_output_path(self, default_output=True):
         raise NotImplementedError

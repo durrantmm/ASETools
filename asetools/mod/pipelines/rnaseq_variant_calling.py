@@ -2,6 +2,8 @@
 This module contains the RunRNASeqVariantCalling class, which is a subclass of RunPipelineSuper.
 
 This executes the full RNAseq Variant Calling pipeline as detailed by the GATK best practices.
+
+. Calling variants from RNA-seq can be useful when genotyping information for your sample is limited.
 """
 
 from os.path import join

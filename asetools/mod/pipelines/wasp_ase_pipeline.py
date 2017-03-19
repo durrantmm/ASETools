@@ -2,6 +2,9 @@
 This module contains the RunWASPAlleleSpecificExpressionPipeline class, which is a subclass of RunPipelineSuper.
 
 This executes the full WASP mapping bias and ASE read counting pipeline.
+
+It follows the WASP workflow, a tool for removing reference allele mapping bias from RNA-seq alignments
+(Geijn et al., 2015) . Removing bias from read alignments is an important step in reliable ASE analysis.
 """
 
 from os.path import join

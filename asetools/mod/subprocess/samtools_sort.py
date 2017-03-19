@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunSamtoolsSort.
+
+It executes the samtools sort command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import SamtoolsSortCustomConfig
-
 from mod.config.fixed import SamtoolsSortFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
@@ -49,8 +53,10 @@ class RunSamtoolsSort(RunSubprocessStepSuper):
         else:
             return basename(input_bam).split('.')[0]+'.sorted.bam'
 
+
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parser=False):
         self.samtools.run()
+
 
     def format_command(self):
 

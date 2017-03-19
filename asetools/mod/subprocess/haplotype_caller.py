@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunGATKHaplotypeCaller.
+
+It executes the GATK HaplotypeCaller command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import GATKHaplotypeCallerCustomConfig
-
 from mod.config.fixed import GATKHaplotypeCallerFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper

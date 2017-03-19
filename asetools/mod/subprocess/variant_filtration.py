@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunGATKVariantFiltration.
+
+It executes the GATK VariantFiltration command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import GATKVariantFiltrationCustomConfig
-
 from mod.config.fixed import GATKVariantFiltrationFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
@@ -64,6 +68,7 @@ class RunGATKVariantFiltration(RunSubprocessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         self.java.check_version()
         super().check_version()
+
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         super().execute_command(shell=True)

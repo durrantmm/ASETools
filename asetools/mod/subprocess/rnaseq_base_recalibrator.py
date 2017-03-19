@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunGATKRNAseqBaseRecalibrator.
+
+It executes the GATK BaseRecalibrator command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
-
 from mod.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper

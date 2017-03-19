@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunGATKSplitNCigarReads.
+
+It executes the GATK SplitNCivarReads command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import GATKSplitNCigarReadsCustomConfig
-
 from mod.config.fixed import GATKSplitNCigarReadsFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper

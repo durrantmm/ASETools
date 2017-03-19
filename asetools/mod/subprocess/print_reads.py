@@ -1,8 +1,12 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunGATKPrintReads.
+
+It executes the GATK PrintReads command using the subprocess standard library module.
+"""
+
 import subprocess
 from os.path import basename, join
-
 from mod.config.custom import GATKPrintReadsCustomConfig
-
 from mod.config.fixed import GATKPrintReadsFixedConfig
 from mod.misc.string_constants import *
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
@@ -44,8 +48,6 @@ class RunGATKPrintReads(RunSubprocessStepSuper):
         super().__init__(name=name, output_dir=output_dir, execution_path=execution_path, version=version,
                          version_flag=version_flag, version_parser=version_parser, input=input,
                          output=output, args=args, log_name=log_name, logger=logger)
-
-
 
 
     def handle_output_bam(self, output_bam, input_bam):

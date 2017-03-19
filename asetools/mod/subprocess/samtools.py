@@ -1,9 +1,14 @@
+"""
+This module contains a RunSubprocessStepSuper subclass called RunSamtools.
+
+This just checks to see that samtools is the correct version.
+"""
+
 import subprocess
-
 from mod.config.custom import SamtoolsCustomConfig
-
 from mod.config.fixed import SamtoolsFixedConfig
 from mod.subprocess_step_superclass import RunSubprocessStepSuper
+
 
 class RunSamtools(RunSubprocessStepSuper):
 
@@ -36,20 +41,26 @@ class RunSamtools(RunSubprocessStepSuper):
     def check_version(self, stderr=subprocess.PIPE, ignore_error=False, pass_version_to_parse=False):
         super().check_version(stderr=subprocess.STDOUT, ignore_error=True)
 
+
     def run(self, make_output_dir=True):
         self.check_version()
+
 
     def execute_command(self, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False):
         raise NotImplementedError
 
+
     def save_log(self):
         raise NotImplementedError
+
 
     def get_log_json(self):
         raise NotImplementedError
 
+
     def get_log_path(self):
         raise NotImplementedError
+
 
     def format_command(self):
         raise NotImplementedError
