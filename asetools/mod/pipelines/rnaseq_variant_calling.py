@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains the RunRNASeqVariantCalling class, which is a subclass of RunPipelineSuper.
 
 This executes the full RNAseq Variant Calling pipeline as detailed by the GATK best practices.

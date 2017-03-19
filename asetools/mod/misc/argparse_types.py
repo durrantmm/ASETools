@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This script contains functions that ensure that certaio argparse arguments are formatted correctly.
 This will likely be added to later as the asetools package is expanded.
 """

@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
-""" Primary entry point for ASEtools
+"""
+AUTHOR: Matt Durrant
+
+Primary entry point for ASEtools
 This script acts as a primary entry point for ASEtools.
 It includes a comprehensive command-line argument parser.
 

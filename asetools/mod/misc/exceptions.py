@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module stores all of the exceptions that are used to handle errors that can occur throughout the application.
 """
 

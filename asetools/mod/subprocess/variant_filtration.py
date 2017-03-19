@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKVariantFiltration.
 
 It executes the GATK VariantFiltration command using the subprocess standard library module.

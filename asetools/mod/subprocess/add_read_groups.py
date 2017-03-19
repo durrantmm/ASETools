@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunPicardAddReadGroups.
 
 It executes the picard.jar AddReadGroups command using the subprocess standard library module.

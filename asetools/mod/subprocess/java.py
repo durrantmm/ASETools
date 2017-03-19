@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunJava.
 
 It simply verifies that Java is the right version.

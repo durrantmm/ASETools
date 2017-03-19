@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKHaplotypeCaller.
 
 It executes the GATK HaplotypeCaller command using the subprocess standard library module.

@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunRetrieveMappingDistances.
 
 This script takes a VCF of differential ASE candidate variants as one input, and a BAM file of aligned RNAseq data as a

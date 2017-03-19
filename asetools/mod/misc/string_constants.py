@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 These are some useful string constants used throughout the asetools package.
 """
 

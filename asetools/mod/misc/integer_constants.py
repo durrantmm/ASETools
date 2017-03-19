@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 Integer constants to be used throughout asetools.
 
 This can be added to later.

@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunMakeWaspSnpDir.
 
 This class converts a VCF file into a WASP SNP directory. This is a directory of files for each of the chromosomes

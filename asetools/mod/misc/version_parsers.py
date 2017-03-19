@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module stores all of the lambda functions used to parse the output of all of the check_version() method calls
 used by the subprocess classes.
 

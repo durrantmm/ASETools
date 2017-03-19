@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains the QSubmit class, which is designed to take a python asetools command and an SGE submission
 script and to resubmit the command so that it can be executed on the cluster.
 """

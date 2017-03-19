@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKASEReadCounter.
 
 It executes the GATK ASEReadCounter command using the subprocess standard library module.

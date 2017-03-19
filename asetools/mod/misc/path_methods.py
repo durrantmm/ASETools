@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 Miscellaneous path methods to help execute methods throughout the asetools package.
 """
 

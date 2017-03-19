@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This is a module that handles all of the logging for ASETools
 It provides two types of logging classes: Log and SimpleLog
 Log will log to both an output file and to the user's terminal

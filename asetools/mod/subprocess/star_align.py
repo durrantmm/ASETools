@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunStarAlign.
 
 It executes the STAR mapping application using the subprocess standard library module.

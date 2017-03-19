@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunPicardMarkDuplicates.
 
 It executes the picard.jar MarkDuplicates command using the subprocess standard library module.

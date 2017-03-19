@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKPrintReads.
 
 It executes the GATK PrintReads command using the subprocess standard library module.

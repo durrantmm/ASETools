@@ -1,4 +1,7 @@
-""" All of the user-customizable options for ASEtools
+"""
+AUTHOR: Matt Durrant
+
+All of the user-customizable options for ASEtools
 
 This is currently configured for the mdurrant account on Stanford's SCG4 cluster.
 This file must be correctly configured in order to run the ASEtools pipelines.

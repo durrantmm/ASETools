@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunVcfFilterASE.
 
 This script takes a VCF file as input, and it keeps only variants that are biallelic, heterozygous single nucleotide

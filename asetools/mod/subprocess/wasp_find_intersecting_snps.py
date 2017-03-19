@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunWaspFindIntersectingSnps.
 
 It executes the WASP find_intersecting_snps.py script using the subprocess standard library module.

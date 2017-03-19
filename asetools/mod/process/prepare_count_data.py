@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunPrepareReadCountData.
 
 This script takes the output of the pipeline implemented as Pipeline-ASEReadCounterWASP, which produces TSV files that

@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains the RunWASPAlleleSpecificExpressionPipeline class, which is a subclass of RunPipelineSuper.
 
 This executes the full WASP mapping bias and ASE read counting pipeline.

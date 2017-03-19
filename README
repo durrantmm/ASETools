@@ -1,3 +1,5 @@
+AUTHOR: Matt Durrant
+
 ASEtools
 
 A python command line interface for preparing and analyzing allele-specific expression data ##
@@ -69,7 +71,7 @@ You can run the asetools CLI with command such as the following:
 
     python asetools Pipeline-ASEReadCounterWASP --bam example_input/Pipeline-ASEReadCounterWASP.bam --vcf example_input/Pipeline-ASEReadCounterWASP.vcf.gz example_output/Pipeline-ASEReadCounterWASP
 
-    python asetools VcfFilterASE example_output/VcfFilterASE --vcf example_input/VcfFilterASE.vcf
+    python asetools VcfFilterASE example_output/VcfFilterASE --vcf example_input/VcfFilterASE.vcf.gz
 
     python asetools FishersExactTest example_output/FishersExactTest --read-counts example_input/FishersExactTest.tsv
 

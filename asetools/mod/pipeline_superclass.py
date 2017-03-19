@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains the RunPipelineSuper supeclass.
 
 This functions acts as the superclass for all of the pipelines that are found in the mod.pipelines directory.

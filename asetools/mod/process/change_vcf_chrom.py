@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunChangeVcfChrom.
 
 I developed this script to help me correct a common problem that I often came across:

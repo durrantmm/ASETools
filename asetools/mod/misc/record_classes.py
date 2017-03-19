@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This is used for storing recordclass objects, which are lightweight objects that can be accessed by property
 and they are mutable.
 """

@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKRNAseqBaseRecalibrator.
 
 It executes the GATK BaseRecalibrator command using the subprocess standard library module.

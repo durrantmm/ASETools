@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunSamtoolsSort.
 
 It executes the samtools sort command using the subprocess standard library module.

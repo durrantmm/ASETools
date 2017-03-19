@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunSamtoolsMerge.
 
 It executes the samtools merge command using the subprocess standard library module.

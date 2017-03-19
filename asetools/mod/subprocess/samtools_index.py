@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunSamtoolsIndex.
 
 It executes the samtools index command using the subprocess standard library module.

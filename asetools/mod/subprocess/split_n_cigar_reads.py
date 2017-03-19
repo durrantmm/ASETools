@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunGATKSplitNCigarReads.
 
 It executes the GATK SplitNCivarReads command using the subprocess standard library module.

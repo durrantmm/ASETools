@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunSubprocessStepSuper subclass called RunWaspFilterRemappedReads.
 
 It executes the WASP filter_remapped_reads.py script using the subprocess standard library module.

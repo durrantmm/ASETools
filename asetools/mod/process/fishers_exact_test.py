@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunFishersExactTest.
 
 It iterates through each line of the input file and performs a Fisher’s exact test on the case/control read count data.

@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains the RunProcessStepSuper superclass.
 
 This functions acts as the superclass for all of the subclasses that are found in the mod.process directory.

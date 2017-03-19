@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This module contains a RunProcessStepSuper subclass called RunVcfSummaryStatistics.
 
 This script produces useful VCF summary, including the total number of indels, SNVs, multiallelic sites, and biallelic

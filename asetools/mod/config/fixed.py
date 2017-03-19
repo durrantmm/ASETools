@@ -1,4 +1,6 @@
 """
+AUTHOR: Matt Durrant
+
 This is a companion module to the custom.py module.
 
 These are the configurations that the user should not touch - they are fixed and independent of the user's environment.
