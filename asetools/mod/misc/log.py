@@ -1,9 +1,12 @@
-import logging, os, sys
+"""
+This is a module that handles all of the logging for ASETools
+It provides two types of logging classes: Log and SimpleLog
+Log will log to both an output file and to the user's terminal
+SimpleLog will only log to the user's terminal
 
-# This is a moduel that handles all of the logging for ASETools
-# It provides two types of logging classes: Log and SimpleLog
-# Log will log to both an output file and to the user's terminal
-# SimpleLog will only log to the user's terminal
+"""
+
+import logging, os
 
 # Here are some strings that are used to log recurring events
 msg_checking_version = "Ensuring that {NAME} is version {VERSION}..."
@@ -12,8 +15,6 @@ msg_executing_command = "Executing the command:{DELIM}{COMMAND}"
 msg_saving_run_info = "Saving run info to {PATH}"
 msg_check_version_signature = "stderr={STDERR}, ignore_error={IGNORE_E}, pass_version_to_parser={PVTP}"
 msg_execute_command_signature = "stderr={STDERR}, subprocess={SHELL}"
-
-
 
 
 class Log:

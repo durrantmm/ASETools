@@ -1,4 +1,12 @@
-import sys
+"""
+This module stores all of the lambda functions used to parse the output of all of the check_version() method calls
+used by the subprocess classes.
+
+When check_version() is called, it executes a command with subprocess. The output is then parsed to ensure that it
+the application being run is the correct version.
+"""
+
+
 from mod.misc.string_constants import *
 
 parse_star_version = lambda x: x.decode(UTF8).strip()

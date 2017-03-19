@@ -7,7 +7,7 @@ from mod.config.fixed import WASPFilterRemappedReadsFixedConfig
 from mod.misc.log import *
 from mod.misc.record_classes import *
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_super import RunSubprocessStepSuper
+from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
 
 
 class RunWaspFilterRemappedReads(RunSubprocessStepSuper):

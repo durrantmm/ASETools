@@ -1,10 +1,16 @@
+"""
+ATTENTION - I DID NOT WRITE THIS CODE AT ALL.
+ATTENTION - I DID NOT WRITE THIS CODE AT ALL.
+ATTENTION - I DID NOT WRITE THIS CODE AT ALL.
+
+I retrieved it from https://github.com/nfusi/qvalue, see Storey and Tibshirani, 2003
+THIS CODE WAS NOT WRITTEN BY ME
+
+I changed all xrange() function calls to range() so it would work with python3
+"""
+
 import scipy as sp
 from scipy import interpolate
-
-# ATTENTION - I DID NOT WRITE THIS CODE AT ALL.
-# I retrieved it from https://github.com/nfusi/qvalue, see Storey and Tibshirani, 2003
-#
-# THIS CODE WAS NOT WRITTEN BY ME
 
 
 def estimate(pv, m=None, verbose=False, lowmem=False, pi0=None):

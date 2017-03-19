@@ -4,7 +4,7 @@ import vcf
 import os
 
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_superclass import RunProcessStepSuper
 from collections import defaultdict
 
 class RunVcfSummaryStatistics(RunProcessStepSuper):
@@ -87,7 +87,7 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
             outfile.write(NL + "PER CHROMOSOME SUMMARY STATISTICS" + NL)
 
             for chrom in ordered_chroms:
-                outfile.write(TAB + chrom + SEMI + NL)
+                outfile.write(NL + TAB + chrom + SEMI + NL)
                 outfile.write(TAB + TAB + self.TOTAL + SPACE + self.RECORDS + SEMI + SPACE +
                               str(per_chrom_stats[chrom][self.TOTAL]) + NL)
                 outfile.write(TAB + TAB + self.SNP + SPACE + self.RECORDS + SEMI + SPACE +
@@ -101,7 +101,7 @@ class RunVcfSummaryStatistics(RunProcessStepSuper):
 
                 outfile.write(NL + TAB + "{CHROM} SNV NUCLEOTIDE CHANGES".format(CHROM=chrom) + NL)
                 for change in full_stats_nuc_changes.keys():
-                    outfile.write(TAB + TAB + change + SEMI + SPACE + str(full_stats_nuc_changes[change]) + NL)
+                    outfile.write(TAB + TAB + change + SEMI + SPACE + str(per_chrom_nuc_changes[chrom][change]) + NL)
 
 
 

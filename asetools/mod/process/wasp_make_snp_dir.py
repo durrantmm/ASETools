@@ -4,7 +4,7 @@ from os.path import join
 import vcf
 
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_superclass import RunProcessStepSuper
 
 
 class RunMakeWaspSnpDir(RunProcessStepSuper):

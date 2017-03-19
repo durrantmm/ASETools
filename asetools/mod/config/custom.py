@@ -1,15 +1,11 @@
-import sys
-from mod.misc.string_constants import *
 
-########################################################################################################################
-#   This is the custom config file, providing the necessary information to correctly run the various applications
-#   used by asetools on your system.
-#   Feel free to edit the paths available here to suit your system.
-#
-#
-#
-#
-########################################################################################################################
+""" All of the user-customizable options for ASEtools
+
+This is currently configured for the mdurrant account on Stanford's SCG4 cluster.
+This file must be correctly configured in order to run the ASEtools pipelines.
+"""
+
+from mod.misc.string_constants import *
 
 # Picard execution path and picard version
 PICARD_EXECUTION_PATH = "/srv/gs1/software/picard-tools/2.8.0/picard.jar"
@@ -24,12 +20,14 @@ REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/ref
 
 # A dbsnp vcf (you can retrieve this from the GATK bundle)
 DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/dbsnp_138.hg19.vcf.gz"
+
 # A bed file of all of the exons found in the genome, for RNAseq variant calling.
 GENCODE_EXONS_BED = "/home/mdurrant/montgomery/mdurrant/data/gencode.exons.merged.bed"
 
 # The maximum memory available to java for the process. 50g = 50 gigabytes.
 MAX_JAVA_MEMORY = "50g"
 
+# You must specify a python interpreter that will run in a python environment that has been configured to run WASP.
 WASP_PYTHON_PATH = "/home/mdurrant/miniconda3/envs/venv2.7/bin/python"
 
 
@@ -73,6 +71,9 @@ class StarAlignCustomConfig:
         ]
 
 class JavaCustomConfig:
+    """
+    Configure your java, does not actually execute anything other than self.check_version()
+    """
 
     def __init__(self):
 
@@ -86,6 +87,9 @@ class JavaCustomConfig:
 
 
 class PicardAddReadGroupsCustomConfig:
+    """
+    Configure picard.jar AddOrReplaceReadGroups to run properly.
+    """
 
     def __init__(self):
 
@@ -113,6 +117,9 @@ class PicardAddReadGroupsCustomConfig:
 
 
 class PicardMarkDuplicatesCustomConfig:
+    """
+    Configure picard.jar MarkDuplicates.
+    """
 
     def __init__(self):
 
@@ -136,6 +143,9 @@ class PicardMarkDuplicatesCustomConfig:
         ]
 
 class GATKSplitNCigarReadsCustomConfig:
+    """
+    Configure GATK SplitNCigarReads
+    """
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
@@ -161,6 +171,9 @@ class GATKSplitNCigarReadsCustomConfig:
 
 
 class GATKRNAseqBaseRecalibratorCustomConfig:
+    """
+    Configure GATK BaseRecalibrator.
+    """
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
@@ -183,6 +196,9 @@ class GATKRNAseqBaseRecalibratorCustomConfig:
         ]
 
 class GATKPrintReadsCustomConfig:
+    """
+    Configure GATK PrintReads.
+    """
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
@@ -202,7 +218,11 @@ class GATKPrintReadsCustomConfig:
 
         ]
 
+
 class GATKHaplotypeCallerCustomConfig:
+    """
+    Configure GATK HaplotypeCaller
+    """
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
@@ -226,6 +246,9 @@ class GATKHaplotypeCallerCustomConfig:
 
 
 class WASPFindIntersectingSnpsCustomConfig:
+    """
+    Configure WASP find_intersecting_snps.py
+    """
 
     def __init__(self):
 
@@ -247,7 +270,11 @@ class WASPFindIntersectingSnpsCustomConfig:
 
         ]
 
+
 class WASPFilterRemappedReadsCustomConfig:
+    """
+    Configure WASP filter_remapped_reads.py
+    """
 
     def __init__(self):
 
@@ -263,6 +290,9 @@ class WASPFilterRemappedReadsCustomConfig:
 
 
 class SamtoolsCustomConfig:
+    """
+    Configure samtools
+    """
 
     def __init__(self):
 
@@ -278,7 +308,9 @@ class SamtoolsCustomConfig:
 
 
 class SamtoolsMergeCustomConfig:
-
+    """
+    Configure samtools merge
+    """
     def __init__(self):
 
         self.execution_path = SPACE.join([SamtoolsCustomConfig().execution_path,
@@ -293,7 +325,11 @@ class SamtoolsMergeCustomConfig:
             ('-f', '')
         ]
 
+
 class SamtoolsSortCustomConfig:
+    """
+    configure samtools sort
+    """
 
     def __init__(self):
 
@@ -308,6 +344,9 @@ class SamtoolsSortCustomConfig:
         self.args = []
 
 class SamtoolsIndexCustomConfig:
+    """
+    Configure samtools index
+    """
 
     def __init__(self):
 
@@ -323,7 +362,9 @@ class SamtoolsIndexCustomConfig:
 
 
 class GATKVariantFiltrationCustomConfig:
-
+    """
+    Configure GATK VariantFiltration
+    """
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,
                                           "-Xmx%s" % MAX_JAVA_MEMORY,
@@ -350,6 +391,9 @@ class GATKVariantFiltrationCustomConfig:
 
 
 class GATKASEReadCounterCustomConfig:
+    """
+    Configure GATK ASEReadCounter
+    """
 
     def __init__(self):
         self.execution_path = SPACE.join([JavaCustomConfig().execution_path,

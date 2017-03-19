@@ -2,7 +2,7 @@ import os, sys
 import numpy as np
 from mod.misc.string_constants import *
 from mod.misc.integer_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_superclass import RunProcessStepSuper
 from scipy.stats import fisher_exact
 from mod.misc import qvalue
 

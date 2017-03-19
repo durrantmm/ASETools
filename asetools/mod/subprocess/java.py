@@ -4,7 +4,7 @@ from mod.config.custom import JavaCustomConfig
 
 from mod.config.fixed import JavaFixedConfig
 from mod.misc.record_classes import *
-from mod.run_subprocess_step_super import RunSubprocessStepSuper
+from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
 
 
 class RunJava(RunSubprocessStepSuper):

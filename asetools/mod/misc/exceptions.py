@@ -1,6 +1,6 @@
-import sys
-
-# This module stores all of the exceptions that are used to handle errors that can occur throughout the application.
+"""
+This module stores all of the exceptions that are used to handle errors that can occur throughout the application.
+"""
 
 
 class VersionError(Exception):

@@ -1,7 +1,7 @@
 import os, sys
 
 from mod.misc.string_constants import *
-from mod.run_process_step_super import RunProcessStepSuper
+from mod.run_process_step_superclass import RunProcessStepSuper
 from collections import defaultdict
 from operator import itemgetter
 

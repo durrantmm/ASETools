@@ -1,8 +1,8 @@
-from os.path import basename
+"""
+Miscellaneous path methods to help execute methods throughout the asetools package.
+"""
 
-# Miscellaneous path methods to help run functions
-#
-#
+from os.path import basename
 
 
 def get_shared_prefix(string1, string2, strip_chars=None, base=False):

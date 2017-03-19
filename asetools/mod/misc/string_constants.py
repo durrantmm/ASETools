@@ -1,3 +1,7 @@
+"""
+These are some useful string constants used throughout the asetools package.
+"""
+
 
 ###### Simple Characters
 SPACE = ' '

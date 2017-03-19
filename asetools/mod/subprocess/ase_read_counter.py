@@ -5,7 +5,7 @@ from mod.config.custom import GATKASEReadCounterCustomConfig
 
 from mod.config.fixed import GATKASEReadCounterFixedConfig
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_super import RunSubprocessStepSuper
+from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 

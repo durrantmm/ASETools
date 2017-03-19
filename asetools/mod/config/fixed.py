@@ -1,5 +1,15 @@
+"""
+This is a companion module to the custom.py module.
+
+These are the configurations that the user should not touch - they are fixed and independent of the user's environment.
+"""
+
 from mod.misc.record_classes import FlagTwoArgs, FlagArg
 from mod.misc.version_parsers import *
+
+
+
+
 
 class StarAlignFixedConfig:
 
@@ -122,6 +132,7 @@ class GATKHaplotypeCallerFixedConfig:
 
         self.log_name = "haplotype_caller.json"
 
+
 class GATKVariantFiltrationFixedConfig:
 
     def __init__(self):
@@ -136,7 +147,6 @@ class GATKVariantFiltrationFixedConfig:
         self.version_parser = parse_gatk_version
 
         self.log_name = "variant_filtration.json"
-
 
 
 class WASPFindIntersectingSnpsFixedConfig:
@@ -168,6 +178,7 @@ class WASPFilterRemappedReadsFixedConfig:
 
         self.log_name = "wasp_filter_remapped_reads.json"
 
+
 class SamtoolsFixedConfig:
 
     def __init__(self):
@@ -181,6 +192,7 @@ class SamtoolsFixedConfig:
         self.version_parser = parse_samtools_version
 
         self.log_name = None
+
 
 class SamtoolsMergeFixedConfig:
 
@@ -224,7 +236,6 @@ class SamtoolsIndexFixedConfig:
         self.log_name = "samtools_index.json"
 
 
-
 class GATKASEReadCounterFixedConfig:
 
     def __init__(self):
@@ -250,6 +261,7 @@ class RNASeqVariantCallingFixedConfig:
 
         self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
 
+
 class WASPAlleleSpecificExpressionPipelineFixedConfig:
 
     def __init__(self):
@@ -257,5 +269,3 @@ class WASPAlleleSpecificExpressionPipelineFixedConfig:
         self.name = "WASP-ASE-subprocess"
 
         self.input = FlagTwoArgs(flag='--readFilesIn', arg1=None, arg2=None)
-
-

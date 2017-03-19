@@ -3,7 +3,7 @@ import subprocess
 from mod.config.custom import SamtoolsCustomConfig
 
 from mod.config.fixed import SamtoolsFixedConfig
-from mod.run_subprocess_step_super import RunSubprocessStepSuper
+from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
 
 class RunSamtools(RunSubprocessStepSuper):
 
