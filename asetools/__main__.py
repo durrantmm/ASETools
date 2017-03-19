@@ -8,12 +8,12 @@ You can see the details of this argument parser by typing
 
     python asetools --help
 
-
 This script executes many of the most important functions of this package.
 """
 
 from mod.misc.argparse_types import *
 from mod.misc.log import Log
+from mod.misc.qsub import QSubmit
 from mod.misc.string_constants import *
 from mod.pipelines.rnaseq_variant_calling import RunRNASeqVariantCalling
 from mod.pipelines.wasp_ase_pipeline import RunWASPAlleleSpecificExpressionPipeline
@@ -21,11 +21,8 @@ from mod.process.change_vcf_chrom import RunChangeVcfChrom
 from mod.process.fishers_exact_test import RunFishersExactTest
 from mod.process.prepare_count_data import RunPrepareReadCountData
 from mod.process.retrieve_mapping_distances import RunRetrieveMappingDistances
-from mod.process.vcf_filter_ase import RunVCFFilterASE
+from mod.process.vcf_filter_ase import RunVcfFilterASE
 from mod.process.vcf_summary_statistics import RunVcfSummaryStatistics
-from mod.qsub import QSubmit
-
-
 
 # Important strings used to parse the input
 PIPELINE_SUBPARSER_STR = 'subprocess'
@@ -166,7 +163,7 @@ def main(args):
     # This filters a VCF file to include only those reads that are relevant to allele-specific expression.
     elif args.protocol_name == VCF_FILTER_ASE_STR:
 
-        filter_vcf = RunVCFFilterASE(output_dir=args.output_dir,
+        filter_vcf = RunVcfFilterASE(output_dir=args.output_dir,
                                      input_vcf=args.vcf,
                                      logger=Log(args.output_dir))
         filter_vcf.run()
@@ -272,6 +269,7 @@ def parse_arguments():
         pass
 
     return args
+
 
 if __name__ == '__main__':
 

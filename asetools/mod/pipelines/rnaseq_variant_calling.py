@@ -16,7 +16,7 @@ from mod.subprocess.variant_filtration import RunGATKVariantFiltration
 from mod.process.vcf_summary_statistics import RunVcfSummaryStatistics
 
 from mod.config.fixed import RNASeqVariantCallingFixedConfig
-from mod.run_pipeline_superclass import RunPipelineSuper
+from mod.pipeline_superclass import RunPipelineSuper
 from mod.subprocess.mark_duplicates import RunPicardMarkDuplicates
 
 

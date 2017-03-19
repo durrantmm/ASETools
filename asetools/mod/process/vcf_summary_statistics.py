@@ -1,10 +1,8 @@
-from os.path import basename, join
-
 import vcf
 import os
 
 from mod.misc.string_constants import *
-from mod.run_process_step_superclass import RunProcessStepSuper
+from mod.process_step_superclass import RunProcessStepSuper
 from collections import defaultdict
 
 class RunVcfSummaryStatistics(RunProcessStepSuper):

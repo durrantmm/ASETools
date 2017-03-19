@@ -7,7 +7,7 @@ from mod.config.fixed import WASPFindIntersectingSnpsFixedConfig
 from mod.misc.log import *
 from mod.misc.record_classes import FlagArg
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
+from mod.subprocess_step_superclass import RunSubprocessStepSuper
 
 
 class RunWaspFindIntersectingSnps(RunSubprocessStepSuper):

@@ -5,7 +5,7 @@ from mod.config.custom import PicardAddReadGroupsCustomConfig
 
 from mod.config.fixed import PicardAddReadGroupsFixedConfig
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
+from mod.subprocess_step_superclass import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 

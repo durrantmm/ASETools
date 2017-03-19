@@ -17,7 +17,7 @@ from mod.subprocess.wasp_find_intersecting_snps import RunWaspFindIntersectingSn
 
 from mod.config.fixed import WASPAlleleSpecificExpressionPipelineFixedConfig
 from mod.process.wasp_make_snp_dir import RunMakeWaspSnpDir
-from mod.run_pipeline_superclass import RunPipelineSuper
+from mod.pipeline_superclass import RunPipelineSuper
 from mod.subprocess.samtools_index import RunSamtoolsIndex
 
 

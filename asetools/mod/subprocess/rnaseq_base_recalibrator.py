@@ -5,7 +5,7 @@ from mod.config.custom import GATKRNAseqBaseRecalibratorCustomConfig
 
 from mod.config.fixed import GATKRNAseqBaseRecalibratorFixedConfig
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
+from mod.subprocess_step_superclass import RunSubprocessStepSuper
 from mod.subprocess.java import RunJava
 
 

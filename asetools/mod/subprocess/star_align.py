@@ -7,7 +7,7 @@ from mod.config.fixed import StarAlignFixedConfig
 from mod.misc.path_methods import get_shared_prefix
 from mod.misc.record_classes import FlagTwoArgs_to_tuple
 from mod.misc.string_constants import *
-from mod.run_subprocess_step_superclass import RunSubprocessStepSuper
+from mod.subprocess_step_superclass import RunSubprocessStepSuper
 
 
 class RunStarAlign(RunSubprocessStepSuper):
