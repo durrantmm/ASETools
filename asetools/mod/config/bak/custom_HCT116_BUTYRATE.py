@@ -18,8 +18,7 @@ GATK_EXECUTION_PATH = "/srv/gs1/software/gatk/gatk-3.6/GenomeAnalysisTK.jar"
 GATK_VERSION = "3.6-0-g89b7209"
 
 # The reference genome fasta to use for all analyses and pipelines.
-REFERENCE_GENOME_FASTA = "/srv/gsfs0/shared_data/RefGenomes/H_sapiens/hg19/hg19.fa"
-GTF_FILE = "/srv/gsfs0/projects/montgomery/lfresard/WHI_rawdata/gencode.v19.annotation.gtf"
+REFERENCE_GENOME_FASTA = "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/hg19/ucsc.hg19.fasta"
 
 # A dbsnp vcf (you can retrieve this from the GATK bundle)
 DBSNP_VCF = "/home/mdurrant/montgomery/mdurrant/data/dbsnp_138.hg19.vcf.gz"
