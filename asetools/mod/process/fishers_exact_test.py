@@ -98,7 +98,7 @@ class RunFishersExactTest(RunProcessStepSuper):
         # q-value correction is added.
         results = self.qvalue_correct(results)
 
-        # Writes the results fot a file
+        # Writes the results for:q a file
         with open(os.path.join(self.output_dir, self.output), w) as outfile:
 
             outfile.write(TAB.join(self.output_header) + NL)

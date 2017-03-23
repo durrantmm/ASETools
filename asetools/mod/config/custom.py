@@ -52,7 +52,7 @@ class StarAlignCustomConfig:
         # If only single argument, write it as ("--arg","")
         self.args = [
 
-            ("--genomeDir", "/srv/gsfs0/projects/bhatt/mdurrant/BUTYRATE_brayon/references/starGenomeUCSChg19"),
+            ("--genomeDir", "/home/mdurrant/montgomery/mdurrant/PIVUS/STAR_PIVUS_hg19"),
             ("--readFilesCommand", "zcat"),
             ("--runThreadN", 6),
             ("--genomeLoad", "NoSharedMemory"),
