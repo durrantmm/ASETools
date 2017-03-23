@@ -282,7 +282,7 @@ class WASPFilterRemappedReadsCustomConfig:
     def __init__(self):
         self.execution_path = SPACE.join([WASP_PYTHON_PATH,
                                           "/home/mdurrant/montgomery/mdurrant/ASETools/WASP/mapping/"
-                                          "ilter_remapped_reads.py"])
+                                          "filter_remapped_reads.py"])
 
         self.version = None
         self.version_flag = None
