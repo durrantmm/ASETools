@@ -14,6 +14,7 @@ You can see the details of this argument parser by typing
 This script executes many of the most important functions of this package.
 """
 
+import sys
 from mod.misc.argparse_types import *
 from mod.misc.log import Log
 from mod.misc.qsub import QSubmit
