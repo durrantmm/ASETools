@@ -415,7 +415,6 @@ class GATKASEReadCounterCustomConfig:
             ("-U", "ALLOW_N_CIGAR_READS"),
             ("-minDepth", -1),
             ("--minBaseQuality", -1),
-            ("--minMappingQuality", -1),
-            ("-drf", "DuplicateRead")
+            ("--minMappingQuality", -1)
 
         ]
