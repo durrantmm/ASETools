@@ -61,7 +61,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
                                          input_sorted_vcf=self.input_vcf,
                                          logger=self.logger)
 
-        make_snp_dir.run()
+        #make_snp_dir.run()
         step_num += 1
 
 
@@ -72,7 +72,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
                                                              input_snp_dir=snp_dir,
                                                              logger=self.logger)
 
-        find_intersecting_snps.run()
+        #find_intersecting_snps.run()
         step_num += 1
 
         bam_keep, bam_remap, fastq1_remap, fastq2_remap, fastq_single_remap = find_intersecting_snps.retrieve_output_path()
@@ -84,7 +84,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
                                   fastq1=fastq1_remap,
                                   fastq2=fastq2_remap,
                                   logger=self.logger)
-        star_remap.run()
+        #star_remap.run()
         step_num += 1
 
         remap_sam = star_remap.retrieve_output_path()
@@ -95,7 +95,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         run_star_remap_add_read_groups = RunPicardAddReadGroups(output_dir=add_read_groups_output_dir,
                                                                 input_sam=remap_sam,
                                                                 logger=self.logger)
-        run_star_remap_add_read_groups.run()
+        #run_star_remap_add_read_groups.run()
         step_num += 1
 
         arg_output_bam = run_star_remap_add_read_groups.retrieve_output_path()
@@ -106,7 +106,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         star_remap_mark_dups = RunPicardMarkDuplicates(output_dir=mark_dups_output_dir,
                                                        input_bam=arg_output_bam,
                                                        logger=self.logger)
-        star_remap_mark_dups.run()
+        #star_remap_mark_dups.run()
         step_num += 1
 
         self.input_bam = star_remap_mark_dups.retrieve_output_path()
@@ -118,7 +118,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
                                                      input_bam_to_remap=bam_remap,
                                                      input_bam_remapped=self.input_bam,
                                                      logger=self.logger)
-        filter_remapped.run()
+        #filter_remapped.run()
         step_num += 1
 
         remapped_output_bam = filter_remapped.retrieve_output_path()
@@ -130,7 +130,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
                                           input_bam1=remapped_output_bam,
                                           input_bam2=bam_keep,
                                           logger=self.logger)
-        samtools_merge.run()
+        #samtools_merge.run()
         step_num += 1
         merged_bam = samtools_merge.retrieve_output_path()
 
@@ -140,7 +140,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         samtools_sort = RunSamtoolsSort(output_dir=samtools_sort_output_dir,
                                          input_bam=merged_bam,
                                          logger=self.logger)
-        samtools_sort.run()
+        #samtools_sort.run()
         step_num += 1
         sorted_bam = samtools_sort.retrieve_output_path()
 
@@ -148,7 +148,7 @@ class RunWASPAlleleSpecificExpressionPipeline(RunPipelineSuper):
         # SAMTOOLS INDEX
         samtools_index = RunSamtoolsIndex(input_bam=sorted_bam,
                                           logger=self.logger)
-        samtools_index.run()
+        #samtools_index.run()
 
 
         # ASE READ COUNTER
